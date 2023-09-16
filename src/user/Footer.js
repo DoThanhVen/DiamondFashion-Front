@@ -1,4 +1,6 @@
 import React from "react";
+import "../css/user/footer.css";
+
 function Footer() {
   return (
     <React.Fragment>

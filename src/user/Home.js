@@ -1,7 +1,7 @@
 import React from "react";
-import { Navbar, Slogan } from "../Navbar";
-import { Banner, BestSaler, ListProducts, Slider } from "../Home";
-import Footer from "../Footer";
+import { Navbar, Slogan } from "./Navbar";
+import { Banner, BestSaler, ListProducts, Slider } from "./FormHome";
+import Footer from "./Footer";
 
 function Home() {
   return (

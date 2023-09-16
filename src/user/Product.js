@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Slogan } from "../Navbar";
-import Footer from "../Footer";
+import { Navbar, Slogan } from "./Navbar";
+import Footer from "./Footer";
+import "../css/user/product.css";
 
 function Product() {
   const handleTDClick = (event) => {

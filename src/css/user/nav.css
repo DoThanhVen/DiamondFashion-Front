@@ -446,13 +446,6 @@ a:visited {
     color: inherit;
 }
 
-.container {
-    margin: 7em 0;
-    display: grid;
-    grid-template-columns: 1fr 28fr 1fr;
-    grid-template-areas: ". mosaic .";
-}
-
 ul.mosaic {
     grid-column-start: 2;
     display: flex;

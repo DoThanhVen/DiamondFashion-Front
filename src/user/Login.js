@@ -1,11 +1,24 @@
 import React from "react";
+import "../css/user/login.css";
 
 function Login() {
+  const showPassword = (event) => {
+    const eye = event.currentTarget;
+    const inputPass = document.querySelector("input#password");
+    eye.classList.toggle("bi-eye");
+    if (eye.classList.contains("bi-eye")) {
+      inputPass.type = "text";
+    } else {
+      inputPass.type = "password";
+    }
+  };
   return (
     <React.Fragment>
       <div id="login">
         <div className={`heading`}>
-          <a href="/" className={`logo`}>Diamond Fashion</a>
+          <a href="/" className={`logo`}>
+            Diamond Fashion
+          </a>
         </div>
         <div className={`content`}>
           <div className={`column`}>
@@ -18,10 +31,15 @@ function Login() {
               của chúng tôi.
             </div>
             <form>
-              <label htmlFor="username">Email</label>
-              <input id="username" type="text" className={`mb-3`}></input>
-              <label htmlFor="password">Mật Khẩu</label>
-              <input id="password" type="password" className={`mb-3`}></input>
+              <div className={`mb-3`}>
+                <label htmlFor="username">Email</label>
+                <input id="username" type="text"></input>
+              </div>
+              <div className={`mb-3`}>
+                <label htmlFor="password">Mật Khẩu</label>
+                <input id="password" type="password"></input>
+                <i class="bi bi-eye-slash" onClick={showPassword}></i>
+              </div>
               <div className={`others mb-3`}>
                 <div className={`remember`}>
                   <input id="remember-me" type="checkbox"></input>
@@ -37,7 +55,8 @@ function Login() {
               </div>
               <span className={`mb-3`}>Hoặc</span>
               <div className={`OAuth2`}>
-                <a className={`btn google`} href="#"><img className={`me-2`} src="images/google.jpg"></img> 
+                <a className={`btn google`} href="#">
+                  <img className={`me-2`} src="images/google.jpg"></img>
                   Đăng nhập bằng Google
                 </a>
               </div>

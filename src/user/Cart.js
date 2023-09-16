@@ -1,8 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Slogan } from "../Navbar";
-import Footer from "../Footer";
+import { Navbar, Slogan } from "./Navbar";
+import Footer from "./Footer";
+import "../css/user/cart.css";
+import "../css/user/home.css";
 
 function Cart() {
+  const [quantity, setQuantity] = useState(1);
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
   const [isActive, setIsActive] = useState(false);
   const checkScreenSize = () => {
     if (window.innerWidth <= 776) {
@@ -11,6 +24,16 @@ function Cart() {
       setIsActive(false);
     }
   };
+
+  function formatCurrency(price) {
+    const formatter = new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+      minimumFractionDigits: 0,
+    });
+    return formatter.format(price);
+  }
+  
   useEffect(() => {
     checkScreenSize();
 
@@ -53,10 +76,15 @@ function Cart() {
                 </td>
                 <td>Xanh Dương - XXL - Nam</td>
                 <td>
-                  <span className="me-2">-</span>999
-                  <span className="ms-2">+</span>
+                  <span className="me-2" onClick={decreaseQuantity}>
+                    -
+                  </span>
+                  {quantity}
+                  <span className="ms-2" onClick={increaseQuantity}>
+                    +
+                  </span>
                 </td>
-                <td>120.000.000 VNĐ</td>
+                <td>{formatCurrency(quantity * 120000)}</td>
               </tr>
               <tr>
                 <td>
@@ -72,10 +100,15 @@ function Cart() {
                 </td>
                 <td>Xanh Dương - XXL - Nam</td>
                 <td>
-                  <span className="me-2">-</span>999
-                  <span className="ms-2">+</span>
+                  <span className="me-2" onClick={decreaseQuantity}>
+                    -
+                  </span>
+                  {quantity}
+                  <span className="ms-2" onClick={increaseQuantity}>
+                    +
+                  </span>
                 </td>
-                <td>120.000.000 VNĐ</td>
+                <td>{formatCurrency(quantity * 120000)}</td>
               </tr>
               <tr>
                 <td>
@@ -91,10 +124,15 @@ function Cart() {
                 </td>
                 <td>Xanh Dương - XXL - Nam</td>
                 <td>
-                  <span className="me-2">-</span>999
-                  <span className="ms-2">+</span>
+                  <span className="me-2" onClick={decreaseQuantity}>
+                    -
+                  </span>
+                  {quantity}
+                  <span className="ms-2" onClick={increaseQuantity}>
+                    +
+                  </span>
                 </td>
-                <td>120.000.000 VNĐ</td>
+                <td>{formatCurrency(quantity * 120000)}</td>
               </tr>
               <tr>
                 <td>
@@ -110,10 +148,15 @@ function Cart() {
                 </td>
                 <td>Xanh Dương - XXL - Nam</td>
                 <td>
-                  <span className="me-2">-</span>999
-                  <span className="ms-2">+</span>
+                  <span className="me-2" onClick={decreaseQuantity}>
+                    -
+                  </span>
+                  {quantity}
+                  <span className="ms-2" onClick={increaseQuantity}>
+                    +
+                  </span>
                 </td>
-                <td>120.000.000 VNĐ</td>
+                <td>{formatCurrency(quantity * 120000)}</td>
               </tr>
               <tr>
                 <td>
@@ -129,10 +172,15 @@ function Cart() {
                 </td>
                 <td>Xanh Dương - XXL - Nam</td>
                 <td>
-                  <span className="me-2">-</span>999
-                  <span className="ms-2">+</span>
+                  <span className="me-2" onClick={decreaseQuantity}>
+                    -
+                  </span>
+                  {quantity}
+                  <span className="ms-2" onClick={increaseQuantity}>
+                    +
+                  </span>
                 </td>
-                <td>120.000.000 VNĐ</td>
+                <td>{formatCurrency(quantity * 120000)}</td>
               </tr>
               <tr>
                 <td>
@@ -148,10 +196,15 @@ function Cart() {
                 </td>
                 <td>Xanh Dương - XXL - Nam</td>
                 <td>
-                  <span className="me-2">-</span>999
-                  <span className="ms-2">+</span>
+                  <span className="me-2" onClick={decreaseQuantity}>
+                    -
+                  </span>
+                  {quantity}
+                  <span className="ms-2" onClick={increaseQuantity}>
+                    +
+                  </span>
                 </td>
-                <td>120.000.000 VNĐ</td>
+                <td>{formatCurrency(quantity * 120000)}</td>
               </tr>
               <tr>
                 <td>
@@ -167,10 +220,15 @@ function Cart() {
                 </td>
                 <td>Xanh Dương - XXL - Nam</td>
                 <td>
-                  <span className="me-2">-</span>999
-                  <span className="ms-2">+</span>
+                  <span className="me-2" onClick={decreaseQuantity}>
+                    -
+                  </span>
+                  {quantity}
+                  <span className="ms-2" onClick={increaseQuantity}>
+                    +
+                  </span>
                 </td>
-                <td>120.000.000 VNĐ</td>
+                <td>{formatCurrency(quantity * 120000)}</td>
               </tr>
               <tr>
                 <td>
@@ -186,10 +244,15 @@ function Cart() {
                 </td>
                 <td>Xanh Dương - XXL - Nam</td>
                 <td>
-                  <span className="me-2">-</span>999
-                  <span className="ms-2">+</span>
+                  <span className="me-2" onClick={decreaseQuantity}>
+                    -
+                  </span>
+                  {quantity}
+                  <span className="ms-2" onClick={increaseQuantity}>
+                    +
+                  </span>
                 </td>
-                <td>120.000.000 VNĐ</td>
+                <td>{formatCurrency(quantity * 120000)}</td>
               </tr>
               <tr>
                 <td>
@@ -205,10 +268,15 @@ function Cart() {
                 </td>
                 <td>Xanh Dương - XXL - Nam</td>
                 <td>
-                  <span className="me-2">-</span>999
-                  <span className="ms-2">+</span>
+                  <span className="me-2" onClick={decreaseQuantity}>
+                    -
+                  </span>
+                  {quantity}
+                  <span className="ms-2" onClick={increaseQuantity}>
+                    +
+                  </span>
                 </td>
-                <td>120.000.000 VNĐ</td>
+                <td>{formatCurrency(quantity * 120000)}</td>
               </tr>
               <tr>
                 <td>
@@ -224,10 +292,15 @@ function Cart() {
                 </td>
                 <td>Xanh Dương - XXL - Nam</td>
                 <td>
-                  <span className="me-2">-</span>999
-                  <span className="ms-2">+</span>
+                  <span className="me-2" onClick={decreaseQuantity}>
+                    -
+                  </span>
+                  {quantity}
+                  <span className="ms-2" onClick={increaseQuantity}>
+                    +
+                  </span>
                 </td>
-                <td>120.000.000 VNĐ</td>
+                <td>{formatCurrency(quantity * 120000)}</td>
               </tr>
               <tr>
                 <td>
@@ -243,10 +316,15 @@ function Cart() {
                 </td>
                 <td>Xanh Dương - XXL - Nam</td>
                 <td>
-                  <span className="me-2">-</span>999
-                  <span className="ms-2">+</span>
+                  <span className="me-2" onClick={decreaseQuantity}>
+                    -
+                  </span>
+                  {quantity}
+                  <span className="ms-2" onClick={increaseQuantity}>
+                    +
+                  </span>
                 </td>
-                <td>120.000.000 VNĐ</td>
+                <td>{formatCurrency(quantity * 120000)}</td>
               </tr>
               <tr>
                 <td>
@@ -262,10 +340,15 @@ function Cart() {
                 </td>
                 <td>Xanh Dương - XXL - Nam</td>
                 <td>
-                  <span className="me-2">-</span>999
-                  <span className="ms-2">+</span>
+                  <span className="me-2" onClick={decreaseQuantity}>
+                    -
+                  </span>
+                  {quantity}
+                  <span className="ms-2" onClick={increaseQuantity}>
+                    +
+                  </span>
                 </td>
-                <td>120.000.000 VNĐ</td>
+                <td>{formatCurrency(quantity * 120000)}</td>
               </tr>
             </tbody>
           </table>
@@ -282,7 +365,7 @@ function Cart() {
             </button>
           </div>
         </div>
-        <ListProducts/>
+        <ListProducts />
         <div id="footer">
           <Footer />
         </div>
@@ -290,8 +373,8 @@ function Cart() {
     </React.Fragment>
   );
 }
-class ListProducts extends React.Component{
-  render(){
+class ListProducts extends React.Component {
+  render() {
     return (
       <React.Fragment>
         <div id="list-products">

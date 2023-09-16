@@ -16,7 +16,7 @@
 }
 
 #banner .banner-left {
-	background-image: url('/images/banner-left.jpg');
+	background-image: url('/public/images/banner-left.jpg');
 	background-size: cover;
 	background-position: center;
 }
@@ -24,7 +24,7 @@
 #banner .banner-right .top {
 	height: 30%;
 	gap: 10px;
-	background-image: url('/images/banner-right-1.jpg');
+	background-image: url('/public/images/banner-right-1.jpg');
 	background-size: cover;
 	background-position: center;
 }
@@ -35,7 +35,7 @@
 }
 
 #banner .banner-right .bottom {
-	background-image: url('/images/banner-right-2.jpg');
+	background-image: url('/public/images/banner-right-2.jpg');
 	background-size: cover;
 	background-position: center;
 }
