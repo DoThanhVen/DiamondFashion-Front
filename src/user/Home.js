@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Slogan } from "./Navbar";
+import { Navbar, Slogan } from "../user/Navbar";
 import { Banner, BestSaler, ListProducts, Slider } from "./FormHome";
 import Footer from "./Footer";
 

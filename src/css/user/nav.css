@@ -24,18 +24,16 @@ nav .wrapper {
 .wrapper .logo {
     width: 20%;
     text-align: center;
+    height: 100%;
+}
+
+.wrapper .logo img {
+    height: 100%;
 }
 
 .wrapper .others {
     width: 20%;
     text-align: center;
-}
-
-.wrapper .logo a {
-    color: #1b1b1b;
-    font-size: 30px;
-    font-weight: 600;
-    text-decoration: none;
 }
 
 .wrapper .nav-links {
@@ -68,6 +66,7 @@ nav .wrapper {
     list-style: none;
     padding-left: 20px;
 }
+
 .nav-links li,
 .nav-links li a {
     color: #1b1b1b;
@@ -78,8 +77,9 @@ nav .wrapper {
     transition: all 0.3s ease;
     cursor: pointer;
 }
+
 .nav-links li:hover,
-.nav-links li:hover a{
+.nav-links li:hover a {
     color: red;
 
 }

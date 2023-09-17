@@ -54,7 +54,7 @@ class NavLinks extends React.Component {
     return (
       <React.Fragment>
         <div className="logo">
-          <a href="/">Diamond Fashion</a>
+          <a href="/"><img src="/images/Diamond.png" alt="Diamond Fashion"></img></a>
         </div>
         <ul className={`nav-links ${this.props.isNavOpen ? "show-nav" : ""}`}>
           <i
