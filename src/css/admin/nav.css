@@ -14,11 +14,16 @@
     padding: 12px;
     background-color: white;
     border-radius: 10px;
-    transition: all .5s ease;
     justify-content: space-between;
     padding: 12px;
     box-shadow: 0 0 10px grey;
-    left: -100%;
+    transform: translateX(-100%);
+    transition: transform 1s ease;
+}
+
+#adminDashBoard nav.active {
+    transform: translateX(20px);
+    margin-top: 2%;
 }
 
 #adminDashBoard nav::-webkit-scrollbar {
@@ -118,11 +123,6 @@
     border-radius: 50%;
 }
 
-#adminDashBoard nav.active {
-    left: 20px;
-    margin-top: 2%;
-}
-
 #adminDashBoard .bx-right-arrow,
 #adminDashBoard .bx-left-arrow {
     position: fixed;
@@ -136,7 +136,7 @@
     z-index: 9999;
     bottom: 30px;
     cursor: pointer;
-    transition: all .5s ease;
+    transition: all 1s ease;
 }
 
 #adminDashBoard .bx-right-arrow {
@@ -157,7 +157,7 @@
 }
 
 #adminDashBoard .bx-left-arrow {
-    left: 275px;
+    left: 295px;
 }
 
 /*CONTENT*/

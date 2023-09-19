@@ -5,6 +5,8 @@ import Cart from "./user/Cart";
 import Product from "./user/Product";
 
 import AdminDashBoard from "./admin/AdminDashBoard";
+
+import TikiHome from "./tiki/TikiForm";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -21,6 +23,10 @@ function App() {
       <Route path="/admin/categories" element={<AdminDashBoard />}/>
       <Route path="/admin/products" element={<AdminDashBoard />}/>
       <Route path="/admin/bills" element={<AdminDashBoard />}/>
+
+      <Route path="/tiki" element={<TikiHome />}/>
+      <Route path="/tiki/account" element={<TikiHome />}/>
+      <Route path="/tiki/cart" element={<TikiHome />}/>
     </Routes>
   );
 }

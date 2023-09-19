@@ -78,9 +78,9 @@ class NavLinks extends React.Component {
             onClick={this.handleMenuClick}
           >
             {this.props.isSmallScreen ? (
-              <a>Sản phẩm</a>
+              <a>Danh mục</a>
             ) : (
-              <a href="/products">Sản phẩm</a>
+              <a href="/products">Danh mục</a>
             )}
 
             <div className={`mega-box`}>
