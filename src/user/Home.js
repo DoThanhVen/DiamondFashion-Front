@@ -1,7 +1,8 @@
 import React from "react";
 import { Navbar, Slogan } from "../user/Navbar";
-import { Banner, BestSaler, ListProducts, Slider } from "./FormHome";
+import { Banner, Introduction, CategoriesProduct, Sale, NewProduct } from "./FormHome";
 import Footer from "./Footer";
+import Categories from "../admin/Categories";
 
 function Home() {
   return (
@@ -9,20 +10,25 @@ function Home() {
       <nav>
         <Navbar />
       </nav>
-      <div id="slogan">
+      {/* <div id="slogan">
         <Slogan />
+      </div> */}
+      
+      <div id="best-saler">
+        <Introduction />
       </div>
-      <div id="banner" className="row container">
+      <div>
+        <CategoriesProduct/>
+      </div>
+      <div>
+        <NewProduct />
+      </div>
+      <div id="banner" >
         <Banner />
       </div>
-      <div id="best-saler">
-        <BestSaler />
-      </div>
+     
       <div id="list-products">
-        <ListProducts />
-      </div>
-      <div id="slider">
-        <Slider />
+        <Sale />
       </div>
       <div id="footer">
         <Footer />

@@ -218,7 +218,7 @@ class NavLinks extends React.Component {
             </div>
           </li>
           <li>
-            <a href="#">Tin tức</a>
+            <a href="#">Khuyến mãi</a>
           </li>
         </ul>
       </React.Fragment>
