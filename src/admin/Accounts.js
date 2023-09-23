@@ -63,7 +63,9 @@ function Accounts() {
                 style={{ display: "none" }}
                 id="selectedImage"
               />
-              <label htmlFor="selectedImage" className="label-selected"><i class='bx bxs-camera me-1'></i>Chọn Ảnh</label>
+              <label htmlFor="selectedImage" className="label-selected">
+                <i class="bx bxs-camera me-1"></i>Chọn Ảnh
+              </label>
               {selectedImage && (
                 <div className={`form-selected`}>
                   <img
@@ -127,7 +129,9 @@ function Accounts() {
           </form>
         </div>
         <div className={`content mt-3`}>
-          <div className={"heading"}>DANH SÁCH TÀI KHOẢN</div>
+          <div className={"heading"}>
+            <label>DANH SÁCH TÀI KHOẢN</label>
+          </div>
           <div className={`search`}>
             <i className={`bx bx-search`} onClick={openSearchForm} />
           </div>

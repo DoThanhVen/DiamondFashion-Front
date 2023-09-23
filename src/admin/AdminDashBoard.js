@@ -4,7 +4,7 @@ import Accounts from "./Accounts";
 import Products from "./Products";
 import Categories from "./Categories";
 import Shops from "./Shops";
-import Bills from "./Bills";
+import Storge from "./Storge";
 import { Link, useLocation } from "react-router-dom";
 import "../css/admin/nav.css";
 
@@ -15,7 +15,7 @@ function Nav() {
   const isActiveShop = location.pathname === "/admin/shops";
   const isActiveTypeProduct = location.pathname === "/admin/categories";
   const isActiveListProduct = location.pathname === "/admin/products";
-  const isActiveBill = location.pathname === "/admin/bills";
+  const isActiveStorge = location.pathname === "/admin/storge";
 
   const handleTDClick = (event) => {
     const showMenu = event.currentTarget;
@@ -71,10 +71,10 @@ function Nav() {
                 <label>Quản Lý Sản Phẩm</label>
               </a>
             </li>
-            <li className={`menu-item ${isActiveBill ? "active" : ""}`}>
-              <a href="/admin/bills">
+            <li className={`menu-item ${isActiveStorge ? "active" : ""}`}>
+              <a href="/admin/storge">
                 <i className="bi bi-receipt"></i>
-                <label>Quản Lý Đơn Hàng</label>
+                <label>Quản Lý Kho Hàng</label>
               </a>
             </li>
           </ul>
@@ -91,7 +91,7 @@ function Nav() {
           {isActiveShop ? <Shops /> : null}
           {isActiveTypeProduct ? <Categories /> : null}
           {isActiveListProduct ? <Products /> : null}
-          {isActiveBill ? <Bills /> : null}
+          {isActiveStorge ? <Storge /> : null}
         </div>
       </div>
     </React.Fragment>

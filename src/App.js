@@ -22,7 +22,7 @@ function App() {
       <Route path="/admin/shops" element={<AdminDashBoard />}/>
       <Route path="/admin/categories" element={<AdminDashBoard />}/>
       <Route path="/admin/products" element={<AdminDashBoard />}/>
-      <Route path="/admin/bills" element={<AdminDashBoard />}/>
+      <Route path="/admin/storge" element={<AdminDashBoard />}/>
 
       <Route path="/tiki" element={<TikiHome />}/>
       <Route path="/tiki/account" element={<TikiHome />}/>

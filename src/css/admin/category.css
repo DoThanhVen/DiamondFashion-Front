@@ -1,0 +1,206 @@
+#content #category .category,
+#content #category .category-item {
+    width: 45%;
+}
+
+#content #category .form-edit {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#content #category div.edit,
+#content #category .content {
+    box-shadow: 0 5px 10px lightgrey;
+    padding: 20px;
+    border-radius: 20px;
+    max-height: 500px;
+    overflow: auto;
+    position: relative;
+}
+
+#content #category div.edit::-webkit-scrollbar,
+#content #category .content::-webkit-scrollbar {
+    width: 6px;
+}
+
+#content #category div.edit::-webkit-scrollbar-thumb,
+#content #category .content::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+}
+
+#content #category div.edit::-webkit-scrollbar-thumb:hover,
+#content #category .content::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+#content #category div.edit::-webkit-scrollbar-track,
+#content #category .content::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+}
+
+#content #category .content .top-business .heading {
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+#content #category .path {
+    padding: 20px 0;
+}
+#content #category .content table td {
+    text-align: left;
+}
+
+#content #category .content table td ul {
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#content #category .content table td ul li {
+    list-style: none;
+    padding: 0 3px;
+    line-height: 20px !important;
+}
+
+#content #category .content table th:nth-child(1) {
+    width: 5%;
+}
+
+#content #category .category .content table td:nth-child(3) {
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#content #category .category .content table th:nth-child(2) {
+    width: 100px;
+}
+
+#content #category .content table img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#content #category .content table tbody span.edit {
+    color: blue;
+}
+
+#content #category .content table tbody span.delete {
+    color: red;
+}
+
+#content #category .content table tbody span.edit,
+#content #category .content table tbody span.delete {
+    font-size: 30px;
+}
+
+@media screen and (max-width:1045px) {
+
+    #content #category .category,
+    #content #category .category-item {
+        width: 90%;
+    }
+
+    #content #category .form-edit {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #content #category .category-item {
+        margin-top: 20px;
+    }
+
+}
+
+/*FORM SEARCH*/
+#content #category .content .search {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+#content #category .content .search i {
+    font-size: 25px;
+}
+
+#content #category .content form.search-form {
+    position: absolute;
+    width: 100%;
+    min-height: 70px;
+    left: 0;
+    top: 0;
+    background-color: white;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+#content #category .content form.search-form.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+#content #category .content form.search-form input[type="text"] {
+    width: 100%;
+    padding: 5px 5px 5px 20px;
+
+    border: none;
+}
+
+#content #category .content form.search-form input[type="text"]:focus,
+#content #category .content form.search-form input[type="text"]:active {
+    border: none;
+    outline: none;
+}
+
+#content #category .content form.search-form i {
+    position: absolute;
+    right: 50px;
+    cursor: pointer;
+}
+
+.form-selected {
+    text-align: center;
+}
+
+.selected-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+#content #category div.edit .label-selected {
+    width: 130px !important;
+    width: auto;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .5s ease-in;
+}
+
+#content #category div.edit .label-selected:hover {
+    box-shadow: 0 0 5px grey;
+}
+
+#content #category div.edit .label-selected i {
+    padding: 5px;
+    border-radius: 5px;
+    transition: all .5s ease-in;
+}
+
+#content #category div.edit .label-selected:hover i {
+    background-color: rgb(218, 42, 150);
+    color: white;
+}
