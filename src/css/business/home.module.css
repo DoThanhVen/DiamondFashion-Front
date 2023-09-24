@@ -1,0 +1,72 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, 文泉驛正黑, "WenQuanYi Zen Hei", "Hiragino Sans GB", "儷黑 Pro", "LiHei Pro", "Heiti TC", 微軟正黑體, "Microsoft JhengHei UI", "Microsoft JhengHei", sans-serif;
+}
+
+.text {
+    color: white;
+}
+
+.card {
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 5px grey;
+}
+
+.cardContent {
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.cardContent:hover {
+    background-color: lightgrey;
+}
+
+.cardContent:nth-child(even)::after {
+    position: absolute;
+    content: "";
+    width: 2px;
+    height: 40%;
+    left: 0;
+    top: 50%;
+    background-color: lightgrey;
+    transform: translateY(-50%);
+}
+
+.cardContent:nth-child(3)::after,
+.cardContent:nth-child(7)::after {
+    position: absolute;
+    content: "";
+    width: 2px;
+    height: 40%;
+    left: 0 !important;
+    top: 50%;
+    background-color: lightgrey;
+    transform: translateY(-50%);
+}
+
+
+.cardTitle {
+    font-size: 14px;
+    text-align: center;
+}
+
+.amount {
+    font-weight: bold;
+    color: blue;
+}
+
+.heading {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.title {
+    font-size: 14px;
+    color: grey;
+    font-weight: bold;
+    opacity: .6;
+}

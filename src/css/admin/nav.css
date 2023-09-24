@@ -19,6 +19,7 @@
     box-shadow: 0 0 10px grey;
     transform: translateX(-100%);
     transition: transform 1s ease;
+    z-index: 999;
 }
 
 #adminDashBoard nav.active {
@@ -81,6 +82,10 @@
 
 #adminDashBoard nav .menu>.menu-item label {
     cursor: pointer;
+}
+
+#adminDashBoard nav .menu>.menu-item a {
+    color: black;
 }
 
 #adminDashBoard nav .menu>.menu-item i {
