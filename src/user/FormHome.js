@@ -3,26 +3,407 @@ import "../css/user/home.css";
 
 function Introduction() {
   return <React.Fragment>
-    <main class="mb-4" style={{ marginTop: "60px" }}>
-      <section class=" section banner banner-section ">
-        <div class="mt-4 pb-4 container banner-column">
-          <img
-            class="banner-image "
-            src="../images/fashion.jpg"
-            alt="banner"
-          ></img>
-          <div class="banner-inner">
-            <h1 class="heading-xl">
-              Bạn đang tìm kiếm trang web thời trang hàng đầu?
-            </h1>
-            <p class="paragraph">
-              Chào mừng đến với trang web thời trang của chúng tôi! Chúng tôi mang
-              đến những xu hướng thời trang mới nhất và đa dạng nhất trên thị
-              trường.
-            </p>
-            <button class="btn btn-darken btn-inline">
-              Mua sắm ngay<i class="bx bx-right-arrow-alt"></i>
-            </button>
+    <main className="mb-4" style={{ marginTop: "100px" }}>
+      <section className="hero">
+        <div className="side-bar">
+          <h4><i className="fa-solid fa-bars"> </i>Danh mục</h4>
+          <ul>
+            <li>
+              <i className="fa-solid fa-house"></i>
+              <a href="#">Đồ gia dụng</a>
+            </li>
+            <li>
+              <i className="fa-solid fa-shop"></i>
+              <a href="#">Quần áo</a>
+            </li>
+
+            <li>
+            <i class="bi bi-laptop"></i>
+              <a href="#">Laptop</a>
+            </li>
+
+            <li>
+              <i className="fa-solid fa-clock"></i>
+              <a href="#">Đồng hồ</a>
+            </li>
+
+            <li>
+              <i className="fa-solid fa-shoe-prints"></i>
+              <a href="#">Giày</a>
+            </li>
+
+            <li>
+              <i className="fa-solid fa-blog"></i>
+              <a href="#">Điện thoại</a>
+            </li>
+
+            <li>
+              <i className="fa-solid fa-envelope"></i>
+              <a href="#">Mắt kính</a>
+            </li>
+
+          </ul>
+        </div>
+
+        <div className="content">
+          <div className="div-text">
+            <span>Những sản phẩm chất lượng</span>
+            <h1>Chào mừng đến với Diamond Fashion</h1>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+            <a href="#" className="btn btn-warning ">shop now</a>
+          </div>
+        </div>
+      </section>
+
+
+      <section className="sec-2">
+        <div className="side-bar">
+
+          <div className="titile">
+            <h4>hot deals</h4>
+            <a href="#">Xem nhiều hơn</a>
+          </div>
+
+          <div className="item">
+            <div className="div-img">
+              <img src="images/best-saler-1.jpg" alt=""
+              
+              ></img>
+            </div>
+
+            <div className="div-text">
+              <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+              <div className="stars">
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-solid fa-star"></i>
+                <i className="fa-regular fa-star-half-stroke"></i>
+
+              </div>
+              <div className="price">
+                <span>$115</span>
+                <del>$160</del>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div className="content">
+          <div className="titile">
+            <h4>new products deals</h4>
+            <a href="#">Xem nhiều hơn</a>
+          </div>
+
+          <div className="all-items d-flex ">
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-2.jpg" alt=""
+                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-3.jpg" alt=""
+                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-4.jpg" alt=""
+                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-1.jpg" alt=""
+                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section className="sec-3">
+        <div className="side-bar">
+          <div className="titile">
+            <h4>new offer</h4>
+            <a href="#">Xem nhiều hơn</a>
+          </div>
+
+          <div className="boxs">
+            <div className="box pb-2">
+              <img src="images/best-saler-2.jpg" alt=""></img>
+              <div className="div-text">
+                <h4>Áo thun tay ngắn</h4>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <span>$139</span>
+              </div>
+            </div>
+
+            <div className="box mt-2 pb-2">
+              <img src="images/best-saler-3.jpg" alt=""
+              
+              ></img>
+              <div className="div-text">
+                <h4>Áo thun tay ngắn</h4>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <span>$139</span>
+              </div>
+            </div>
+
+            <div className="box mt-2 pb-2">
+              <img src="images/best-saler-4.jpg" alt=""
+            
+              ></img>
+              <div className="div-text">
+                <h4>Áo thun tay ngắn</h4>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <span>$139</span>
+              </div>
+            </div>
+
+            <div className="box mt-2 pb-2">
+              <img src="images/best-saler-1.jpg" alt=""
+             
+              ></img>
+              <div className="div-text">
+                <h4>Áo thun tay ngắn</h4>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <span>$139</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div className="content">
+          <div className="bg-sec">
+            <div className="div-text">
+              <h1>Sản phẩm đa dạng</h1>
+              <p>Tha hồ lựa chọn</p>
+              <a href="#" className="btn  btn-warning "> <strong>Shop now</strong> </a>
+            </div>
+          </div>
+
+          <div className="all-items">
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-4.jpg" alt=""
+                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-3.jpg" alt=""
+                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-2.jpg" alt=""
+                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-1.jpg" alt=""
+                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -32,209 +413,23 @@ function Introduction() {
 
 function CategoriesProduct() {
   return <React.Fragment>
-    <div>
-      <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4">
-        <span className="mt-4 pr-3">THỂ LOẠI</span>
-      </h2>
-      <div className=" flex-wrap">
-        <div className="row px-xl-5 pb-3">
-          <div className="col-lg-3 col-md-4 col-sm-6 pb-1">
-            <a className="text-decoration-none" href="">
-              <div className="cat-item d-flex align-items-center mb-4">
-                <div
-                  className="overflow-hidden"
-                  style={{ width: "100px", height: "100px" }}
-                >
-                  <img
-                    className="img-fluid"
-                    src="../images/fashion.jpg"
-                    alt=""
-                  ></img>
-                </div>
-                <div className="flex-fill pl-3">
-                  <h6>Category Name</h6>
-                  <small className="text-body">100 Products</small>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </React.Fragment>
 }
 
 function NewProduct() {
-  return <React.Fragment>
-    <div>
-     <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4">
-        <span className="mt-4 pr-3">SẢN PHẨM MỚI NHẤT</span>
-      </h2>
-      <div className=" d-flex justify-content-center flex-wrap">
-        <div class="card-items page-wrapper">
-          <div class="page-inner">
-            <div class="rows">
-              <div class="el-wrapper">
-                <div class="box-up">
-                  <img
-                    class="img"
-                    src="../images/best-saler-1.jpg"
-                    alt=""
-                  ></img>
-                  <div class="img-info">
-                    <div class="info-inner">
-                      <span class="p-name">Áo thun</span>
-                      <span class="p-color">Đen</span>
-                    </div>
-                    <div class="a-size">
-                      Kích thước : <span class="size">S , M , L , XL</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="box-down">
-                  <div class="h-bg">
-                    <div class="h-bg-inner"></div>
-                  </div>
-
-                  <a class="cart" href="#">
-                    <span class="price">$120</span>
-                    <span class="add-to-cart">
-                      <span class="txt">Thêm vào giỏ hàng</span>
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card-items page-wrapper">
-          <div class="page-inner">
-            <div class="rows">
-              <div class="el-wrapper">
-                <div class="box-up">
-                  <img
-                    class="img"
-                    src="../images/best-saler-1.jpg"
-                    alt=""
-                  ></img>
-                  <div class="img-info">
-                    <div class="info-inner">
-                      <span class="p-name">Áo thun</span>
-                      <span class="p-color">Đen</span>
-                    </div>
-                    <div class="a-size">
-                      Kích thước : <span class="size">S , M , L , XL</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="box-down">
-                  <div class="h-bg">
-                    <div class="h-bg-inner"></div>
-                  </div>
-
-                  <a class="cart" href="#">
-                    <span class="price">$120</span>
-                    <span class="add-to-cart">
-                      <span class="txt">Thêm vào giỏ hàng</span>
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card-items page-wrapper">
-          <div class="page-inner">
-            <div class="rows">
-              <div class="el-wrapper">
-                <div class="box-up">
-                  <img
-                    class="img"
-                    src="../images/best-saler-1.jpg"
-                    alt=""
-                  ></img>
-                  <div class="img-info">
-                    <div class="info-inner">
-                      <span class="p-name">Áo thun</span>
-                      <span class="p-color">Đen</span>
-                    </div>
-                    <div class="a-size">
-                      Kích thước : <span class="size">S , M , L , XL</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="box-down">
-                  <div class="h-bg">
-                    <div class="h-bg-inner"></div>
-                  </div>
-
-                  <a class="cart" href="#">
-                    <span class="price">$120</span>
-                    <span class="add-to-cart">
-                      <span class="txt">Thêm vào giỏ hàng</span>
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card-items page-wrapper">
-          <div class="page-inner">
-            <div class="rows">
-              <div class="el-wrapper">
-                <div class="box-up">
-                  <img
-                    class="img"
-                    src="../images/best-saler-1.jpg"
-                    alt=""
-                  ></img>
-                  <div class="img-info">
-                    <div class="info-inner">
-                      <span class="p-name">Áo thun</span>
-                      <span class="p-color">Đen</span>
-                    </div>
-                    <div class="a-size">
-                      Kích thước : <span class="size">S , M , L , XL</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="box-down">
-                  <div class="h-bg">
-                    <div class="h-bg-inner"></div>
-                  </div>
-
-                  <a class="cart" href="#">
-                    <span class="price">$120</span>
-                    <span class="add-to-cart">
-                      <span class="txt">Thêm vào giỏ hàng</span>
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0px' }}>
-      <button type="button" style={{padding: '20px 60px', borderRadius: '0', fontSize: '17px'}} className="btn btn-outline-dark btn-light">XEM THÊM</button>
-      </div>
-  </React.Fragment>
+  return <React.Fragment></React.Fragment>
 }
+
 
 function Banner() {
   return <React.Fragment>
-    <div className=" p-4" style={{backgroundColor: 'rgb(236, 236, 236)'}}>
+    <div className=" p-4" >
       <div className="container list">
         <div className="items">
           <div
             id="carouselExampleControls"
-            class="carousel slide"
+            className="carousel slide"
             data-bs-ride="carousel"
           >
             <div className="carousel-inner">
@@ -286,191 +481,34 @@ function Banner() {
             </button>
           </div>
         </div>
-
+  
         <div className="items">
           <img src="../images/banner-left.jpg" alt="Diamond_Fashion"></img>
         </div>
-
+  
         <div className="items">
           <img src="../images/banner5.jpg" alt="Diamond_Fashion"></img>
         </div>
-
+  
         <div className="items">
           <img src="../images/banner_woman1.jpg" alt="Diamond_Fashion"></img>
         </div>
-
+  
         <div className="items">
           <img src="../images/banner_style3.jpg" alt="Diamond_Fashion"></img>
         </div>
-
+  
         <div className="items">
           <img src="../images/banner_mc2.jpg" alt="Diamond_Fashion"></img>
         </div>
       </div>
     </div>
   </React.Fragment>
-}
+  }
 
 function Sale() {
   return <React.Fragment>
-     <h2 className="mt-4 section-title position-relative text-uppercase mx-xl-5 ">
-        <span className=" pr-3">ĐANG SALE</span>
-      </h2>
-      <div className=" d-flex justify-content-center flex-wrap">
-        <div class="card-items page-wrapper">
-          <div class="page-inner">
-            <div class="rows">
-              <div class="el-wrapper">
-                <div class="box-up">
-                  <img
-                    class="img"
-                    src="../images/best-saler-1.jpg"
-                    alt=""
-                  ></img>
-                  <div class="img-info">
-                    <div class="info-inner">
-                      <span class="p-name">Áo thun</span>
-                      <span class="p-color">Đen</span>
-                    </div>
-                    <div class="a-size">
-                      Kích thước : <span class="size">S , M , L , XL</span>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="box-down">
-                  <div class="h-bg">
-                    <div class="h-bg-inner"></div>
-                  </div>
-
-                  <a class="cart" href="#">
-                    <span class="price">$120</span>
-                    <span class="add-to-cart">
-                      <span class="txt">Thêm vào giỏ hàng</span>
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card-items page-wrapper">
-          <div class="page-inner">
-            <div class="rows">
-              <div class="el-wrapper">
-                <div class="box-up">
-                  <img
-                    class="img"
-                    src="../images/best-saler-1.jpg"
-                    alt=""
-                  ></img>
-                  <div class="img-info">
-                    <div class="info-inner">
-                      <span class="p-name">Áo thun</span>
-                      <span class="p-color">Đen</span>
-                    </div>
-                    <div class="a-size">
-                      Kích thước : <span class="size">S , M , L , XL</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="box-down">
-                  <div class="h-bg">
-                    <div class="h-bg-inner"></div>
-                  </div>
-
-                  <a class="cart" href="#">
-                    <span class="price">$120</span>
-                    <span class="add-to-cart">
-                      <span class="txt">Thêm vào giỏ hàng</span>
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card-items page-wrapper">
-          <div class="page-inner">
-            <div class="rows">
-              <div class="el-wrapper">
-                <div class="box-up">
-                  <img
-                    class="img"
-                    src="../images/best-saler-1.jpg"
-                    alt=""
-                  ></img>
-                  <div class="img-info">
-                    <div class="info-inner">
-                      <span class="p-name">Áo thun</span>
-                      <span class="p-color">Đen</span>
-                    </div>
-                    <div class="a-size">
-                      Kích thước : <span class="size">S , M , L , XL</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="box-down">
-                  <div class="h-bg">
-                    <div class="h-bg-inner"></div>
-                  </div>
-
-                  <a class="cart" href="#">
-                    <span class="price">$120</span>
-                    <span class="add-to-cart">
-                      <span class="txt">Thêm vào giỏ hàng</span>
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card-items page-wrapper">
-          <div class="page-inner">
-            <div class="rows">
-              <div class="el-wrapper">
-                <div class="box-up">
-                  <img
-                    class="img"
-                    src="../images/best-saler-1.jpg"
-                    alt=""
-                  ></img>
-                  <div class="img-info">
-                    <div class="info-inner">
-                      <span class="p-name">Áo thun</span>
-                      <span class="p-color">Đen</span>
-                    </div>
-                    <div class="a-size">
-                      Kích thước : <span class="size">S , M , L , XL</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="box-down">
-                  <div class="h-bg">
-                    <div class="h-bg-inner"></div>
-                  </div>
-
-                  <a class="cart" href="#">
-                    <span class="price">$120</span>
-                    <span class="add-to-cart">
-                      <span class="txt">Thêm vào giỏ hàng</span>
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0px' }}>
-      <button type="button" style={{padding: '20px 60px', borderRadius: '0', fontSize: '17px'}} className="btn btn-outline-dark btn-light">XEM THÊM</button>
-      </div>
-     
   </React.Fragment>;
 }
 

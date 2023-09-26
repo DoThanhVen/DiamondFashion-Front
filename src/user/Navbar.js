@@ -69,7 +69,7 @@ class NavLinks extends React.Component {
             </a>
           </li>
           <li>
-            <a href="#">Về chúng tôi</a>
+            <a href="/detail">Về chúng tôi</a>
           </li>
           <li
             className={`products ${
