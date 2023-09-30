@@ -68,9 +68,7 @@ class NavLinks extends React.Component {
               Trang chủ
             </a>
           </li>
-          <li>
-            <a href="/detail">Về chúng tôi</a>
-          </li>
+          
           <li
             className={`products ${
               this.state.isOpenListProducts ? "active" : ""
@@ -218,7 +216,10 @@ class NavLinks extends React.Component {
             </div>
           </li>
           <li>
-            <a href="#">Khuyến mãi</a>
+            <a href="/detail">Về chúng tôi</a>
+          </li>
+          <li>
+            <a href="#">Liên hệ</a>
           </li>
         </ul>
       </React.Fragment>

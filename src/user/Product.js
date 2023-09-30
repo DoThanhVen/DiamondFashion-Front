@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Navbar, Slogan } from "./Navbar";
 import Footer from "./Footer";
 import "../css/user/product.css";
+import "../css/user/home.css"
 
 function Product() {
   const handleTDClick = (event) => {
@@ -15,561 +16,536 @@ function Product() {
   };
   return (
     <React.Fragment>
-      <div id="product">
-        <nav>
+      <div className='product'>
+        <nav >
           <Navbar />
         </nav>
-        <div id="slogan">
-          <Slogan />
-        </div>
-        <div className={`path`}>Trang Chủ/Sản Phẩm</div>
-        <div className={`slider`}>
-          <div
-            id="carouselExampleControls"
-            class="carousel slide"
-            data-bs-ride="carousel"
-          >
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img
-                  src="images/slider-1.jpg"
-                  class="d-block w-100"
-                  alt="..."
-                />
-              </div>
-              <div class="carousel-item">
-                <img
-                  src="images/slider-1.jpg"
-                  class="d-block w-100"
-                  alt="..."
-                />
-              </div>
-              <div class="carousel-item">
-                <img
-                  src="images/slider-1.jpg"
-                  class="d-block w-100"
-                  alt="..."
-                />
-              </div>
-            </div>
-            <button
-              class="carousel-control-prev"
-              type="button"
-              data-bs-target="#carouselExampleControls"
-              data-bs-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button
-              class="carousel-control-next"
-              type="button"
-              data-bs-target="#carouselExampleControls"
-              data-bs-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-          <div className={`banner`}>
-            <div className={`column`}>
-              <img src="images/banner-left.jpg" alt=""></img>
-            </div>
-            <div className={`column`}>
-              <img src="images/banner-left.jpg" alt=""></img>
-            </div>
-          </div>
-        </div>
-        <div id="list-products">
-          <div className={`heading`}>SẢN PHẨM</div>
-          <div className={`content`}>
-            <div className={`sidebar`}>
-              <div className={`heading`}>THỂ LOẠI</div>
-              <ul className="menu">
-                <li className={`menu-item`} onClick={handleTDClick}>
-                  <header>
-                    <label>ÁO</label>
-                    <i class="bx bx-chevron-down"></i>
-                  </header>
-                  <ul className={`sub-menu`}>
-                    <li>
-                      <a href="#">Tất Cả Áo</a>
-                    </li>
-                    <li>
-                      <a href="#">Áo Thun</a>
-                    </li>
-                    <li>
-                      <a href="#">Áo Thun In Họa Tiết</a>
-                    </li>
-                    <li>
-                      <a href="#">Áo Polo</a>
-                    </li>
-                    <li>
-                      <a href="#">Áo Nỉ & Hoodie</a>
-                    </li>
-                    <li>
-                      <a href="#">Áo Sơ Mi Casual</a>
-                    </li>
-                    <li>
-                      <a href="#">Áo Sơ Mi Công Sở</a>
-                    </li>
-                    <li>
-                      <a href="#">Áo Len</a>
-                    </li>
-                  </ul>
-                </li>
-                <li className={`menu-item`} onClick={handleTDClick}>
-                  <header>
-                    <label>ĐỒ MẶC NGOÀI</label>
-                    <i class="bx bx-chevron-down"></i>
-                  </header>
-                  <ul className="sub-menu">
-                    <li>
-                      <a href="#">Tất Cả Đồ Mặc Ngoài</a>
-                    </li>
-                    <li>
-                      <a href="#">Áo Blouson & Áo Parka</a>
-                    </li>
-                    <li>
-                      <a href="#">Áo Khoác & Áo Blazer</a>
-                    </li>
-                    <li>
-                      <a href="#">AirSense Áo Khoác Siêu Nhẹ</a>
-                    </li>
-                    <li>
-                      <a href="#">Áo Khoác Siêu Nhẹ & Áo Chần Bông</a>
-                    </li>
-                  </ul>
-                </li>
-                <li className={`menu-item`} onClick={handleTDClick}>
-                  <header>
-                    <label>QUẦN</label>
-                    <i class="bx bx-chevron-down"></i>
-                  </header>
-                  <ul className="sub-menu">
-                    <li>
-                      <a href="#">Tất Cả Quần</a>
-                    </li>
-                    <li>
-                      <a href="#">Quần Jean & Quần Jean Màu</a>
-                    </li>
-                    <li>
-                      <a href="#">Quần Dài Đến Mắt Cá</a>
-                    </li>
-                    <li>
-                      <a href="#">Quần Dài Dáng Rộng</a>
-                    </li>
-                    <li>
-                      <a href="#">Quần Chino</a>
-                    </li>
-                    <li>
-                      <a href="#">AirSense Quần Dài Siêu Nhẹ</a>
-                    </li>
-                    <li>
-                      <a href="#">Quần Tây</a>
-                    </li>
-                    <li>
-                      <a href="#">Quần Easy Pants</a>
-                    </li>
-                    <li>
-                      <a href="#">Quần Nỉ</a>
-                    </li>
-                    <li>
-                      <a href="#">Quần Short</a>
-                    </li>
-                  </ul>
-                </li>
-                <li className={`menu-item`} onClick={handleTDClick}>
-                  <header>
-                    <label>ĐỒ MẶC NHÀ</label>
-                    <i class="bx bx-chevron-down"></i>
-                  </header>
-                  <ul className="sub-menu">
-                    <li>
-                      <a href="#">Tất Cả Đồ Mặc Nhà</a>
-                    </li>
-                    <li>
-                      <a href="#">Đồ Mặc Nhà & Pyjama</a>
-                    </li>
-                    <li>
-                      <a href="#">Dép Đi Trong Nhà</a>
-                    </li>
-                  </ul>
-                </li>
-                <li className={`menu-item`} onClick={handleTDClick}>
-                  <header>
-                    <label>PHỤ KIỆN</label>
-                    <i class="bx bx-chevron-down"></i>
-                  </header>
-                  <ul className="sub-menu">
-                    <li>
-                      <a href="#">Tất Cả Phụ Kiện</a>
-                    </li>
-                    <li>
-                      <a href="#">Túi</a>
-                    </li>
-                    <li>
-                      <a href="#">Thắt Lưng</a>
-                    </li>
-                    <li>
-                      <a href="#">Giày & Giày Scandal</a>
-                    </li>
-                    <li>
-                      <a href="#">Kính Mắt</a>
-                    </li>
-                    <li>
-                      <a href="#">Khác</a>
-                    </li>
-                  </ul>
-                </li>
-                <li className={`menu-item`} onClick={handleTDClick}>
-                  <header>
-                    <label>GIÁ</label>
-                    <i class="bx bx-chevron-down"></i>
-                  </header>
-                  <ul className="sub-menu">
-                    <li>
-                      <a href="#">Dưới 1 Triệu</a>
-                    </li>
-                    <li>
-                      <a href="#">Từ 1 - 3 Triệu</a>
-                    </li>
-                    <li>
-                      <a href="#">Từ 3 - 5 Triệu</a>
-                    </li>
-                    <li>
-                      <a href="#">Từ 5 - 10 Triệu</a>
-                    </li>
-                    <li>
-                      <a href="#">Trên 10 Triệu</a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-            <div className={`list-products-item`}>
-              <div className={`row container`}>
-                <div className={`item col-md-4 col-sm-6 col-6`}>
-                  <img src="images/best-saler-1.jpg"></img>
-                  <div className={`content`}>
-                    <div className={`sale`}>
-                      <i className="bi bi-fire"></i>
-                      <span>25%</span>
-                    </div>
-                    <ul className={`menu`}>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-heart"></i>
-                      </li>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-cart-add"></i>
-                      </li>
-                    </ul>
-                    <span className={`title`}>
-                      Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                    </span>
-                    <div className={`price`}>
-                      <del>300,000</del>
-                      <span>255,000</span>
-                    </div>
-                    <span className={`sold`}>3.2k</span>
-                  </div>
+
+        <section className="breadcrumb-section" style={{ backgroundImage: "url('images/best-saler-1.jpg')" }}>
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12 text-center">
+                <div className="breadcrumb__text">
+                  <h2>Diamond Shop</h2>
+                  <p>Khám phá một thế giới biến đổi với các sản phẩm của chúng tôi. Cho dù bạn đang tìm cách nâng cấp phong cách của mình, duy trì kết nối hay làm cho ngôi nhà của bạn thông minh hơn, chúng tôi có mọi thứ bạn cần để thay đổi cuộc sống của bạn</p>
                 </div>
-                <div className={`item col-md-4 col-sm-6 col-6`}>
-                  <img src="images/best-saler-2.jpg"></img>
-                  <div className={`content`}>
-                    <div className={`sale`}>
-                      <i className="bi bi-fire"></i>
-                      <span>25%</span>
-                    </div>
-                    <ul className={`menu`}>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-heart"></i>
-                      </li>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-cart-add"></i>
-                      </li>
-                    </ul>
-                    <span className={`title`}>
-                      Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                    </span>
-                    <div className={`price`}>
-                      <del>300,000</del>
-                      <span>255,000</span>
-                    </div>
-                    <span className={`sold`}>3.2k</span>
-                  </div>
-                </div>
-                <div className={`item col-md-4 col-sm-6 col-6`}>
-                  <img src="images/best-saler-3.jpg"></img>
-                  <div className={`content`}>
-                    <div className={`sale`}>
-                      <i className="bi bi-fire"></i>
-                      <span>25%</span>
-                    </div>
-                    <ul className={`menu`}>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-heart"></i>
-                      </li>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-cart-add"></i>
-                      </li>
-                    </ul>
-                    <span className={`title`}>
-                      Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                    </span>
-                    <div className={`price`}>
-                      <del>300,000</del>
-                      <span>255,000</span>
-                    </div>
-                    <span className={`sold`}>3.2k</span>
-                  </div>
-                </div>
-                <div className={`item col-md-4 col-sm-6 col-6`}>
-                  <img src="images/best-saler-4.jpg"></img>
-                  <div className={`content`}>
-                    <div className={`sale`}>
-                      <i className="bi bi-fire"></i>
-                      <span>25%</span>
-                    </div>
-                    <ul className={`menu`}>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-heart"></i>
-                      </li>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-cart-add"></i>
-                      </li>
-                    </ul>
-                    <span className={`title`}>
-                      Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                    </span>
-                    <div className={`price`}>
-                      <del>300,000</del>
-                      <span>255,000</span>
-                    </div>
-                    <span className={`sold`}>3.2k</span>
-                  </div>
-                </div>
-                <div className={`item col-md-4 col-sm-6 col-6`}>
-                  <img src="images/best-saler-1.jpg"></img>
-                  <div className={`content`}>
-                    <div className={`sale`}>
-                      <i className="bi bi-fire"></i>
-                      <span>25%</span>
-                    </div>
-                    <ul className={`menu`}>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-heart"></i>
-                      </li>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-cart-add"></i>
-                      </li>
-                    </ul>
-                    <span className={`title`}>
-                      Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                    </span>
-                    <div className={`price`}>
-                      <del>300,000</del>
-                      <span>255,000</span>
-                    </div>
-                    <span className={`sold`}>3.2k</span>
-                  </div>
-                </div>
-                <div className={`item col-md-4 col-sm-6 col-6`}>
-                  <img src="images/best-saler-2.jpg"></img>
-                  <div className={`content`}>
-                    <div className={`sale`}>
-                      <i className="bi bi-fire"></i>
-                      <span>25%</span>
-                    </div>
-                    <ul className={`menu`}>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-heart"></i>
-                      </li>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-cart-add"></i>
-                      </li>
-                    </ul>
-                    <span className={`title`}>
-                      Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                    </span>
-                    <div className={`price`}>
-                      <del>300,000</del>
-                      <span>255,000</span>
-                    </div>
-                    <span className={`sold`}>3.2k</span>
-                  </div>
-                </div>
-                <div className={`item col-md-4 col-sm-6 col-6`}>
-                  <img src="images/best-saler-3.jpg"></img>
-                  <div className={`content`}>
-                    <div className={`sale`}>
-                      <i className="bi bi-fire"></i>
-                      <span>25%</span>
-                    </div>
-                    <ul className={`menu`}>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-heart"></i>
-                      </li>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-cart-add"></i>
-                      </li>
-                    </ul>
-                    <span className={`title`}>
-                      Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                    </span>
-                    <div className={`price`}>
-                      <del>300,000</del>
-                      <span>255,000</span>
-                    </div>
-                    <span className={`sold`}>3.2k</span>
-                  </div>
-                </div>
-                <div className={`item col-md-4 col-sm-6 col-6`}>
-                  <img src="images/best-saler-4.jpg"></img>
-                  <div className={`content`}>
-                    <div className={`sale`}>
-                      <i className="bi bi-fire"></i>
-                      <span>25%</span>
-                    </div>
-                    <ul className={`menu`}>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-heart"></i>
-                      </li>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-cart-add"></i>
-                      </li>
-                    </ul>
-                    <span className={`title`}>
-                      Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                    </span>
-                    <div className={`price`}>
-                      <del>300,000</del>
-                      <span>255,000</span>
-                    </div>
-                    <span className={`sold`}>3.2k</span>
-                  </div>
-                </div>
-                <div className={`item col-md-4 col-sm-6 col-6`}>
-                  <img src="images/best-saler-1.jpg"></img>
-                  <div className={`content`}>
-                    <div className={`sale`}>
-                      <i className="bi bi-fire"></i>
-                      <span>25%</span>
-                    </div>
-                    <ul className={`menu`}>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-heart"></i>
-                      </li>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-cart-add"></i>
-                      </li>
-                    </ul>
-                    <span className={`title`}>
-                      Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                    </span>
-                    <div className={`price`}>
-                      <del>300,000</del>
-                      <span>255,000</span>
-                    </div>
-                    <span className={`sold`}>3.2k</span>
-                  </div>
-                </div>
-                <div className={`item col-md-4 col-sm-6 col-6`}>
-                  <img src="images/best-saler-2.jpg"></img>
-                  <div className={`content`}>
-                    <div className={`sale`}>
-                      <i className="bi bi-fire"></i>
-                      <span>25%</span>
-                    </div>
-                    <ul className={`menu`}>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-heart"></i>
-                      </li>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-cart-add"></i>
-                      </li>
-                    </ul>
-                    <span className={`title`}>
-                      Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                    </span>
-                    <div className={`price`}>
-                      <del>300,000</del>
-                      <span>255,000</span>
-                    </div>
-                    <span className={`sold`}>3.2k</span>
-                  </div>
-                </div>
-                <div className={`item col-md-4 col-sm-6 col-6`}>
-                  <img src="images/best-saler-3.jpg"></img>
-                  <div className={`content`}>
-                    <div className={`sale`}>
-                      <i className="bi bi-fire"></i>
-                      <span>25%</span>
-                    </div>
-                    <ul className={`menu`}>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-heart"></i>
-                      </li>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-cart-add"></i>
-                      </li>
-                    </ul>
-                    <span className={`title`}>
-                      Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                    </span>
-                    <div className={`price`}>
-                      <del>300,000</del>
-                      <span>255,000</span>
-                    </div>
-                    <span className={`sold`}>3.2k</span>
-                  </div>
-                </div>
-                <div className={`item col-md-4 col-sm-6 col-6`}>
-                  <img src="images/best-saler-4.jpg"></img>
-                  <div className={`content`}>
-                    <div className={`sale`}>
-                      <i className="bi bi-fire"></i>
-                      <span>25%</span>
-                    </div>
-                    <ul className={`menu`}>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-heart"></i>
-                      </li>
-                      <li className={`menu-item`} onClick={handleTDClick}>
-                        <i className="bx bx-cart-add"></i>
-                      </li>
-                    </ul>
-                    <span className={`title`}>
-                      Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                    </span>
-                    <div className={`price`}>
-                      <del>300,000</del>
-                      <span>255,000</span>
-                    </div>
-                    <span className={`sold`}>3.2k</span>
-                  </div>
-                </div>
-              </div>
-              <div className={`pages`}>
-                <span className={`first`}>
-                  <i className="bx bxs-chevron-left"></i>
-                </span>
-                <span className={`page-number-prev`}>1</span>
-                <span className={`page-number-center`}>2</span>
-                <span className={`page-number-next`}>3</span>
-                <span className={`last`}>
-                  <i className="bx bxs-chevron-right"></i>
-                </span>
               </div>
             </div>
           </div>
-        </div>
+        </section>
+
+        <section className="product spad">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 col-md-5">
+                <div className="sidebar">
+                  <div className="sidebar__item">
+                    <h4>Department</h4>
+                    <ul>
+                      <li><a href="#">Fresh Meat</a></li>
+                      <li><a href="#">Vegetables</a></li>
+                      <li><a href="#">Fruit & Nut Gifts</a></li>
+                      <li><a href="#">Fresh Berries</a></li>
+                      <li><a href="#">Ocean Foods</a></li>
+                      <li><a href="#">Butter & Eggs</a></li>
+                      <li><a href="#">Fastfood</a></li>
+                      <li><a href="#">Fresh Onion</a></li>
+                      <li><a href="#">Papayaya & Crisps</a></li>
+                      <li><a href="#">Oatmeal</a></li>
+                    </ul>
+                  </div>
+                  <div className="sidebar__item">
+                    <h4>Price</h4>
+                    <div className="price-range-wrap">
+                      <div
+                        className="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                        data-min="10"
+                        data-max="540"
+                      >
+                        <div className="ui-slider-range ui-corner-all ui-widget-header"></div>
+                        <span tabIndex="0" className="ui-slider-handle ui-corner-all ui-state-default"></span>
+                        <span tabIndex="0" className="ui-slider-handle ui-corner-all ui-state-default"></span>
+                      </div>
+                      <div className="range-slider">
+                        <div className="price-input">
+                          <input type="text" id="minamount" />
+                          <input type="text" id="maxamount" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="sidebar__item sidebar__item__color--option">
+                      <h4>Colors</h4>
+                      <div className="sidebar__item__color sidebar__item__color--white">
+                        <label htmlFor="white">
+                          White
+                          <input type="radio" id="white" />
+                        </label>
+                      </div>
+                      <div className="sidebar__item__color sidebar__item__color--gray">
+                        <label htmlFor="gray">
+                          Gray
+                          <input type="radio" id="gray" />
+                        </label>
+                      </div>
+                      <div className="sidebar__item__color sidebar__item__color--red">
+                        <label htmlFor="red">
+                          Red
+                          <input type="radio" id="red" />
+                        </label>
+                      </div>
+                      <div className="sidebar__item__color sidebar__item__color--black">
+                        <label htmlFor="black">
+                          Black
+                          <input type="radio" id="black" />
+                        </label>
+                      </div>
+                      <div className="sidebar__item__color sidebar__item__color--blue">
+                        <label htmlFor="blue">
+                          Blue
+                          <input type="radio" id="blue" />
+                        </label>
+                      </div>
+                      <div className="sidebar__item__color sidebar__item__color--green">
+                        <label htmlFor="green">
+                          Green
+                          <input type="radio" id="green" />
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="sidebar__item">
+                      <h4>Popular Size</h4>
+                      <div className="sidebar__item__size">
+                        <label htmlFor="large">
+                          Large
+                          <input type="radio" id="large" />
+                        </label>
+                      </div>
+                      <div className="sidebar__item__size">
+                        <label htmlFor="medium">
+                          Medium
+                          <input type="radio" id="medium" />
+                        </label>
+                      </div>
+                      <div className="sidebar__item__size">
+                        <label htmlFor="small">
+                          Small
+                          <input type="radio" id="small" />
+                        </label>
+                      </div>
+                      <div className="sidebar__item__size">
+                        <label htmlFor="tiny">
+                          Tiny
+                          <input type="radio" id="tiny" />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="sidebar__item">
+                    <div className="latest-product__text">
+                      <h4>Latest Products</h4>
+                      <div className="latest-product__slider owl-carousel">
+                       
+
+                        {/* Slide 2 */}
+                        <div className="latest-prdouct__slider__item">
+                          <a href="#" className="latest-product__item">
+                            <div className="latest-product__item__pic">
+                              <img src="images/best-saler-4.jpg" alt="" style={{ width: '150px' }} />
+                            </div>
+                            <div className="latest-product__item__text">
+                              <h6>Crab Pool Security</h6>
+                              <span>$30.00</span>
+                            </div>
+                          </a>
+                        </div>
+
+                        {/* Slide 3 */}
+                        <div className="latest-prdouct__slider__item">
+                          <a href="#" className="latest-product__item">
+                            <div className="latest-product__item__pic">
+                              <img src="images/best-saler-4.jpg" alt="" style={{ width: '150px' }} />
+                            </div>
+                            <div className="latest-product__item__text">
+                              <h6>Crab Pool Security</h6>
+                              <span>$30.00</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-9 col-md-7">
+                <div className="product__discount">
+                  <div className="section-title product__discount__title">
+                    <h2>Đang giảm giá</h2>
+                  </div>
+
+                  <div>
+                    <div class=" ">
+                    <div className="all-items">
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-4.jpg" alt=""
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-3.jpg" alt=""
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-2.jpg" alt=""
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-1.jpg" alt=""
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+          </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="filter__item">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-5">
+                      <div class="filter__sort">
+                        <span>Sort By</span>
+                        <select>
+                          <option value="0">Default</option>
+                          <option value="0">Default</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                      <div class="filter__found">
+                        <h6><span>16</span> Products found</h6>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-3">
+                      <div class="filter__option">
+                        <span class="icon_grid-2x2"></span>
+                        <span class="icon_ul"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="all-items">
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-4.jpg" alt=""
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-3.jpg" alt=""
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-2.jpg" alt=""
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-1.jpg" alt=""
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="all-items">
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-4.jpg" alt=""
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-3.jpg" alt=""
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-2.jpg" alt=""
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="item">
+              <div className="div-img">
+                <img src="images/best-saler-1.jpg" alt=""
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                ></img>
+              </div>
+
+              <div className="div-text">
+                <h4><a href="#">Áo thun tay ngắn</a></h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+                <div className="stars">
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
+                  <i className="fa-regular fa-star-half-stroke"></i>
+
+                </div>
+                <div className="price">
+                  <span>$120</span>
+                  <del>$140</del>
+                </div>
+              </div>
+            </div>
+          </div>
+                <div class="product__pagination">
+                  <a href="#">1</a>
+                  <a href="#">2</a>
+                  <a href="#">3</a>
+                  <a href="#"><i class="fa fa-long-arrow-right"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div id="footer">
           <Footer />
         </div>

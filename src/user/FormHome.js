@@ -5,52 +5,34 @@ function Introduction() {
   return <React.Fragment>
     <main className="mb-4" style={{ marginTop: "100px" }}>
       <section className="hero">
-        <div className="side-bar">
-          <h4><i className="fa-solid fa-bars"> </i>Danh mục</h4>
-          <ul>
-            <li>
-              <i className="fa-solid fa-house"></i>
-              <a href="#">Đồ gia dụng</a>
-            </li>
-            <li>
-              <i className="fa-solid fa-shop"></i>
-              <a href="#">Quần áo</a>
-            </li>
-
-            <li>
-            <i class="bi bi-laptop"></i>
-              <a href="#">Laptop</a>
-            </li>
-
-            <li>
-              <i className="fa-solid fa-clock"></i>
-              <a href="#">Đồng hồ</a>
-            </li>
-
-            <li>
-              <i className="fa-solid fa-shoe-prints"></i>
-              <a href="#">Giày</a>
-            </li>
-
-            <li>
-              <i className="fa-solid fa-blog"></i>
-              <a href="#">Điện thoại</a>
-            </li>
-
-            <li>
-              <i className="fa-solid fa-envelope"></i>
-              <a href="#">Mắt kính</a>
-            </li>
-
-          </ul>
-        </div>
+      <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>All departments</span>
+                        </div>
+                        <ul>
+                            <li><a href="#">Fresh Meat</a></li>
+                            <li><a href="#">Vegetables</a></li>
+                            <li><a href="#">Fruit & Nut Gifts</a></li>
+                            <li><a href="#">Fresh Berries</a></li>
+                            <li><a href="#">Ocean Foods</a></li>
+                            <li><a href="#">Butter & Eggs</a></li>
+                            <li><a href="#">Fastfood</a></li>
+                            <li><a href="#">Fresh Onion</a></li>
+                            <li><a href="#">Papayaya & Crisps</a></li>
+                            <li><a href="#">Oatmeal</a></li>
+                            <li><a href="#">Fresh Bananas</a></li>
+                        </ul>
+                    </div>
+                </div>
 
         <div className="content">
           <div className="div-text">
-            <span>Những sản phẩm chất lượng</span>
-            <h1>Chào mừng đến với Diamond Fashion</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-            <a href="#" className="btn btn-warning ">shop now</a>
+            <span>Khám phá những xu hướng mới nhất về thời trang, điện tử và hơn thế nữa!</span>
+            <h1>Chào mừng đến với Diamond</h1>
+            <p>Chào mừng bạn đến với cửa hàng trực tuyến tổng hợp của chúng tôi, nơi bạn có thể tìm thấy bộ sưu tập phong phú các mặt hàng thời trang, đồ điện tử tiên tiến và đồ gia dụng hàng đầu. Chúng tôi phục vụ mọi sở thích và sở thích của người dùng, cung cấp những sản phẩm tốt nhất với mức giá cạnh tranh nhất.</p>
+            <button type="button" className="btn btn-warning">Mua sắm ngay</button>
           </div>
         </div>
       </section>
@@ -60,151 +42,186 @@ function Introduction() {
         <div className="side-bar">
 
           <div className="titile">
-            <h4>hot deals</h4>
+            <h4>ƯU ĐÃI LỚN</h4>
             <a href="#">Xem nhiều hơn</a>
           </div>
 
-          <div className="item">
-            <div className="div-img">
-              <img src="images/best-saler-1.jpg" alt=""
-              
-              ></img>
-            </div>
+          <div class="card mb-4" style={{ width: '320px', marginTop: '20px' }}>
+                  <div class="d-flex justify-content-between p-3">
+                    <p class="lead mb-0">Today's Combo Offer</p>
+                    <div
+                      class="bg-info rounded-circle d-flex align-items-center justify-content-center shadow-1-strong"
+                      style={{ width: '35px', height: '35px' }}>
+                      <p class="text-white mb-0 small">x4</p>
+                    </div>
+                  </div>
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/4.webp"
+                    class="card-img-top" alt="Laptop" />
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
+                      <p class="small text-danger"><s>$1099</s></p>
+                    </div>
 
-            <div className="div-text">
-              <h4><a href="#">Áo thun tay ngắn</a></h4>
+                    <div class="d-flex justify-content-between mb-3">
+                      <h5 class="mb-0">HP Notebook</h5>
+                      <h5 class="text-dark mb-0">$999</h5>
+                    </div>
 
-              <div className="stars">
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-solid fa-star"></i>
-                <i className="fa-regular fa-star-half-stroke"></i>
-
-              </div>
-              <div className="price">
-                <span>$115</span>
-                <del>$160</del>
-              </div>
-            </div>
-          </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                      <div class="ms-auto text-warning">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
         </div>
 
         <div className="content">
           <div className="titile">
-            <h4>new products deals</h4>
+            <h4>SẢN PHẨM MỚI</h4>
             <a href="#">Xem nhiều hơn</a>
           </div>
 
-          <div className="all-items d-flex ">
+          <div className="all-items">
             <div className="item">
-              <div className="div-img">
-                <img src="images/best-saler-2.jpg" alt=""
-                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
-                ></img>
-              </div>
+            <div className="div-img">
+  <div class="image-container">
+    <img src="images/best-saler-4.jpg" alt=""
+      style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+    ></img>
+    <p class="mb-0 small bg-danger text-white">-50%</p>
+  </div>
+</div>
 
-              <div className="div-text">
-                <h4><a href="#">Áo thun tay ngắn</a></h4>
 
-                <p>Lorem ipsum dolor sit amet consectetur.</p>
-                <div className="stars">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-regular fa-star-half-stroke"></i>
+              <div class="card-body">
+              
+                    <div class="d-flex justify-content-between">
+                      <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
+                      <p class="small text-danger"><s>$1099</s></p>
+                    </div>
 
-                </div>
-                <div className="price">
-                  <span>$120</span>
-                  <del>$140</del>
-                </div>
-              </div>
+                    <div class="d-flex justify-content-between mb-3">
+                      <h5 class="mb-0">HP Notebook</h5>
+                      <h5 class="text-dark mb-0">$999</h5>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-2">
+                      <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                      <div class="ms-auto text-warning">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
             </div>
 
             <div className="item">
               <div className="div-img">
                 <img src="images/best-saler-3.jpg" alt=""
-                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                 ></img>
               </div>
 
-              <div className="div-text">
-                <h4><a href="#">Áo thun tay ngắn</a></h4>
+              <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
+                      <p class="small text-danger"><s>$1099</s></p>
+                    </div>
 
-                <p>Lorem ipsum dolor sit amet consectetur.</p>
-                <div className="stars">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-regular fa-star-half-stroke"></i>
+                    <div class="d-flex justify-content-between mb-3">
+                      <h5 class="mb-0">HP Notebook</h5>
+                      <h5 class="text-dark mb-0">$999</h5>
+                    </div>
 
-                </div>
-                <div className="price">
-                  <span>$120</span>
-                  <del>$140</del>
-                </div>
-              </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                      <div class="ms-auto text-warning">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
             </div>
 
 
             <div className="item">
               <div className="div-img">
-                <img src="images/best-saler-4.jpg" alt=""
-                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                <img src="images/best-saler-2.jpg" alt=""
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                 ></img>
               </div>
 
-              <div className="div-text">
-                <h4><a href="#">Áo thun tay ngắn</a></h4>
+              <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
+                      <p class="small text-danger"><s>$1099</s></p>
+                    </div>
 
-                <p>Lorem ipsum dolor sit amet consectetur.</p>
-                <div className="stars">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-regular fa-star-half-stroke"></i>
+                    <div class="d-flex justify-content-between mb-3">
+                      <h5 class="mb-0">HP Notebook</h5>
+                      <h5 class="text-dark mb-0">$999</h5>
+                    </div>
 
-                </div>
-                <div className="price">
-                  <span>$120</span>
-                  <del>$140</del>
-                </div>
-              </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                      <div class="ms-auto text-warning">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
             </div>
 
 
             <div className="item">
               <div className="div-img">
                 <img src="images/best-saler-1.jpg" alt=""
-                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                 ></img>
               </div>
 
-              <div className="div-text">
-                <h4><a href="#">Áo thun tay ngắn</a></h4>
+              <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
+                      <p class="small text-danger"><s>$1099</s></p>
+                    </div>
 
-                <p>Lorem ipsum dolor sit amet consectetur.</p>
-                <div className="stars">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-regular fa-star-half-stroke"></i>
+                    <div class="d-flex justify-content-between mb-3">
+                      <h5 class="mb-0">HP Notebook</h5>
+                      <h5 class="text-dark mb-0">$999</h5>
+                    </div>
 
-                </div>
-                <div className="price">
-                  <span>$120</span>
-                  <del>$140</del>
-                </div>
-              </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                      <div class="ms-auto text-warning">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
             </div>
           </div>
-          
+
         </div>
       </section>
 
@@ -219,72 +236,110 @@ function Introduction() {
           <div className="boxs">
             <div className="box pb-2">
               <img src="images/best-saler-2.jpg" alt=""></img>
-              <div className="div-text">
-                <h4>Áo thun tay ngắn</h4>
-                <div className="stars">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-regular fa-star-half-stroke"></i>
+              <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
+                      <p class="small text-danger"><s>$1099</s></p>
+                    </div>
 
-                </div>
-                <span>$139</span>
-              </div>
+                    <div class="d-flex justify-content-between mb-3">
+                      <h5 class="mb-0">HP Notebook</h5>
+                      <h5 class="text-dark mb-0">$999</h5>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-2">
+                      <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                      <div class="ms-auto text-warning">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
             </div>
 
             <div className="box mt-2 pb-2">
-              <img src="images/best-saler-3.jpg" alt=""
-              
-              ></img>
-              <div className="div-text">
-                <h4>Áo thun tay ngắn</h4>
-                <div className="stars">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-regular fa-star-half-stroke"></i>
+              <img src="images/best-saler-3.jpg" alt="" ></img>
+              <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
+                      <p class="small text-danger"><s>$1099</s></p>
+                    </div>
 
-                </div>
-                <span>$139</span>
-              </div>
+                    <div class="d-flex justify-content-between mb-3">
+                      <h5 class="mb-0">HP Notebook</h5>
+                      <h5 class="text-dark mb-0">$999</h5>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-2">
+                      <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                      <div class="ms-auto text-warning">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
             </div>
 
             <div className="box mt-2 pb-2">
               <img src="images/best-saler-4.jpg" alt=""
-            
-              ></img>
-              <div className="div-text">
-                <h4>Áo thun tay ngắn</h4>
-                <div className="stars">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-regular fa-star-half-stroke"></i>
 
-                </div>
-                <span>$139</span>
-              </div>
+              ></img>
+              <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
+                      <p class="small text-danger"><s>$1099</s></p>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                      <h5 class="mb-0">HP Notebook</h5>
+                      <h5 class="text-dark mb-0">$999</h5>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-2">
+                      <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                      <div class="ms-auto text-warning">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
             </div>
 
             <div className="box mt-2 pb-2">
               <img src="images/best-saler-1.jpg" alt=""
-             
-              ></img>
-              <div className="div-text">
-                <h4>Áo thun tay ngắn</h4>
-                <div className="stars">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-regular fa-star-half-stroke"></i>
 
-                </div>
-                <span>$139</span>
-              </div>
+              ></img>
+               <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
+                      <p class="small text-danger"><s>$1099</s></p>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                      <h5 class="mb-0">HP Notebook</h5>
+                      <h5 class="text-dark mb-0">$999</h5>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-2">
+                      <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                      <div class="ms-auto text-warning">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
             </div>
 
           </div>
@@ -294,119 +349,145 @@ function Introduction() {
           <div className="bg-sec">
             <div className="div-text">
               <h1>Sản phẩm đa dạng</h1>
-              <p>Tha hồ lựa chọn</p>
-              <a href="#" className="btn  btn-warning "> <strong>Shop now</strong> </a>
+              <p>Khám phá một thế giới biến đổi với các sản phẩm của chúng tôi. Cho dù bạn đang tìm cách nâng cấp phong cách của mình, duy trì kết nối hay làm cho ngôi nhà của bạn thông minh hơn, chúng tôi có mọi thứ bạn cần để thay đổi cuộc sống của bạn.</p>
+              <a href="#" className="btn  btn-warning "> <strong>Mua sắm ngay</strong> </a>
             </div>
           </div>
 
+
+          <div className="titile">
+            <h4>SẢN PHẨM ĐANG KHUYẾN MÃI</h4>
+            <a href="#">Xem nhiều hơn</a>
+          </div>
           <div className="all-items">
             <div className="item">
               <div className="div-img">
                 <img src="images/best-saler-4.jpg" alt=""
-                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                 ></img>
               </div>
 
-              <div className="div-text">
-                <h4><a href="#">Áo thun tay ngắn</a></h4>
+              <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
+                      <p class="small text-danger"><s>$1099</s></p>
+                    </div>
 
-                <p>Lorem ipsum dolor sit amet consectetur.</p>
-                <div className="stars">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-regular fa-star-half-stroke"></i>
+                    <div class="d-flex justify-content-between mb-3">
+                      <h5 class="mb-0">HP Notebook</h5>
+                      <h5 class="text-dark mb-0">$999</h5>
+                    </div>
 
-                </div>
-                <div className="price">
-                  <span>$120</span>
-                  <del>$140</del>
-                </div>
-              </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                      <div class="ms-auto text-warning">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
             </div>
 
             <div className="item">
               <div className="div-img">
                 <img src="images/best-saler-3.jpg" alt=""
-                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                 ></img>
               </div>
 
-              <div className="div-text">
-                <h4><a href="#">Áo thun tay ngắn</a></h4>
+              <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
+                      <p class="small text-danger"><s>$1099</s></p>
+                    </div>
 
-                <p>Lorem ipsum dolor sit amet consectetur.</p>
-                <div className="stars">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-regular fa-star-half-stroke"></i>
+                    <div class="d-flex justify-content-between mb-3">
+                      <h5 class="mb-0">HP Notebook</h5>
+                      <h5 class="text-dark mb-0">$999</h5>
+                    </div>
 
-                </div>
-                <div className="price">
-                  <span>$120</span>
-                  <del>$140</del>
-                </div>
-              </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                      <div class="ms-auto text-warning">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
             </div>
 
 
             <div className="item">
               <div className="div-img">
                 <img src="images/best-saler-2.jpg" alt=""
-                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                 ></img>
               </div>
 
-              <div className="div-text">
-                <h4><a href="#">Áo thun tay ngắn</a></h4>
+              <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
+                      <p class="small text-danger"><s>$1099</s></p>
+                    </div>
 
-                <p>Lorem ipsum dolor sit amet consectetur.</p>
-                <div className="stars">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-regular fa-star-half-stroke"></i>
+                    <div class="d-flex justify-content-between mb-3">
+                      <h5 class="mb-0">HP Notebook</h5>
+                      <h5 class="text-dark mb-0">$999</h5>
+                    </div>
 
-                </div>
-                <div className="price">
-                  <span>$120</span>
-                  <del>$140</del>
-                </div>
-              </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                      <div class="ms-auto text-warning">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
             </div>
 
 
             <div className="item">
               <div className="div-img">
                 <img src="images/best-saler-1.jpg" alt=""
-                style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                 ></img>
               </div>
 
-              <div className="div-text">
-                <h4><a href="#">Áo thun tay ngắn</a></h4>
+              <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <p class="small"><a href="#!" class="text-muted">Laptops</a></p>
+                      <p class="small text-danger"><s>$1099</s></p>
+                    </div>
 
-                <p>Lorem ipsum dolor sit amet consectetur.</p>
-                <div className="stars">
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-solid fa-star"></i>
-                  <i className="fa-regular fa-star-half-stroke"></i>
+                    <div class="d-flex justify-content-between mb-3">
+                      <h5 class="mb-0">HP Notebook</h5>
+                      <h5 class="text-dark mb-0">$999</h5>
+                    </div>
 
-                </div>
-                <div className="price">
-                  <span>$120</span>
-                  <del>$140</del>
-                </div>
-              </div>
+                    <div class="d-flex justify-content-between mb-2">
+                      <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p>
+                      <div class="ms-auto text-warning">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                  </div>
             </div>
           </div>
         </div>
+
       </section>
     </main>
   </React.Fragment>
@@ -482,34 +563,34 @@ function Banner() {
             </button>
           </div>
         </div>
-  
+
         <div className="items">
           <img src="../images/banner-left.jpg" alt="Diamond_Fashion"></img>
         </div>
-  
+
         <div className="items">
           <img src="../images/banner5.jpg" alt="Diamond_Fashion"></img>
         </div>
-  
+
         <div className="items">
           <img src="../images/banner_woman1.jpg" alt="Diamond_Fashion"></img>
         </div>
-  
+
         <div className="items">
           <img src="../images/banner_style3.jpg" alt="Diamond_Fashion"></img>
         </div>
-  
+
         <div className="items">
           <img src="../images/banner_mc2.jpg" alt="Diamond_Fashion"></img>
         </div>
       </div>
     </div>
   </React.Fragment>
-  }
+}
 
 function Sale() {
   return <React.Fragment>
-
+    
   </React.Fragment>;
 }
 

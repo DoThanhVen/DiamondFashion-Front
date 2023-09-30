@@ -548,6 +548,11 @@ class ProductPage extends React.Component {
           </div>
         </section>
 
+
+
+        
+
+
         <div id="footer">
           <Footer />
         </div>
