@@ -212,12 +212,12 @@ class ProductPage extends React.Component {
 
                    
                   </div>
-                  <a href="#" className="btn btn-warning shadow-0 p-2" >
+                  <a href="#" className="btn  shadow-0 " style={{backgroundColor: ' rgb(252,162,53)', padding: '10px 50px'}} >
                     <i className="bi bi-bag-plus mx-2"></i>
-                    <strong>Mua ngay</strong>
+                    Mua ngay
                   </a>
-                  <a href="#" className="btn btn-primary shadow-0 mx-4 text-white
-                  p-2">
+                  <a href="#" className="btn  shadow-0 mx-4 text-white
+                  " style={{backgroundColor: ' rgb(48,83,73)', padding: '10px 50px'}} >
                     <i className="bi bi-basket3-fill"></i>
                     <strong> Thêm vào giỏ hàng</strong>
                   </a>

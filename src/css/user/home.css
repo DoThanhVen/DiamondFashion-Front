@@ -398,7 +398,7 @@ border-radius: 10px;
 }
 
 .hero__categories__all {
-	background: #7fad39;
+	background: rgb(48,83,73);
 	position: relative;
 	padding: 10px 25px 10px 40px;
 	cursor: pointer;
@@ -416,7 +416,7 @@ border-radius: 10px;
 	color: #ffffff;
 }
 
-.hero__categories__all:after {
+/* .hero__categories__all:after {
 	position: absolute;
 	right: 18px;
 	top: 9px;
@@ -424,7 +424,7 @@ border-radius: 10px;
 	font-family: "ElegantIcons";
 	font-size: 18px;
 	color: #ffffff;
-}
+} */
 
 .hero__categories ul {
 	border: 1px solid #ebebeb;
@@ -463,6 +463,38 @@ border-radius: 10px;
   padding: 5px;
   background-color: rgba(255, 255, 255, 0.7);
   font-size: 12px;
+}
+
+/* Khuyến mãi */
+
+.countdown-desc {
+  color: hsl(0, 0%, 13%);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.countdown {
+  display: flex;
+  gap: 5px;
+}
+.countdown-content {
+
+  background: hsl(0, 0%, 93%);
+  border-radius: 10px;
+  text-align: center;
+}
+.countdown { gap: 10px; }
+
+
+.display-number {
+  color: hsl(0, 0%, 13%);
+  padding: 0 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  min-width: 40px;
+  margin-top: 10px;
 }
 
 
