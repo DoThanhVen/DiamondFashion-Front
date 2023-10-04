@@ -1,0 +1,5 @@
+/* CSS */
+.selected {
+  background-color: green; /* Hoặc màu bạn muốn */
+  color: white; /* Màu chữ khi được chọn */
+}

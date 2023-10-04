@@ -1,0 +1,65 @@
+[33mcommit 41c1b1f398e54b7a94964779824d2cd8ee0f8c3a[m[33m ([m[1;36mHEAD -> [m[1;32mFE_Home[m[33m, [m[1;31morigin/FE_Home[m[33m)[m
+Author: hoangphucdhp <hoangphuc01655@gmail.com>
+Date:   Wed Oct 4 14:42:37 2023 +0700
+
+    Update New
+
+[33mcommit 721b7c73dffc13dee444dd1cf51711b9698bb616[m
+Author: hoangphucdhp <hoangphuc01655@gmail.com>
+Date:   Sun Oct 1 13:52:28 2023 +0700
+
+    Home 90%, Products 80%, Detail 70%
+
+[33mcommit 0b73cdb1857adff48c9edf97e106bea854bfd3eb[m
+Author: hoangphucdhp <hoangphuc01655@gmail.com>
+Date:   Sun Oct 1 02:42:49 2023 +0700
+
+    Home 80%, Product 80%, Detail 70%
+
+[33mcommit 3d4cbb6bdaa2ce45eb7f5c97920b7aead1a46d42[m
+Author: hoangphucdhp <hoangphuc01655@gmail.com>
+Date:   Wed Sep 27 18:59:39 2023 +0700
+
+    80% Home, 90% Detail
+
+[33mcommit e7417e19ace3aa26fb5efcb931851ae8619a34b8[m
+Author: hoangphucdhp <hoangphuc01655@gmail.com>
+Date:   Tue Sep 26 23:36:43 2023 +0700
+
+    update 80% Home, 50% detail
+
+[33mcommit bec10ff2caedcc99029e20903a8499fd2678fa52[m
+Author: hoangphucdhp <hoangphuc01655@gmail.com>
+Date:   Tue Sep 19 13:12:08 2023 +0700
+
+    demo_home
+
+[33mcommit caf8efd6a0bbf31d49a66333742f74ad1f879b58[m
+Author: Team6 <dothanhven0303@gmail.com>
+Date:   Sun Sep 17 10:02:51 2023 +0700
+
+    Update Logo + Add Form Admin
+
+[33mcommit 6748f32e53d3c9567c588c2f1d85c58a32d59ecc[m
+Author: Team6 <dothanhven0303@gmail.com>
+Date:   Sun Sep 17 03:59:39 2023 +0700
+
+    Update LoginForm + Change Folder src
+
+[33mcommit 61de10350072c7ef032e4bf30d019883964357d2[m
+Author: Team6 <dothanhven0303@gmail.com>
+Date:   Sat Sep 16 22:52:22 2023 +0700
+
+    Add Project Diamond Fashion FrontEnd
+
+[33mcommit ca8dcee28e59e735743b6575e6226b672e7658c4[m
+Author: Team6 <dothanhven0303@gmail.com>
+Date:   Sat Sep 16 22:45:43 2023 +0700
+
+    Add Project Diamond Fashion FrontEnd
+
+[33mcommit 741d7d69f6efe3d8185ea4babe9b9ee540a3576a[m
+Author: Team6 <dothanhven0303@gmail.com>
+Date:   Fri Sep 15 00:04:38 2023 +0700
+
+    Initialize project using Create React App

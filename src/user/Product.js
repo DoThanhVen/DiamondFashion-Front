@@ -3,6 +3,7 @@ import { Navbar, Slogan } from "./Navbar";
 import Footer from "./Footer";
 import "../css/user/product.css";
 import "../css/user/home.css"
+import { Container, Row, Col, Form, InputGroup, Button, Card  } from 'react-bootstrap';
 
 function Product() {
   const handleTDClick = (event) => {
@@ -22,16 +23,16 @@ function Product() {
         </nav>
 
         <section className="breadcrumb-section" style={{ backgroundImage: "url('images/best-saler-1.jpg')" }}>
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12 text-center">
+          <Container>
+            <Row>
+              <Col lg={12} className="text-center">
                 <div className="breadcrumb__text">
                   <h2>Diamond Shop</h2>
                   <p>Khám phá một thế giới biến đổi với các sản phẩm của chúng tôi. Cho dù bạn đang tìm cách nâng cấp phong cách của mình, duy trì kết nối hay làm cho ngôi nhà của bạn thông minh hơn, chúng tôi có mọi thứ bạn cần để thay đổi cuộc sống của bạn</p>
                 </div>
-              </div>
-            </div>
-          </div>
+              </Col>
+            </Row>
+          </Container>
         </section>
 
         <section className="product spad">
@@ -297,10 +298,10 @@ function Product() {
                   </div>
 
                 </div>
-                <div class="filter__item">
-                  <div class="row">
-                    <div class="col-lg-4 col-md-5">
-                      <div class="filter__sort">
+                <div className="filter__item">
+                  <div className="row">
+                    <div className="col-lg-4 col-md-5">
+                      <div className="filter__sort">
                         <span>Sắp xếp: </span>
                         <select style={{ marginLeft: '20px' }}>
                           <option value="0">Tăng Theo Giá Sản Phẩm</option>
