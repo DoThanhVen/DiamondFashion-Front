@@ -34,11 +34,11 @@ function Introduction() {
         <div className="newsletter">
               <form action="#">
                 <div className="newsletter-header">
-                  <h3 className="newsletter-title">Subscribe Newsletter.</h3>
+                  {/* <h3 className="newsletter-title">Subscribe Newsletter.</h3>
 
                   <p className="newsletter-desc">
                     Subscribe the <b>Anon</b> to get latest products and discount update.
-                  </p>
+                  </p> */}
                 </div>
 
                 <input
@@ -139,13 +139,13 @@ function CategoriesProduct() {
             </div>
 
             <div className="boxs">
-              <div className="box pb-2">
+              <div className="box mt-4 pb-2">
                 <img
-                  src="images/best-saler-2.jpg"
+                  src="images/banner6.jpg"
                   alt=""
                   style={{ width: "100%" }}
                 ></img>
-                <div class="card-body" style={{ marginLeft: "10px" }}>
+                {/* <div class="card-body" style={{ marginLeft: "10px" }}>
                   <div class="d-flex justify-content-between">
                     <p class="small">
                       <a href="#!" class="text-muted">
@@ -174,7 +174,7 @@ function CategoriesProduct() {
                       <i class="fa fa-star"></i>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -235,17 +235,20 @@ function CategoriesProduct() {
               </div>
 
               <div className="item">
-                <div className="div-img">
-                  <img
-                    src="images/best-saler-3.jpg"
-                    alt=""
-                    style={{
-                      width: "200px",
-                      height: "200px",
-                      objectFit: "cover",
-                    }}
-                  ></img>
-                </div>
+                 <div class="image-container">
+                    <div class="image-container">
+                    <img
+                      src="images/best-saler-3.jpg"
+                      alt=""
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        objectFit: "cover",
+                      }}
+                    ></img>
+                    <p class="mb-0 small text-white" style={{backgroundColor: '#00CED1'}}>Mới</p>
+                  </div>
+                  </div>
 
                 <div class="card-body">
                   <div class="d-flex justify-content-between">
@@ -548,8 +551,8 @@ function CategoriesProduct() {
               <a href="#">Xem nhiều hơn</a>
             </div>
 
-            <div className="container">
-              <div className="countdown-box">
+            <div className="container ">
+              <div className="countdown-box mt-2">
                 <p className="countdown-desc">Nhanh lên! Ưu đãi kết thúc sau:</p>
 
                 <div className="countdown">
@@ -858,15 +861,15 @@ function Sale() {
   return (
     <div>
       <div className="notification-toast" data-toast>
-      <button className="toast-close-btn" data-toast-close>
+      {/* <button className="toast-close-btn" data-toast-close>
       <i class="fa-solid fa-xmark"></i>
-      </button>
+      </button> */}
 
       <div className="toast-banner">
         <img
           src="images/best-saler-4.jpg"
           alt="Diamond"
-          style={{width: '80px', height: '70px'}}
+          style={{width: '100%'}}
        
         />
       </div>
