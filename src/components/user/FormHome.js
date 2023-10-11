@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-
+import axios from 'axios';
 import "../css/user/home.css";
 import "../css/user/modal.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal, Button } from "react-bootstrap";
+import Table from 'react-bootstrap/Table';
+import { fetchAllUser } from "../../service/UserService";
+import ReactPaginate from 'react-paginate';
+
 
 function Introduction() {
   const [showModal, setShowModal] = useState(false);
@@ -66,9 +70,25 @@ function Introduction() {
 
 
 function CategoriesProduct() {
+
+  const [categories, setCategories] = useState([]);
+  const [showMore, setShowMore] = useState(false);
+
+  useEffect(() => {
+    // Gọi API để lấy danh sách 
+    fetch('http://localhost:8080/api/category')
+      .then((response) => response.json())
+      .then((data) => setCategories(data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+
+  const handleShowMore = () => {
+    setShowMore(true);
+  };
+
   return <React.Fragment>
-    <main className="mb-4" style={{ marginTop: "100px" }}>
-      <section className="hero">
+    <main style={{ marginTop: "20px" }}>
+      <section className="hero container">
         <div class="col-lg-3">
           <div class="hero__categories">
             <div class="hero__categories__all">
@@ -76,36 +96,11 @@ function CategoriesProduct() {
               <span>Danh mục</span>
             </div>
             <ul>
-              <li>
-                <a href="#">Điện Thoại - Máy Tính Bảng</a>
-              </li>
-              <li>
-                <a href="#">Điện gia dụng</a>
-              </li>
-              <li>
-                <a href="#">Thời trang nam</a>
-              </li>
-              <li>
-                <a href="#">Thời trang nữ</a>
-              </li>
-              <li>
-                <a href="#">Balo - Vali</a>
-              </li>
-              <li>
-                <a href="#">Phụ Kiện Thời Trang</a>
-              </li>
-              <li>
-                <a href="#">Điện Tử - Điện Lạnh</a>
-              </li>
-              <li>
-                <a href="#">Dụng Cụ Làm Bếp</a>
-              </li>
-              <li>
-                <a href="#">Thiết Bị Số</a>
-              </li>
-              <li>
-                <a href="#">Máy Ảnh - Máy Quay Phim</a>
-              </li>
+              {categories.map((category) => (
+                <li key={category.id}>
+                  <a href="#">{category.type_category}</a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -113,8 +108,7 @@ function CategoriesProduct() {
         <div className="content">
           <div className="div-text">
             <span>
-              Khám phá những xu hướng mới nhất về thời trang, điện tử và hơn
-              thế nữa!
+              Hãy cùng nhau khám phá các xu hướng mới nhất !!!
             </span>
             <h1>Chào mừng đến với Diamond</h1>
             <p>
@@ -131,10 +125,19 @@ function CategoriesProduct() {
         </div>
       </section>
 
-      <section className="sec-2">
+
+    </main>
+  </React.Fragment>;
+}
+
+function Products_home() {
+
+  return (
+    <>
+      <section className="sec-2 container">
         <div className="side-bar">
           <div className="titile">
-            <h4>ƯU ĐÃI LỚN</h4>
+            <h5>ƯU ĐÃI LỚN</h5>
             <a href="#">Xem nhiều hơn</a>
           </div>
 
@@ -181,7 +184,7 @@ function CategoriesProduct() {
 
         <div className="content">
           <div className="titile">
-            <h4>SẢN PHẨM MỚI</h4>
+            <h5>SẢN PHẨM MỚI</h5>
             <a href="#">Xem nhiều hơn</a>
           </div>
 
@@ -235,8 +238,8 @@ function CategoriesProduct() {
             </div>
 
             <div className="item">
-              <div class="image-container">
-                <div class="image-container">
+              <div className="image-container">
+                <div className="image-container">
                   <img
                     src="images/best-saler-3.jpg"
                     alt=""
@@ -246,37 +249,37 @@ function CategoriesProduct() {
                       objectFit: "cover",
                     }}
                   ></img>
-                  <p class="mb-0 small text-white" style={{ backgroundColor: '#00CED1' }}>Mới</p>
+                  <p className="mb-0 small text-white" style={{ backgroundColor: '#7fad39' }}>Mới</p>
                 </div>
               </div>
 
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <p class="small">
+              <div className="card-body">
+                <div className="d-flex justify-content-between">
+                  <p className="small">
                     <a href="#!" class="text-muted">
                       Laptops
                     </a>
                   </p>
-                  <p class="small text-danger">
+                  <p className="small text-danger">
                     <s>$1099</s>
                   </p>
                 </div>
 
-                <div class="d-flex justify-content-between mb-3">
-                  <h5 class="mb-0">HP Notebook</h5>
-                  <h5 class="text-dark mb-0">$999</h5>
+                <div className="d-flex justify-content-between mb-3">
+                  <h5 className="mb-0">HP Notebook</h5>
+                  <h5 className="text-dark mb-0">$999</h5>
                 </div>
 
-                <div class="d-flex justify-content-between mb-2">
-                  <p class="text-muted mb-0">
+                <div className="d-flex justify-content-between mb-2">
+                  <p className="text-muted mb-0">
                     Available: <span class="fw-bold">6</span>
                   </p>
-                  <div class="ms-auto text-warning">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                  <div className="ms-auto text-warning">
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
                   </div>
                 </div>
               </div>
@@ -295,33 +298,33 @@ function CategoriesProduct() {
                 ></img>
               </div>
 
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <p class="small">
-                    <a href="#!" class="text-muted">
+              <div className="card-body">
+                <div className="d-flex justify-content-between">
+                  <p className="small">
+                    <a href="#!" className="text-muted">
                       Laptops
                     </a>
                   </p>
-                  <p class="small text-danger">
+                  <p className="small text-danger">
                     <s>$1099</s>
                   </p>
                 </div>
 
-                <div class="d-flex justify-content-between mb-3">
-                  <h5 class="mb-0">HP Notebook</h5>
-                  <h5 class="text-dark mb-0">$999</h5>
+                <div className="d-flex justify-content-between mb-3">
+                  <h5 className="mb-0">HP Notebook</h5>
+                  <h5 className="text-dark mb-0">$999</h5>
                 </div>
 
-                <div class="d-flex justify-content-between mb-2">
-                  <p class="text-muted mb-0">
-                    Available: <span class="fw-bold">6</span>
+                <div className="d-flex justify-content-between mb-2">
+                  <p className="text-muted mb-0">
+                    Available: <span className="fw-bold">6</span>
                   </p>
-                  <div class="ms-auto text-warning">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                  <div className="ms-auto text-warning">
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
                   </div>
                 </div>
               </div>
@@ -337,36 +340,36 @@ function CategoriesProduct() {
                     height: "200px",
                     objectFit: "cover",
                   }}
-                ></img>
+                />
               </div>
 
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <p class="small">
-                    <a href="#!" class="text-muted">
+              <div className="card-body">
+                <div className="d-flex justify-content-between">
+                  <p className="small">
+                    <a href="#!" className="text-muted">
                       Laptops
                     </a>
                   </p>
-                  <p class="small text-danger">
+                  <p className="small text-danger">
                     <s>$1099</s>
                   </p>
                 </div>
 
-                <div class="d-flex justify-content-between mb-3">
-                  <h5 class="mb-0">HP Notebook</h5>
-                  <h5 class="text-dark mb-0">$999</h5>
+                <div className="d-flex justify-content-between mb-3">
+                  <h5 className="mb-0">HP Notebook</h5>
+                  <h5 className="text-dark mb-0">$999</h5>
                 </div>
 
-                <div class="d-flex justify-content-between mb-2">
-                  <p class="text-muted mb-0">
-                    Available: <span class="fw-bold">6</span>
+                <div className="d-flex justify-content-between mb-2">
+                  <p className="text-muted mb-0">
+                    Available: <span className="fw-bold">6</span>
                   </p>
-                  <div class="ms-auto text-warning">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                  <div className="ms-auto text-warning">
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
                   </div>
                 </div>
               </div>
@@ -383,149 +386,49 @@ function CategoriesProduct() {
         </div>
       </section>
 
-      <section className="sec-3">
+      <section className="sec-3 container">
         <div className="side-bar">
           <div className="titile">
-            <h4>new offer</h4>
+            <h5>NEW OFFER</h5>
             <a href="#">Xem nhiều hơn</a>
           </div>
 
           <div className="boxs">
             <div className="box pb-2">
               <img src="images/best-saler-2.jpg" alt=""></img>
-              <div class="card-body" style={{ marginLeft: "10px" }}>
-                <div class="d-flex justify-content-between">
-                  <p class="small">
+              <div className="card-body" style={{ marginLeft: "10px" }}>
+                <div className="d-flex justify-content-between">
+                  <p className="small">
                     <a href="#!" class="text-muted">
                       Laptops
                     </a>
                   </p>
-                  <p class="small text-danger">
+                  <p className="small text-danger">
                     <s>$1099</s>
                   </p>
                 </div>
 
-                <div class="d-flex justify-content-between mb-3">
-                  <h5 class="mb-0">HP Notebook</h5>
-                  <h5 class="text-dark mb-0">$999</h5>
+                <div className="d-flex justify-content-between mb-3">
+                  <h6 className="mb-0">HP Notebook</h6>
+                  <h6 className="text-dark mb-0">$999</h6>
                 </div>
 
-                <div class="d-flex justify-content-between mb-2">
-                  <p class="text-muted mb-0">
-                    Available: <span class="fw-bold">6</span>
+                <div className="d-flex justify-content-between mb-2">
+                  <p className="text-muted mb-0 smaller-text">
+                    Available: <span class="fw-bold ">6</span>
                   </p>
-                  <div class="ms-auto text-warning">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
+
+                </div>
+                <div className="ms-auto text-warning">
+                  <i className="fa fa-star smaller-text"></i>
+                  <i className="fa fa-star smaller-text"></i>
+                  <i className="fa fa-star smaller-text"></i>
+                  <i className="fa fa-star smaller-text"></i>
+                  <i className="fa fa-star smaller-text"></i>
                 </div>
               </div>
             </div>
 
-            <div className="box mt-2 pb-2">
-              <img src="images/best-saler-3.jpg" alt=""></img>
-              <div class="card-body" style={{ marginLeft: "10px" }}>
-                <div class="d-flex justify-content-between">
-                  <p class="small">
-                    <a href="#!" class="text-muted">
-                      Laptops
-                    </a>
-                  </p>
-                  <p class="small text-danger">
-                    <s>$1099</s>
-                  </p>
-                </div>
-
-                <div class="d-flex justify-content-between mb-3">
-                  <h5 class="mb-0">HP Notebook</h5>
-                  <h5 class="text-dark mb-0">$999</h5>
-                </div>
-
-                <div class="d-flex justify-content-between mb-2">
-                  <p class="text-muted mb-0">
-                    Available: <span class="fw-bold">6</span>
-                  </p>
-                  <div class="ms-auto text-warning">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="box mt-2 pb-2">
-              <img src="images/best-saler-4.jpg" alt=""></img>
-              <div class="card-body" style={{ marginLeft: "10px" }}>
-                <div class="d-flex justify-content-between">
-                  <p class="small">
-                    <a href="#!" class="text-muted">
-                      Laptops
-                    </a>
-                  </p>
-                  <p class="small text-danger">
-                    <s>$1099</s>
-                  </p>
-                </div>
-
-                <div class="d-flex justify-content-between mb-3">
-                  <h5 class="mb-0">HP Notebook</h5>
-                  <h5 class="text-dark mb-0">$999</h5>
-                </div>
-
-                <div class="d-flex justify-content-between mb-2">
-                  <p class="text-muted mb-0">
-                    Available: <span class="fw-bold">6</span>
-                  </p>
-                  <div class="ms-auto text-warning">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="box mt-2 pb-2">
-              <img src="images/best-saler-1.jpg" alt=""></img>
-              <div class="card-body" style={{ marginLeft: "10px" }}>
-                <div class="d-flex justify-content-between">
-                  <p class="small">
-                    <a href="#!" class="text-muted">
-                      Laptops
-                    </a>
-                  </p>
-                  <p class="small text-danger">
-                    <s>$1099</s>
-                  </p>
-                </div>
-
-                <div class="d-flex justify-content-between mb-3">
-                  <h5 class="mb-0">HP Notebook</h5>
-                  <h5 class="text-dark mb-0">$999</h5>
-                </div>
-
-                <div class="d-flex justify-content-between mb-2">
-                  <p class="text-muted mb-0">
-                    Available: <span class="fw-bold">6</span>
-                  </p>
-                  <div class="ms-auto text-warning">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -539,16 +442,16 @@ function CategoriesProduct() {
                 kết nối hay làm cho ngôi nhà của bạn thông minh hơn, chúng tôi
                 có mọi thứ bạn cần để thay đổi cuộc sống của bạn.
               </p>
-              <a href="#" className="btn  btn-warning ">
-                {" "}
-                <strong>Mua sắm ngay</strong>{" "}
+              <a href="/products" className="btn btn-warning">
+                <strong>Mua sắm ngay</strong>
               </a>
+
             </div>
           </div>
 
           <div className="titile">
             <h4>SẢN PHẨM ĐANG KHUYẾN MÃI</h4>
-            <a href="#">Xem nhiều hơn</a>
+            <a href="/">Xem nhiều hơn</a>
           </div>
 
           <div className="container ">
@@ -592,33 +495,33 @@ function CategoriesProduct() {
                 ></img>
               </div>
 
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <p class="small">
-                    <a href="#!" class="text-muted">
+              <div className="card-body">
+                <div className="d-flex justify-content-between">
+                  <p className="small">
+                    <a href="#!" className="text-muted">
                       Laptops
                     </a>
                   </p>
-                  <p class="small text-danger">
+                  <p className="small text-danger">
                     <s>$1099</s>
                   </p>
                 </div>
 
-                <div class="d-flex justify-content-between mb-3">
-                  <h5 class="mb-0">HP Notebook</h5>
-                  <h5 class="text-dark mb-0">$999</h5>
+                <div className="d-flex justify-content-between mb-3">
+                  <h5 className="mb-0">HP Notebook</h5>
+                  <h5 className="text-dark mb-0">$999</h5>
                 </div>
 
-                <div class="d-flex justify-content-between mb-2">
-                  <p class="text-muted mb-0">
-                    Available: <span class="fw-bold">6</span>
+                <div className="d-flex justify-content-between mb-2">
+                  <p className="text-muted mb-0">
+                    Available: <span className="fw-bold">6</span>
                   </p>
-                  <div class="ms-auto text-warning">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                  <div className="ms-auto text-warning">
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
                   </div>
                 </div>
               </div>
@@ -637,33 +540,33 @@ function CategoriesProduct() {
                 ></img>
               </div>
 
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <p class="small">
-                    <a href="#!" class="text-muted">
+              <div className="card-body">
+                <div className="d-flex justify-content-between">
+                  <p className="small">
+                    <a href="#!" className="text-muted">
                       Laptops
                     </a>
                   </p>
-                  <p class="small text-danger">
+                  <p className="small text-danger">
                     <s>$1099</s>
                   </p>
                 </div>
 
-                <div class="d-flex justify-content-between mb-3">
-                  <h5 class="mb-0">HP Notebook</h5>
-                  <h5 class="text-dark mb-0">$999</h5>
+                <div className="d-flex justify-content-between mb-3">
+                  <h5 className="mb-0">HP Notebook</h5>
+                  <h5 className="text-dark mb-0">$999</h5>
                 </div>
 
-                <div class="d-flex justify-content-between mb-2">
-                  <p class="text-muted mb-0">
-                    Available: <span class="fw-bold">6</span>
+                <div className="d-flex justify-content-between mb-2">
+                  <p className="text-muted mb-0">
+                    Available: <span className="fw-bold">6</span>
                   </p>
-                  <div class="ms-auto text-warning">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                  <div className="ms-auto text-warning">
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
                   </div>
                 </div>
               </div>
@@ -682,33 +585,33 @@ function CategoriesProduct() {
                 ></img>
               </div>
 
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <p class="small">
-                    <a href="#!" class="text-muted">
+              <div className="card-body">
+                <div className="d-flex justify-content-between">
+                  <p className="small">
+                    <a href="#!" className="text-muted">
                       Laptops
                     </a>
                   </p>
-                  <p class="small text-danger">
+                  <p className="small text-danger">
                     <s>$1099</s>
                   </p>
                 </div>
 
-                <div class="d-flex justify-content-between mb-3">
-                  <h5 class="mb-0">HP Notebook</h5>
-                  <h5 class="text-dark mb-0">$999</h5>
+                <div className="d-flex justify-content-between mb-3">
+                  <h5 className="mb-0">HP Notebook</h5>
+                  <h5 className="text-dark mb-0">$999</h5>
                 </div>
 
-                <div class="d-flex justify-content-between mb-2">
-                  <p class="text-muted mb-0">
-                    Available: <span class="fw-bold">6</span>
+                <div className="d-flex justify-content-between mb-2">
+                  <p className="text-muted mb-0">
+                    Available: <span className="fw-bold">6</span>
                   </p>
-                  <div class="ms-auto text-warning">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                  <div className="ms-auto text-warning">
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
                   </div>
                 </div>
               </div>
@@ -727,33 +630,33 @@ function CategoriesProduct() {
                 ></img>
               </div>
 
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <p class="small">
-                    <a href="#!" class="text-muted">
+              <div className="card-body">
+                <div className="d-flex justify-content-between">
+                  <p className="small">
+                    <a href="#!" className="text-muted">
                       Laptops
                     </a>
                   </p>
-                  <p class="small text-danger">
+                  <p className="small text-danger">
                     <s>$1099</s>
                   </p>
                 </div>
 
-                <div class="d-flex justify-content-between mb-3">
-                  <h5 class="mb-0">HP Notebook</h5>
-                  <h5 class="text-dark mb-0">$999</h5>
+                <div className="d-flex justify-content-between mb-3">
+                  <h5 className="mb-0">HP Notebook</h5>
+                  <h5 className="text-dark mb-0">$999</h5>
                 </div>
 
-                <div class="d-flex justify-content-between mb-2">
-                  <p class="text-muted mb-0">
-                    Available: <span class="fw-bold">6</span>
+                <div className="d-flex justify-content-between mb-2">
+                  <p className="text-muted mb-0">
+                    Available: <span className="fw-bold">6</span>
                   </p>
-                  <div class="ms-auto text-warning">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                  <div className="ms-auto text-warning">
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
+                    <i className="fa fa-star"></i>
                   </div>
                 </div>
               </div>
@@ -761,14 +664,113 @@ function CategoriesProduct() {
           </div>
         </div>
       </section>
-    </main>
-  </React.Fragment>;
+    </>
+  )
+
+
 }
 
+const Banner = (props) => {
 
-function Banner() {
+  const [listUsers, setListUsers] = useState([]);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [sortBy, setSortBy] = useState("asc");
+  const [sortField, setSortField] = useState("id");
+
+
+  useEffect(() => {
+    // Your code here
+    getUsers();
+  }, []);
+
+  const getUsers = async (page) => {
+
+    let res = await fetchAllUser(page);
+    console.log(">>check: ", res)
+    if (res && res.data) {
+      console.log(res)
+      setTotalUsers(res.total)
+      setListUsers(res.data)
+      setTotalPages(res.total_pages)
+    }
+  }
+
+  const handlePageClick = (event) => {
+    console.log("event: " + event)
+    getUsers(+ event.selected + 1);
+  }
+
+  const handleSort = (sortBy, sortField) => {
+    setSortBy(sortBy)
+    setSortField(sortField);
+
+  }
+
+  console.log("sort check", sortBy, sortField)
+
   return (
-    <React.Fragment>
+    <>
+
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>ID
+              <i className="fa-solid fa-arrow-down-long"
+                onClick={() => handleSort("desc", "id")}></i>
+              <i className="fa-solid fa-arrow-up-long"
+                onClick={() => handleSort("asc", "id")}></i>
+            </th>
+            <th>Avatar</th>
+            <th>Email</th>
+            <th>firts_name
+              <i className="fa-solid fa-arrow-down-long"
+                onClick={() => handleSort("desc", "firts_name")}></i>
+              <i className="fa-solid fa-arrow-up-long"
+                onClick={() => handleSort("asc", "firts_name")}></i>
+            </th>
+            <th>last_name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {listUsers && listUsers.length > 0 &&
+            listUsers.map((item, index) => {
+              return (
+                <tr key={`users-${index}`}>
+                  <td>{item.id}</td>
+                  <td>{item.avatar}</td>
+                  <td>{item.email}</td>
+                  <td>{item.first_name}</td>
+                  <td>{item.last_name}</td>
+                </tr>
+              )
+            })
+          }
+
+        </tbody>
+      </Table>
+
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel="next >"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={5}
+        pageCount={totalPages}
+        previousLabel="< previous"
+        renderOnZeroPageCount={null}
+
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        containerClassName="pagination"
+        activeClassName="active"
+      />
+
       <div className=" p-4">
         <div className="container list">
           <div className="items">
@@ -848,13 +850,11 @@ function Banner() {
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 }
 
 function Sale() {
-
-
   return (
     <div>
       <div className="notification-toast" data-toast>
@@ -886,4 +886,10 @@ function Sale() {
   );
 }
 
-export { Introduction, CategoriesProduct, Banner, Sale };
+
+
+
+
+
+
+export { Introduction, Products_home, CategoriesProduct, Banner, Sale };

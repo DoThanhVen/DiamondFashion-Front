@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Slogan } from "./Navbar";
-import Footer from "./Footer";
+import { Navbar, Slogan } from "../../page/user/Navbar";
+import Footer from "../../page/user/Footer";
 import "../css/user/product.css";
-import "../css/user/home.css"
+import "../css/user/home.css";
+import "../css/user/slider.css";
 import { Container, Row, Col, Form, InputGroup, Button, Card  } from 'react-bootstrap';
 
 function Product() {
@@ -15,11 +16,18 @@ function Product() {
       icon.classList.toggle("bx-chevron-up");
     }
   };
+
+  const [value, setValue] = useState(50);
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
   return (
     <React.Fragment>
       <div className='product'>
         <nav >
-          <Navbar />
+          {/* <Navbar /> */}
         </nav>
 
         <section className="breadcrumb-section" style={{ backgroundImage: "url('images/best-saler-1.jpg')" }}>
@@ -40,21 +48,19 @@ function Product() {
             <div className="row">
               <div className="col-lg-3 col-md-5">
                 <div className="sidebar">
-                  <div className="sidebar__item">
-                    <h4>Danh mục sản phẩm</h4>
-                    <ul>
-                      <li><a href="#">Điện Thoại - Máy Tính Bảng</a></li>
-                      <li><a href="#">Điện gia dụng</a></li>
-                      <li><a href="#">Thời trang nam</a></li>
-                      <li><a href="#">Thời trang nữ</a></li>
-                      <li><a href="#">Balo - Vali</a></li>
-                      <li><a href="#">Phụ Kiện Thời Trang</a></li>
-                      <li><a href="#">Điện Tử - Điện Lạnh</a></li>
-                      <li><a href="#">Dụng Cụ Làm Bếp</a></li>
-                      <li><a href="#">Thiết Bị Số</a></li>
-                      <li><a href="#">Máy Ảnh - Máy Quay Phim</a></li>
-                    </ul>
-                  </div>
+                <div class="hero__categories">
+            <div class="hero__categories__all">
+              <i class="fa fa-bars"></i>
+              <span>Danh mục sản phẩm</span>
+            </div>
+            <ul>
+              {/* {categories.map((category) => (
+                <li key={category.id}>
+                  <a href="#">{category.type_category}</a>
+                </li>
+              ))} */}
+            </ul>
+          </div>
                   <div className="sidebar__item">
                     <h4>Giá</h4>
                     <div className="price-range-wrap">
@@ -69,6 +75,8 @@ function Product() {
                       </div>
                       <div className="range-slider">
                         <div className="price-input">
+                        <div className="slider-container">
+   </div>
                           <input type="text" id="minamount" />
                           <input type="text" id="maxamount" />
                         </div>
@@ -182,9 +190,9 @@ function Product() {
               <div className="col-lg-9 col-md-7">
                 <div className="product__discount">
                   <div className="section-title product__discount__title">
-                    <h2>Đang giảm giá</h2>
+                    <h4><strong>ĐANG GIẢM GIÁ</strong> </h4>
                   </div>
-
+                  
                   <div>
                     <div class=" ">
                       <div className="all-items">

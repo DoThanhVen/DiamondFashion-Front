@@ -1,26 +1,25 @@
 import React from "react";
-import { Navbar, Slogan } from "../user/Navbar";
-import { Banner, Introduction, CategoriesProduct, Sale} from "./FormHome";
-import Footer from "./Footer";
-import Categories from "../admin/Categories";
+import  MainNavbar  from "../../page/user/Navbar";
+import { Banner, Introduction,Products_home, CategoriesProduct, Sale} from "./FormHome";
+import Footer from "../../page/user/Footer";
+
 
 function Home() {
   return (
     <React.Fragment>
       <nav>
-        <Navbar />
+        <MainNavbar />
       </nav>
-      {/* <div id="slogan">
-        <Slogan />
-      </div> */}
-      
       <div id="best-saler">
         <Introduction />
       </div>
+     
       <div>
         <CategoriesProduct/>
       </div>
-      
+      <div>
+        <Products_home/>
+      </div>
       <div id="banner" >
         <Banner />
       </div>
@@ -28,6 +27,8 @@ function Home() {
       <div id="list-products">
         <Sale />
       </div>
+   
+
       <div id="footer">
         <Footer />
       </div>

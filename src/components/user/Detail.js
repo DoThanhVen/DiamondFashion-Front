@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "../css/user/detail.css";
-import { Navbar } from './Navbar';
-import Footer from './Footer';
+import { Navbar } from '../../page/user/Navbar';
+import Footer from '../../page/user/Footer';
 import { products, image } from './data';
 
 function ProductPage() {
@@ -70,7 +70,7 @@ function ProductPage() {
 
     <div className='detail'>
       <nav >
-        <Navbar />
+        {/* <Navbar /> */}
       </nav>
 
       <section className="py-5" style={{ marginTop: '70px' }}>

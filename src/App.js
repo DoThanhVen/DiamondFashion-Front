@@ -1,11 +1,15 @@
 import React from "react";
-import Home from "./user/Home";
-import Login from "./user/Login";
-import Cart from "./user/Cart";
-import Product from "./user/Product";
-import Detail from "./user/Detail"
+import Home from "./components/user/Home";
+import Login from "./components/user/Login";
+import Cart from "./components/user/Cart";
+import Product from "./components/user/Product";
+import Detail from "./components/user/Detail"
+import Register from "./components/user/Register"
+import OrderDetail from "./components/user/OrderDetail"
+import Checkout from "./components/user/Checkout"
+import Profile from "./components/user/Profile"
 
-import AdminDashBoard from "./admin/AdminDashBoard";
+// import AdminDashBoard from "./componentadmin/AdminDashBoard";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -16,13 +20,11 @@ function App() {
       <Route path="/cart" element={<Cart />}/>
       <Route path="/products" element={<Product />}/>
       <Route path="/detail" element={<Detail/>}/>
-
-      <Route path="/admin" element={<AdminDashBoard />}/>
-      <Route path="/admin/accounts" element={<AdminDashBoard />}/>
-      <Route path="/admin/shops" element={<AdminDashBoard />}/>
-      <Route path="/admin/categories" element={<AdminDashBoard />}/>
-      <Route path="/admin/products" element={<AdminDashBoard />}/>
-      <Route path="/admin/bills" element={<AdminDashBoard />}/>
+      <Route path="/register" element={<Register/>}/>
+      <Route path="/orderDetail" element={<OrderDetail/>}/>
+      <Route path="/checkout" element={<Checkout/>}/>
+      <Route path="/profile" element={<Profile/>}/>
+    
     </Routes>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Slogan } from "./Navbar";
-import Footer from "./Footer";
+import { Navbar } from "../../page/user/Navbar";
+import Footer from "../../page/user/Footer";
 import "../css/user/cart.css";
 import "../css/user/home.css";
 
@@ -43,11 +43,8 @@ function Cart() {
     <React.Fragment>
       <div id="cart">
         <nav>
-          <Navbar />
+          {/* <Navbar /> */}
         </nav>
-        <div id="slogan">
-          <Slogan />
-        </div>
         <div className={`list-carts`}>
           <table>
             <thead>
