@@ -1,91 +1,58 @@
 import React from 'react';
-import "../css/user/register_login.css"
+
 
 function SignUp() {
   return (
-    <section className="signup ">
-      <div className="container">
-        <div className="signup-content">
-          <div className="signup-form">
-            <h2 className="form-title">Đăng ký tài khoản</h2>
-            <form  className="register-form" id="register-form">
-              <div className="form-group">
-                <label>
-                <i className="fa-solid fa-user"></i>
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  placeholder="Vui lòng nhập tên của bạn"
-                />
-              </div>
-              <div className="form-group">
-                <label>
-                <i className="fa-solid fa-envelope"></i>
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="Vui lòng nhập email"
-                />
-              </div>
-              <div className="form-group">
-                <label>
-                <i class="fa-solid fa-lock"></i>
-                </label>
-                <input
-                  type="password"
-                  name="pass"
-                  id="pass"
-                  placeholder="Vui lòng nhập mật khẩu"
-                />
-              </div>
-              <div className="form-group">
-                <label>
-                <i class="fa-solid fa-lock"></i>
-                </label>
-                <input
-                  type="password"
-                  name="re_pass"
-                  id="re_pass"
-                  placeholder="Nhập lại mật khẩu"
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  type="checkbox"
-                  name="agree-term"
-                  id="agree-term"
-                  className="agree-term"
-                />
-                <label  className="label-agree-term ml-2">
-                  <span>
-                    <span></span>
-                  </span>
-                  Tôi đồng ý với tất cả các{' '}
-                  <a href="#" className="term-service">
-                    Điều khoản và Chính sách
-                  </a>
-                </label>
-              </div>
-              <div className="form-group form-button">
-              <button type="button" class="btn btn-secondary">Đăng ký</button>
-              </div>
-            </form>
-          </div>
-          <div className="signup-image">
-            <figure>
-              <img src="images/log.jpg" alt="sign up image" />
-            </figure>
-            <a href="#" className="signup-image-link">
-              I am already a member
-            </a>
-          </div>
+    <>
+    <div id="main-wrapper" class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-10">
+            <div class="card border-0">
+                <div class="card-body p-0">
+                    <div class="row no-gutters">
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="mb-5">
+                                    <h3 class="h4 font-weight-bold text-theme">Register</h3>
+                                </div>
+                                <h6 class="h5 mb-0">Just Do Register.</h6>
+                                <p class="text-muted mt-2 mb-5">If You Really Want To Know, Look In The Register.</p>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="yourName">Your name</label>
+                                        <input type="text" class="form-control" id="yourName" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email address</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" />
+                                    </div>
+                                    <div class="form-group mb-5">
+                                        <label for="exampleInputPassword1">Password</label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1" />
+                                    </div>
+                                    <button type="submit" class="btn btn-theme">Register</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 d-none d-lg-inline-block">
+                            <div class="account-block rounded-right">
+                                <div class="overlay rounded-right"></div>
+                                <div class="account-testimonial">
+                                    <h4 class="text-white mb-4">This beautiful theme yours!</h4>
+                                    <p class="lead text-white">"Best investment i made for a long time. Can only recommend it for other users."</p>
+                                    <p>- Admin User</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-muted text-center mt-3 mb-0">Already have an account? <a href="/account" class="text-primary ml-1">login</a></p>
+         
         </div>
-      </div>
-    </section>
+    </div>
+</div>
+    </>
   );
 }
 

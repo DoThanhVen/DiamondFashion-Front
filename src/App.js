@@ -8,6 +8,7 @@ import Register from "./components/user/Register"
 import OrderDetail from "./components/user/OrderDetail"
 import Checkout from "./components/user/Checkout"
 import Profile from "./components/user/Profile"
+import Order from "./components/user/Order"
 
 // import AdminDashBoard from "./componentadmin/AdminDashBoard";
 import { Route, Routes } from "react-router-dom";
@@ -24,7 +25,7 @@ function App() {
       <Route path="/orderDetail" element={<OrderDetail/>}/>
       <Route path="/checkout" element={<Checkout/>}/>
       <Route path="/profile" element={<Profile/>}/>
-    
+      <Route path="/order" element={<Order/>}/>
     </Routes>
   );
 }

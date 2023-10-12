@@ -1,88 +1,135 @@
 import React from 'react';
-
+import MainNavbar from "../../page/user/Navbar";
+import Footer from "../../page/user/Footer";
 function OrderReceipt() {
   return (
-    <section className="mt-4" >
-      <div className="container py-5 h-100 mt-4">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col">
-            <div className="" style={{ borderRadius: '10px' }}>
-              <div className="card-body p-4">
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="d-flex flex-column">
-                    <span className="lead fw-normal">Đơn hàng của bạn</span>
-                    <p className="small text-muted mb-0">Mã đơn hàng: 1KAU9-84UIL</p>
-                  </div>
-                  <div>
-                    <button className="btn btn-success" type="button">Giao hàng thành công</button>
-                  </div>
-                </div>
+    <>
+     <nav >
+          <MainNavbar />
+        </nav>
+      <div className="container-fluid mt-2">
+        <div className="container">
+          {/* Title */}
+          <div className="d-flex justify-content-between align-items-center py-3">
+            <h2 className="h5 mb-0"><a href="#" className="text-muted"></a> Chi tiết đơn hàng</h2>
+          </div>
 
-                <div className="card-body p-4">
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                  
-                 
-                </div>
-                <div className=" mb-4">
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-md-2">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/13.webp" className="img-fluid" alt="Phone" />
-                      </div>
-                      <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p className="text-muted mb-0">Samsung Galaxy</p>
-                      </div>
-                      <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p className="text-muted mb-0 small">White</p>
-                      </div>
-                      <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p className="text-muted mb-0 small">Capacity: 64GB</p>
-                      </div>
-                      <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p className="text-muted mb-0 small">Qty: 1</p>
-                      </div>
-                      <div className="col-md-2 text-center d-flex justify-content-center align-items-center">
-                        <p className="text-muted mb-0 small">$499</p>
+          {/* Main content */}
+          <div className="row">
+            <div className="col-lg-8">
+              {/* Details */}
+              <div className="card mb-4">
+                <div className="card-body">
+                  <div className="mb-3 d-flex justify-content-between">
+                    <div>
+                      <span className="me-3">22-11-2021</span>
+                      <span className="me-3">#16123222</span>
+                      <span className="me-3">Visa -1234</span>
+                      <span className="badge rounded-pill bg-info">Đang giao</span>
+                    </div>
+                    <div className="d-flex">
+                      {/* <button className="btn btn-link p-0 me-3 d-none d-lg-block btn-icon-text"><i className="bi bi-download"></i> <span className="text">Invoice</span></button> */}
+                      <div className="dropdown">
+                        <button className="btn btn-link p-0 text-muted" type="button" data-bs-toggle="dropdown">
+                          <i className="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <ul className="dropdown-menu dropdown-menu-end">
+                          <li><a className="dropdown-item" href="#"><i className="bi bi-pencil"></i> Edit</a></li>
+                          <li><a className="dropdown-item" href="#"><i className="bi bi-printer"></i> Print</a></li>
+                        </ul>
                       </div>
                     </div>
-                    <hr className="mb-4" style={{ backgroundColor: '#e0e0e0', opacity: 1 }} />
+                  </div>
+                  <table className="table table-borderless">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div className="d-flex mb-2">
+                            <div className="flex-shrink-0">
+                              <img src="https://www.bootdey.com/image/280x280/87CEFA/000000" style={{width: '80px', height: '80px'}} alt="" width="35" className="img-fluid" />
+                            </div>
+                            <div className="flex-lg-grow-1 ms-3">
+                              <h6 className="small mb-0 text-start">Wireless Headphones with Noise Cancellation Tru Bass Bluetooth HiFi</h6>
+                              <h6 className="small mt-2 text-start">Màu: Black</h6>
+                              <h6 className="small mt-2 text-start">Số lượng: 1</h6>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="text-end">$79.99</td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
                     
+                      <tr>
+                        <td colSpan="2" className='text-start'>Phí vận chuyển</td>
+                        <td className="text-end">$20.00</td>
+                      </tr>
+                      <tr>
+                        <td colSpan="2" className='text-start'>Giảm giá</td>
+                        <td className="text-danger text-end">-$10.00</td>
+                      </tr>
+                      <tr className="fw-bold">
+                        <td colSpan="2" className='text-start'>Tổng cộng</td>
+                        <td className="text-end">$169,98</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              {/* Payment */}
+              <div className="card mb-4">
+                <div className="card-body">
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <h3 className="h6">Thông tin thanh toán</h3>
+                      <p>Visa -1234 <br />
+                        Tổng cộng: $169,98 <span className="badge bg-success rounded-pill">Đã thanh toán</span></p>
+                    </div>
+                    <div className="col-lg-6">
+                      <h3 className="h6">Địa chỉ thanh toán</h3>
+                      <address>
+                        <strong>John Doe</strong><br />
+                        1355 Market St, Suite 900<br />
+                        San Francisco, CA 94103<br />
+                        <abbr title="Phone">P:</abbr> (123) 456-7890
+                      </address>
+                    </div>
                   </div>
                 </div>
-                <div class="d-flex justify-content-between pt-2">
-              <p class="fw-bold mb-0">Order Details</p>
-              <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> $898.00</p>
+              </div>
             </div>
-            <div class="d-flex justify-content-between pt-2">
-              <p class="text-muted mb-0">Invoice Number : 788152</p>
-              <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
-            </div>
-
-            <div class="d-flex justify-content-between">
-              <p class="text-muted mb-0">Invoice Date : 22 Dec,2019</p>
-              <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> 123</p>
-            </div>
-
-            <div class="d-flex justify-content-between mb-5">
-              <p class="text-muted mb-0">Recepits Voucher : 18KU-62IIK</p>
-              <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
-            </div>
-
-            <div class="card-footer border-0 px-4 py-5"
-          >
-            <h5 class="d-flex align-items-center justify-content-end  text-uppercase mb-0">Total
-              paid: <span class="h2 mb-0 ms-2">$1040</span></h5>
-          </div>
+            <div className="col-lg-4">
+              {/* Customer Notes */}
+              <div className="card mb-4">
+                <div className="card-body">
+                  <h3 className="h6">Ghi chú</h3>
+                  <p>Sed enim, faucibus litora velit vestibulum habitasse. Cras lobortis cum sem aliquet mauris rutrum. Sollicitudin. Morbi, sem tellus vestibulum porttitor.</p>
                 </div>
-
-                
-
+              </div>
+              <div className="card mb-4">
+                {/* Shipping information */}
+                <div className="card-body">
+                  <h3 className="h6">Thông tin vận chuyển</h3>
+                  <strong>FedEx</strong>
+                  <span><a href="#" className="text-decoration-underline" target="_blank">FF1234567890</a> <i className="bi bi-box-arrow-up-right"></i> </span>
+                  <hr />
+                  <h3 className="h6">Địa chỉ</h3>
+                  <address>
+                    <strong>John Doe</strong><br />
+                    1355 Market St, Suite 900<br />
+                    San Francisco, CA 94103<br />
+                    <abbr title="Phone">P:</abbr> (123) 456-7890
+                  </address>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+      <div id="footer">
+          <Footer />
+        </div>
+    </>
   );
 }
 

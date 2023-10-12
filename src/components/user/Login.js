@@ -20,124 +20,69 @@ function Login() {
   };
   return (
     <React.Fragment>
-      {/* <section className="sign-in " style={{marginTop: '60px'}}>
-      <div className="container">
-        <div className="signin-content">
-          <div className="signin-image">
-            <figure>
-              <img src="images/Diamond.png" alt="sing up image" />
-            </figure>
-            <a href="/register" className="signup-image-link">
-              Đăng ký tài khoản mới
-            </a>
-          </div>
+      <div id="main-wrapper" className="container">
+        <div className="row justify-content-center">
+          <div className="col-xl-10">
+            <div className="card border-0">
+              <div className="card-body p-0">
+                <div className="row no-gutters">
+                  <div className="col-lg-6">
+                    <div className="p-5">
+                      <div className="mb-5">
+                        <h3 className="h4 font-weight-bold text-theme">Login</h3>
+                      </div>
 
-          <div className="signin-form">
-            <h2 className="form-title">Đăng nhập</h2>
-            <form method="POST" className="register-form" id="login-form">
-              <div className="form-group">
-                <label htmlFor="your_name">
-                <i class="fa-solid fa-envelope"></i>
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="Vui lòng nhập email"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="your_pass">
-                <i class="fa-solid fa-lock"></i>
-                </label>
-                <input
-                  type="password"
-                  name="your_pass"
-                  id="your_pass"
-                  placeholder="Vui lòng nhập mật khẩu"
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  type="checkbox"
-                  name="remember-me"
-                  id="remember-me"
-                  className="agree-term"
-                />
-                <label htmlFor="remember-me" className="label-agree-term">
-                  <span>
-                    <span></span>
-                  </span>
-                  Ghi nhớ
-                </label>
-              </div>
-              <div className="form-group form-button">
-              <button type="button" class="btn btn-warning">Warning</button>
-              </div>
-            </form>
-            <div className="social-login">
-              <span className="social-label">Hoặc đăng nhập với</span>
-              <i className="fa-brands fa-facebook fa-2xl" style={{color: '#005cfa'}}></i>
-              <i className="fa-brands fa-google fa-2xl " style={{color: '#d81818', marginLeft: '10px'}}></i>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> */}
-      <div id="login">
-        <div className={`heading`}>
-          <a href="/" className={`logo`}>
-            Diamond Fashion
-          </a>
-        </div>
-        <div className={`content`}>
-          <div className={`column`}>
-            <img src="images/login.jpg"></img>
-          </div>
-          <div className={`column`}>
-            <div className={`heading mb-3`}>ĐĂNG NHẬP</div>
-            <div className={`title mb-3`}>
-              Xin chào! Chúng tôi rất hạnh phúc khi bạn ghé Website thời trang
-              của chúng tôi.
-            </div>
-            <form>
-              <div className={`mb-3`}>
-                <label htmlFor="username">Email</label>
-                <input id="username" type="text"></input>
-              </div>
-              <div className={`mb-3`}>
-                <label htmlFor="password">Mật Khẩu</label>
-                <input id="password" type="password"></input>
-                <i class="bi bi-eye-slash" onClick={showPassword}></i>
-              </div>
-              <div className={`others mb-3`}>
-                <div className={`remember`}>
-                  <input id="remember-me" type="checkbox"></input>
-                  <label htmlFor="remember-me" className={`ms-1`}>
-                    Nhớ mật khẩu ?
-                  </label>
+                      <h6 className="h5 mb-0">Welcome back!</h6>
+                      <p className="text-muted mt-2 mb-5">Enter your email address and password to access admin panel.</p>
+
+                      <form>
+                        <div className="form-group">
+                          <label for="exampleInputEmail1">Email address</label>
+                          <input typeName="email" className="form-control" id="exampleInputEmail1" />
+                        </div>
+                        <div className="form-group mb-5">
+                          <label for="exampleInputPassword1">Password</label>
+                          <input type="password" className="form-control" id="exampleInputPassword1" />
+                        </div>
+                        <div className="d-flex justify-content-between">
+                        <button type="submit" className="btn btn-theme">Login</button>
+                        <a href="#l" className="forgot-link float-right text-primary">Forgot password?</a>
+                        </div>
+                        <div class="or">
+							<span>or signup using</span>
+						</div>
+
+            <div class="row gutters">
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+								<button type="submit" class="btn btn-tw btn-block">Twitter</button>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+								<button type="submit" class="btn btn-fb btn-block">Facebook</button>
+							</div>
+						</div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-6 d-none d-lg-inline-block">
+                    <div className="account-block rounded-right">
+                      <div className="overlay rounded-right"></div>
+                      <div className="account-testimonial">
+                        <h4 className="text-white mb-4">This  beautiful theme yours!</h4>
+                        <p className="lead text-white">"Best investment i made for a long time. Can only recommend it for other users."</p>
+                        <p>- Admin User</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className={`forgot-password`}>Quên mật khẩu ?</div>
-              </div>
 
-              <ReCAPTCHA
-    sitekey="6LdRaIooAAAAAGUGGf1qxK5i-fCsz3Tk-6gnRxlq"
-    onChange={onChange}
-  />
+              </div>
+            </div>
 
-              <button type="submit">Đăng Nhập</button>
-              <div className={`sign-up mt-1 mb-1`}>
-                Bạn chưa có tài khoản ? <a href="/sign-up">Đăng Kí</a>
-              </div>
-              <span className={`mb-3`}>Hoặc</span>
-              <div className={`OAuth2`}>
-                <a className={`btn google`} href="#">
-                  <img className={`me-2`} src="images/google.jpg"></img>
-                  Đăng nhập bằng Google
-                </a>
-              </div>
-            </form>
+            <p className="text-muted text-center mt-3 mb-0">Don't have an account? <a href="register.html" className="text-primary ml-1">register</a></p>
+
+
+
           </div>
         </div>
       </div>

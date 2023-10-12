@@ -1,695 +1,157 @@
 import React, { useState, useEffect } from "react";
-import { Navbar } from "../../page/user/Navbar";
+import MainNavbar from "../../page/user/Navbar";
 import Footer from "../../page/user/Footer";
 import "../css/user/cart.css";
 import "../css/user/home.css";
 
 function Cart() {
-  const [quantity, setQuantity] = useState(1);
-  const decreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
 
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const [isActive, setIsActive] = useState(false);
-  const checkScreenSize = () => {
-    if (window.innerWidth <= 776) {
-      setIsActive(true);
-    } else {
-      setIsActive(false);
-    }
-  };
-
-  function formatCurrency(price) {
-    const formatter = new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-      minimumFractionDigits: 0,
-    });
-    return formatter.format(price);
-  }
-  
-  useEffect(() => {
-    checkScreenSize();
-
-    window.addEventListener("resize", checkScreenSize);
-  }, []);
   return (
-    <React.Fragment>
-      <div id="cart">
-        <nav>
-          {/* <Navbar /> */}
-        </nav>
-        <div className={`list-carts`}>
-          <table>
-            <thead>
-              <th></th>
-              <th>Hình Ảnh</th>
-              <th>Tên Sản Phẩm</th>
-              <th>Chi Tiết</th>
-              <th>Số Lượng</th>
-              <th>Giá</th>
-              <th style={{ display: isActive ? "block" : "none" }}>
-                Thông Tin Sản Phẩm
-              </th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>
-                  <img src="images/banner-left.jpg" alt="Hình Ảnh Sản Phẩm" />
-                </td>
-                <td>
-                  Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành
-                  Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo
-                  Khoác Cá Tính Dành Cho{" "}
-                </td>
-                <td>Xanh Dương - XXL - Nam</td>
-                <td>
-                  <span className="me-2" onClick={decreaseQuantity}>
-                    -
-                  </span>
-                  {quantity}
-                  <span className="ms-2" onClick={increaseQuantity}>
-                    +
-                  </span>
-                </td>
-                <td>{formatCurrency(quantity * 120000)}</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>
-                  <img src="images/banner-left.jpg" alt="Hình Ảnh Sản Phẩm" />
-                </td>
-                <td>
-                  Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành
-                  Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo
-                  Khoác Cá Tính Dành Cho{" "}
-                </td>
-                <td>Xanh Dương - XXL - Nam</td>
-                <td>
-                  <span className="me-2" onClick={decreaseQuantity}>
-                    -
-                  </span>
-                  {quantity}
-                  <span className="ms-2" onClick={increaseQuantity}>
-                    +
-                  </span>
-                </td>
-                <td>{formatCurrency(quantity * 120000)}</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>
-                  <img src="images/banner-left.jpg" alt="Hình Ảnh Sản Phẩm" />
-                </td>
-                <td>
-                  Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành
-                  Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo
-                  Khoác Cá Tính Dành Cho{" "}
-                </td>
-                <td>Xanh Dương - XXL - Nam</td>
-                <td>
-                  <span className="me-2" onClick={decreaseQuantity}>
-                    -
-                  </span>
-                  {quantity}
-                  <span className="ms-2" onClick={increaseQuantity}>
-                    +
-                  </span>
-                </td>
-                <td>{formatCurrency(quantity * 120000)}</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>
-                  <img src="images/banner-left.jpg" alt="Hình Ảnh Sản Phẩm" />
-                </td>
-                <td>
-                  Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành
-                  Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo
-                  Khoác Cá Tính Dành Cho{" "}
-                </td>
-                <td>Xanh Dương - XXL - Nam</td>
-                <td>
-                  <span className="me-2" onClick={decreaseQuantity}>
-                    -
-                  </span>
-                  {quantity}
-                  <span className="ms-2" onClick={increaseQuantity}>
-                    +
-                  </span>
-                </td>
-                <td>{formatCurrency(quantity * 120000)}</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>
-                  <img src="images/banner-left.jpg" alt="Hình Ảnh Sản Phẩm" />
-                </td>
-                <td>
-                  Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành
-                  Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo
-                  Khoác Cá Tính Dành Cho{" "}
-                </td>
-                <td>Xanh Dương - XXL - Nam</td>
-                <td>
-                  <span className="me-2" onClick={decreaseQuantity}>
-                    -
-                  </span>
-                  {quantity}
-                  <span className="ms-2" onClick={increaseQuantity}>
-                    +
-                  </span>
-                </td>
-                <td>{formatCurrency(quantity * 120000)}</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>
-                  <img src="images/banner-left.jpg" alt="Hình Ảnh Sản Phẩm" />
-                </td>
-                <td>
-                  Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành
-                  Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo
-                  Khoác Cá Tính Dành Cho{" "}
-                </td>
-                <td>Xanh Dương - XXL - Nam</td>
-                <td>
-                  <span className="me-2" onClick={decreaseQuantity}>
-                    -
-                  </span>
-                  {quantity}
-                  <span className="ms-2" onClick={increaseQuantity}>
-                    +
-                  </span>
-                </td>
-                <td>{formatCurrency(quantity * 120000)}</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>
-                  <img src="images/banner-left.jpg" alt="Hình Ảnh Sản Phẩm" />
-                </td>
-                <td>
-                  Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành
-                  Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo
-                  Khoác Cá Tính Dành Cho{" "}
-                </td>
-                <td>Xanh Dương - XXL - Nam</td>
-                <td>
-                  <span className="me-2" onClick={decreaseQuantity}>
-                    -
-                  </span>
-                  {quantity}
-                  <span className="ms-2" onClick={increaseQuantity}>
-                    +
-                  </span>
-                </td>
-                <td>{formatCurrency(quantity * 120000)}</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>
-                  <img src="images/banner-left.jpg" alt="Hình Ảnh Sản Phẩm" />
-                </td>
-                <td>
-                  Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành
-                  Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo
-                  Khoác Cá Tính Dành Cho{" "}
-                </td>
-                <td>Xanh Dương - XXL - Nam</td>
-                <td>
-                  <span className="me-2" onClick={decreaseQuantity}>
-                    -
-                  </span>
-                  {quantity}
-                  <span className="ms-2" onClick={increaseQuantity}>
-                    +
-                  </span>
-                </td>
-                <td>{formatCurrency(quantity * 120000)}</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>
-                  <img src="images/banner-left.jpg" alt="Hình Ảnh Sản Phẩm" />
-                </td>
-                <td>
-                  Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành
-                  Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo
-                  Khoác Cá Tính Dành Cho{" "}
-                </td>
-                <td>Xanh Dương - XXL - Nam</td>
-                <td>
-                  <span className="me-2" onClick={decreaseQuantity}>
-                    -
-                  </span>
-                  {quantity}
-                  <span className="ms-2" onClick={increaseQuantity}>
-                    +
-                  </span>
-                </td>
-                <td>{formatCurrency(quantity * 120000)}</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>
-                  <img src="images/banner-left.jpg" alt="Hình Ảnh Sản Phẩm" />
-                </td>
-                <td>
-                  Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành
-                  Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo
-                  Khoác Cá Tính Dành Cho{" "}
-                </td>
-                <td>Xanh Dương - XXL - Nam</td>
-                <td>
-                  <span className="me-2" onClick={decreaseQuantity}>
-                    -
-                  </span>
-                  {quantity}
-                  <span className="ms-2" onClick={increaseQuantity}>
-                    +
-                  </span>
-                </td>
-                <td>{formatCurrency(quantity * 120000)}</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>
-                  <img src="images/banner-left.jpg" alt="Hình Ảnh Sản Phẩm" />
-                </td>
-                <td>
-                  Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành
-                  Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo
-                  Khoác Cá Tính Dành Cho{" "}
-                </td>
-                <td>Xanh Dương - XXL - Nam</td>
-                <td>
-                  <span className="me-2" onClick={decreaseQuantity}>
-                    -
-                  </span>
-                  {quantity}
-                  <span className="ms-2" onClick={increaseQuantity}>
-                    +
-                  </span>
-                </td>
-                <td>{formatCurrency(quantity * 120000)}</td>
-              </tr>
-              <tr>
-                <td>
-                  <input type="checkbox"></input>
-                </td>
-                <td>
-                  <img src="images/banner-left.jpg" alt="Hình Ảnh Sản Phẩm" />
-                </td>
-                <td>
-                  Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành
-                  Cho Mọi Lứa Tuổi Áo Khoác Cá Tính Dành Cho Mọi Lứa Tuổi Áo
-                  Khoác Cá Tính Dành Cho{" "}
-                </td>
-                <td>Xanh Dương - XXL - Nam</td>
-                <td>
-                  <span className="me-2" onClick={decreaseQuantity}>
-                    -
-                  </span>
-                  {quantity}
-                  <span className="ms-2" onClick={increaseQuantity}>
-                    +
-                  </span>
-                </td>
-                <td>{formatCurrency(quantity * 120000)}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className={`buy-products`}>
-          <div className={`buy-all-products`}>
-            <input id="buy-all" type="checkbox" className={`me-3`} />
-            <label htmlFor="buy-all">Chọn tất cả (10)</label>
+    <>
+      <nav>
+        <MainNavbar />
+      </nav>
+
+      <div className="container mt-4">
+        <div className="row">
+          <div className="col-xl-8">
+            <div className="card border shadow-none mb-4">
+              <div className="card-body">
+
+                <div className="d-flex align-items-start border-bottom pb-3">
+                  <div className="me-4">
+                    <img src="https://www.bootdey.com/image/380x380/008B8B/000000" style={{ width: '80px', height: '80px' }} alt="" className="avatar-lg rounded" />
+                  </div>
+                  <div className="flex-grow-1 align-self-center overflow-hidden">
+                    <div>
+                      <h5 className="text-truncate font-size-18"><a href="#" className="text-dark">Waterproof Mobile Phone </a></h5>
+                      <p className="text-muted mb-0">
+                        <i className="bx bxs-star text-warning"></i>
+                        <i className="bx bxs-star text-warning"></i>
+                        <i className="bx bxs-star text-warning"></i>
+                        <i className="bx bxs-star text-warning"></i>
+                        <i className="bx bxs-star-half text-warning"></i>
+                      </p>
+                      <p className="mb-0 mt-1">Color : <span className="fw-medium">Gray</span></p>
+                    </div>
+                  </div>
+                  <div className="flex-shrink-0 ms-2">
+                    <ul className="list-inline mb-0 font-size-16">
+                      <li className="list-inline-item">
+                        <a href="#" className="text-muted px-1">
+                          <i class="fa-regular fa-trash-can"></i>
+                        </a>
+                      </li>
+                      <li className="list-inline-item">
+                        <a href="#" className="text-muted px-1">
+                          <i class="fa-regular fa-heart"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="row">
+                    <div className="col-md-4">
+                      <div className="mt-3">
+                        <p className="text-muted mb-2">Giá</p>
+                        <h5 className="mb-0 mt-2"><span className="text-muted me-2"><del className="font-size-16 fw-normal">$500</del></span>$450</h5>
+                      </div>
+                    </div>
+                    <div className="col-md-5">
+                      <div className="mt-3">
+                        <p className="text-muted mb-2">Số lượng</p>
+                        <div className="d-inline-flex">
+                          <select className="form-select form-select-sm w-xl">
+                            <option value="1">1</option>
+                            <option value="2" selected="">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-3">
+                      <div className="mt-3">
+                        <p className="text-muted mb-2">Thành tiền</p>
+                        <h5>$900</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div className="row my-4">
+              <div className="col-sm-6">
+                <a href="/" className="btn btn-link text-muted">
+                  <i class="fa-solid fa-arrow-left me-1"></i> Tiếp tục mua sắm </a>
+              </div>
+              <div className="col-sm-6">
+                <div className="text-sm-end mt-2 mt-sm-0">
+                  <a href="/checkOut" className="btn btn-success">
+                    <i class="fa-solid fa-cart-shopping me-1"></i> Tiến hành thanh toán </a>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className={`total`}>
-            <label className={`me-2`}>Thành tiền (5): 1.290.000 VNĐ</label>
-            <button type="submit" className={`btn btn-danger`}>
-              ĐẶT HÀNG
-            </button>
+
+          <div className="col-xl-4">
+            <h5 className="font-size-16">Ghi chú </h5>
+            <textarea className="form-control mb-3" id="order-comments" rows="5"></textarea>
+            <div className="mt-5 mt-lg-0">
+              <div className="card border shadow-none">
+                <div className="card-header bg-transparent border-bottom py-3 px-4">
+                  <h5 className="font-size-16 mb-0">Tóm tắt</h5>
+                </div>
+                <div className="card-body p-4 pt-2">
+                  <div className="table-responsive">
+                    <table className="table mb-0">
+                      <tbody>
+                        <tr>
+                          <td className="text-start">Giảm giá : </td>
+                          <td className="text-end">- $ 78</td>
+                        </tr>
+                        <tr>
+                          <td className="text-start">Chi phí vận chuyển :</td>
+                          <td className="text-end">$ 25</td>
+                        </tr>
+                        <tr className="bg-light">
+                          <th>Tổng cộng :</th>
+                          <td className="text-end">
+                            <span className="fw-bold">
+                              $ 745.2
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <ListProducts />
-        <div id="footer">
-          <Footer />
-        </div>
+
       </div>
-    </React.Fragment>
+
+      <div id="footer">
+        <Footer />
+      </div>
+    </>
   );
 }
 class ListProducts extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div id="list-products">
-          <div className="heading">XEM THÊM SẢN PHẨM</div>
-          <div className={`list-products row container`}>
-            <div className={`item col-md-3 col-sm-6 col-6`}>
-              <img src="images/best-saler-1.jpg"></img>
-              <div className={`content`}>
-                <div className={`sale`}>
-                  <i className="bi bi-fire"></i>
-                  <span>25%</span>
-                </div>
-                <ul className={`menu`}>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-heart"></i>
-                  </li>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-cart-add"></i>
-                  </li>
-                </ul>
-                <span className={`title`}>
-                  Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                </span>
-                <div className={`price`}>
-                  <del>300,000</del>
-                  <span>255,000</span>
-                </div>
-                <span className={`sold`}>3.2k</span>
-              </div>
-            </div>
-            <div className={`item col-md-3 col-sm-6 col-6`}>
-              <img src="images/best-saler-1.jpg"></img>
-              <div className={`content`}>
-                <div className={`sale`}>
-                  <i className="bi bi-fire"></i>
-                  <span>25%</span>
-                </div>
-                <ul className={`menu`}>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-heart"></i>
-                  </li>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-cart-add"></i>
-                  </li>
-                </ul>
-                <span className={`title`}>
-                  Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                </span>
-                <div className={`price`}>
-                  <del>300,000</del>
-                  <span>255,000</span>
-                </div>
-                <span className={`sold`}>3.2k</span>
-              </div>
-            </div>
-            <div className={`item col-md-3 col-sm-6 col-6`}>
-              <img src="images/best-saler-1.jpg"></img>
-              <div className={`content`}>
-                <div className={`sale`}>
-                  <i className="bi bi-fire"></i>
-                  <span>25%</span>
-                </div>
-                <ul className={`menu`}>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-heart"></i>
-                  </li>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-cart-add"></i>
-                  </li>
-                </ul>
-                <span className={`title`}>
-                  Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                </span>
-                <div className={`price`}>
-                  <del>300,000</del>
-                  <span>255,000</span>
-                </div>
-                <span className={`sold`}>3.2k</span>
-              </div>
-            </div>
-            <div className={`item col-md-3 col-sm-6 col-6`}>
-              <img src="images/best-saler-1.jpg"></img>
-              <div className={`content`}>
-                <div className={`sale`}>
-                  <i className="bi bi-fire"></i>
-                  <span>25%</span>
-                </div>
-                <ul className={`menu`}>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-heart"></i>
-                  </li>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-cart-add"></i>
-                  </li>
-                </ul>
-                <span className={`title`}>
-                  Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                </span>
-                <div className={`price`}>
-                  <del>300,000</del>
-                  <span>255,000</span>
-                </div>
-                <span className={`sold`}>3.2k</span>
-              </div>
-            </div>
-            <div className={`item col-md-3 col-sm-6 col-6`}>
-              <img src="images/best-saler-1.jpg"></img>
-              <div className={`content`}>
-                <div className={`sale`}>
-                  <i className="bi bi-fire"></i>
-                  <span>25%</span>
-                </div>
-                <ul className={`menu`}>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-heart"></i>
-                  </li>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-cart-add"></i>
-                  </li>
-                </ul>
-                <span className={`title`}>
-                  Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                </span>
-                <div className={`price`}>
-                  <del>300,000</del>
-                  <span>255,000</span>
-                </div>
-                <span className={`sold`}>3.2k</span>
-              </div>
-            </div>
-            <div className={`item col-md-3 col-sm-6 col-6`}>
-              <img src="images/best-saler-1.jpg"></img>
-              <div className={`content`}>
-                <div className={`sale`}>
-                  <i className="bi bi-fire"></i>
-                  <span>25%</span>
-                </div>
-                <ul className={`menu`}>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-heart"></i>
-                  </li>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-cart-add"></i>
-                  </li>
-                </ul>
-                <span className={`title`}>
-                  Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                </span>
-                <div className={`price`}>
-                  <del>300,000</del>
-                  <span>255,000</span>
-                </div>
-                <span className={`sold`}>3.2k</span>
-              </div>
-            </div>
-            <div className={`item col-md-3 col-sm-6 col-6`}>
-              <img src="images/best-saler-1.jpg"></img>
-              <div className={`content`}>
-                <div className={`sale`}>
-                  <i className="bi bi-fire"></i>
-                  <span>25%</span>
-                </div>
-                <ul className={`menu`}>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-heart"></i>
-                  </li>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-cart-add"></i>
-                  </li>
-                </ul>
-                <span className={`title`}>
-                  Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                </span>
-                <div className={`price`}>
-                  <del>300,000</del>
-                  <span>255,000</span>
-                </div>
-                <span className={`sold`}>3.2k</span>
-              </div>
-            </div>
-            <div className={`item col-md-3 col-sm-6 col-6`}>
-              <img src="images/best-saler-1.jpg"></img>
-              <div className={`content`}>
-                <div className={`sale`}>
-                  <i className="bi bi-fire"></i>
-                  <span>25%</span>
-                </div>
-                <ul className={`menu`}>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-heart"></i>
-                  </li>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-cart-add"></i>
-                  </li>
-                </ul>
-                <span className={`title`}>
-                  Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                </span>
-                <div className={`price`}>
-                  <del>300,000</del>
-                  <span>255,000</span>
-                </div>
-                <span className={`sold`}>3.2k</span>
-              </div>
-            </div>
-            <div className={`item col-md-3 col-sm-6 col-6`}>
-              <img src="images/best-saler-1.jpg"></img>
-              <div className={`content`}>
-                <div className={`sale`}>
-                  <i className="bi bi-fire"></i>
-                  <span>25%</span>
-                </div>
-                <ul className={`menu`}>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-heart"></i>
-                  </li>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-cart-add"></i>
-                  </li>
-                </ul>
-                <span className={`title`}>
-                  Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                </span>
-                <div className={`price`}>
-                  <del>300,000</del>
-                  <span>255,000</span>
-                </div>
-                <span className={`sold`}>3.2k</span>
-              </div>
-            </div>
-            <div className={`item col-md-3 col-sm-6 col-6`}>
-              <img src="images/best-saler-1.jpg"></img>
-              <div className={`content`}>
-                <div className={`sale`}>
-                  <i className="bi bi-fire"></i>
-                  <span>25%</span>
-                </div>
-                <ul className={`menu`}>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-heart"></i>
-                  </li>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-cart-add"></i>
-                  </li>
-                </ul>
-                <span className={`title`}>
-                  Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                </span>
-                <div className={`price`}>
-                  <del>300,000</del>
-                  <span>255,000</span>
-                </div>
-                <span className={`sold`}>3.2k</span>
-              </div>
-            </div>
-            <div className={`item col-md-3 col-sm-6 col-6`}>
-              <img src="images/best-saler-1.jpg"></img>
-              <div className={`content`}>
-                <div className={`sale`}>
-                  <i className="bi bi-fire"></i>
-                  <span>25%</span>
-                </div>
-                <ul className={`menu`}>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-heart"></i>
-                  </li>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-cart-add"></i>
-                  </li>
-                </ul>
-                <span className={`title`}>
-                  Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                </span>
-                <div className={`price`}>
-                  <del>300,000</del>
-                  <span>255,000</span>
-                </div>
-                <span className={`sold`}>3.2k</span>
-              </div>
-            </div>
-            <div className={`item col-md-3 col-sm-6 col-6`}>
-              <img src="images/best-saler-1.jpg"></img>
-              <div className={`content`}>
-                <div className={`sale`}>
-                  <i className="bi bi-fire"></i>
-                  <span>25%</span>
-                </div>
-                <ul className={`menu`}>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-heart"></i>
-                  </li>
-                  <li className={`menu-item`}>
-                    <i className="bx bx-cart-add"></i>
-                  </li>
-                </ul>
-                <span className={`title`}>
-                  Áo Thun Unisex Nam Nữ Cực Xinh, Dễ Phối Đồ
-                </span>
-                <div className={`price`}>
-                  <del>300,000</del>
-                  <span>255,000</span>
-                </div>
-                <span className={`sold`}>3.2k</span>
-              </div>
-            </div>
-          </div>
-          <div className={`pages`}>
-            <span className={`first`}>
-              <i className="bx bxs-chevron-left"></i>
-            </span>
-            <span className={`page-number-prev`}>1</span>
-            <span className={`page-number-center`}>2</span>
-            <span className={`page-number-next`}>3</span>
-            <span className={`last`}>
-              <i className="bx bxs-chevron-right"></i>
-            </span>
-          </div>
-        </div>
+
       </React.Fragment>
     );
   }

@@ -11,16 +11,47 @@ import ReactPaginate from 'react-paginate';
 
 function Introduction() {
   const [showModal, setShowModal] = useState(false);
+  const [countdown, setCountdown] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+
 
   useEffect(() => {
     // Mở modal tự động sau 500 milliseconds (0.5 giây) khi trang web được tải
+
     const timer = setTimeout(() => {
       setShowModal(true);
     }, 500); // Modal sẽ mở sau 0.5 giây
 
+    // Update the countdown every second
+
+    const endDate = new Date('2023-12-25 23:59:59');
+    const calculateTime = () => {
+      const currentDate = new Date();
+      const timeRemaining = endDate - currentDate;
+
+      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+      setCountdown({
+        days,
+        hours,
+        minutes,
+        seconds,
+      });
+    };
+    const timerSale = setInterval(calculateTime, 1000);
     return () => {
       clearTimeout(timer); // Hủy bỏ timer nếu component unmount
+      clearInterval(timer); // Clean up timer on unmount
     };
+    calculateTime(); // Initial calculation
   }, []);
 
   const handleClose = () => {
@@ -37,25 +68,50 @@ function Introduction() {
         <Modal.Body>
           <div className="newsletter">
             <form action="#">
+            <img src="/images/sale_christmas.gif" style={{width: '260px'}} alt=""></img>
               <div className="newsletter-header">
                 {/* <h3 className="newsletter-title">Subscribe Newsletter.</h3>
 
                   <p className="newsletter-desc">
                     Subscribe the <b>Anon</b> to get latest products and discount update.
                   </p> */}
+                
+                  
+                <div className="countdown-box mt-2">
+                  <p className="countdown-desc">Nhanh lên! Ưu đãi kết thúc sau:</p>
+
+                  <div className="countdown">
+                    <div className="countdown-content">
+                      <p className="display-number">{countdown.days} Days</p>
+
+                    </div>
+
+                    <div className="countdown-content">
+                      <p className="display-number">{countdown.hours} Hours</p>
+                    </div>
+
+                    <div className="countdown-content">
+                      <p className="display-number">{countdown.minutes} Min</p>
+                    </div>
+
+                    <div className="countdown-content">
+                      <p className="display-number">{countdown.seconds} Sec</p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <input
+              {/* <input
                 type="email"
                 name="email"
                 className="email-field"
                 placeholder="Email Address"
                 required
-              />
+              /> */}
 
-              <button type="submit" className="btn-newsletter">
-                Subscribe
-              </button>
+              {/* <button type="submit" className="btn-newsletter">
+                Bắt đầu mua
+              </button> */}
             </form>
           </div>
         </Modal.Body>
@@ -152,7 +208,7 @@ function Products_home() {
                   <div class="d-flex justify-content-between">
                     <p class="small">
                       <a href="#!" class="text-muted">
-                        Laptops
+                        <i class="fa-regular fa-heart"></i>
                       </a>
                     </p>
                     <p class="small text-danger">
@@ -209,7 +265,7 @@ function Products_home() {
                 <div class="d-flex justify-content-between">
                   <p class="small">
                     <a href="#!" class="text-muted">
-                      Laptops
+                      <i class="fa-regular fa-heart"></i>
                     </a>
                   </p>
                   <p class="small text-danger">
@@ -257,7 +313,7 @@ function Products_home() {
                 <div className="d-flex justify-content-between">
                   <p className="small">
                     <a href="#!" class="text-muted">
-                      Laptops
+                      <i class="fa-regular fa-heart"></i>
                     </a>
                   </p>
                   <p className="small text-danger">
@@ -302,7 +358,7 @@ function Products_home() {
                 <div className="d-flex justify-content-between">
                   <p className="small">
                     <a href="#!" className="text-muted">
-                      Laptops
+                      <i class="fa-regular fa-heart"></i>
                     </a>
                   </p>
                   <p className="small text-danger">
@@ -347,7 +403,7 @@ function Products_home() {
                 <div className="d-flex justify-content-between">
                   <p className="small">
                     <a href="#!" className="text-muted">
-                      Laptops
+                      <i class="fa-regular fa-heart"></i>
                     </a>
                   </p>
                   <p className="small text-danger">
@@ -400,7 +456,7 @@ function Products_home() {
                 <div className="d-flex justify-content-between">
                   <p className="small">
                     <a href="#!" class="text-muted">
-                      Laptops
+                      <i class="fa-regular fa-heart"></i>
                     </a>
                   </p>
                   <p className="small text-danger">
@@ -454,7 +510,7 @@ function Products_home() {
             <a href="/">Xem nhiều hơn</a>
           </div>
 
-          <div className="container ">
+          {/* <div className="container ">
             <div className="countdown-box mt-2">
               <p className="countdown-desc">Nhanh lên! Ưu đãi kết thúc sau:</p>
 
@@ -477,7 +533,7 @@ function Products_home() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
 
 
@@ -499,7 +555,7 @@ function Products_home() {
                 <div className="d-flex justify-content-between">
                   <p className="small">
                     <a href="#!" className="text-muted">
-                      Laptops
+                      <i class="fa-regular fa-heart"></i>
                     </a>
                   </p>
                   <p className="small text-danger">
@@ -544,7 +600,7 @@ function Products_home() {
                 <div className="d-flex justify-content-between">
                   <p className="small">
                     <a href="#!" className="text-muted">
-                      Laptops
+                      <i class="fa-regular fa-heart"></i>
                     </a>
                   </p>
                   <p className="small text-danger">
@@ -589,7 +645,7 @@ function Products_home() {
                 <div className="d-flex justify-content-between">
                   <p className="small">
                     <a href="#!" className="text-muted">
-                      Laptops
+                      <i class="fa-regular fa-heart"></i>
                     </a>
                   </p>
                   <p className="small text-danger">
@@ -634,7 +690,7 @@ function Products_home() {
                 <div className="d-flex justify-content-between">
                   <p className="small">
                     <a href="#!" className="text-muted">
-                      Laptops
+                      <i class="fa-regular fa-heart"></i>
                     </a>
                   </p>
                   <p className="small text-danger">
@@ -712,7 +768,7 @@ const Banner = (props) => {
   return (
     <>
 
-      <Table striped bordered hover>
+      {/* <Table striped bordered hover>
         <thead>
           <tr>
             <th>ID
@@ -769,9 +825,9 @@ const Banner = (props) => {
         breakLinkClassName="page-link"
         containerClassName="pagination"
         activeClassName="active"
-      />
+      /> */}
 
-      <div className=" p-4">
+      {/* <div className=" p-4">
         <div className="container list">
           <div className="items">
             <div
@@ -849,7 +905,7 @@ const Banner = (props) => {
             <img src="../images/banner_mc2.jpg" alt="Diamond_Fashion"></img>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
@@ -887,9 +943,130 @@ function Sale() {
 }
 
 
+function About(){
+  return (
+    <>
+    {/* <div class="container">
+    <div class="row align-items-center event-block no-gutters margin-40px-bottom">
+        <div class="col-lg-5 col-sm-12">
+            <div class="position-relative">
+            <img src="../images/electronic_products.png" style={{width: '450px', height: '400px'}} alt=""/>
+                <div class="events-date">
+                    <div class="font-size28">10</div>
+                    <div class="font-size14">Mar</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 col-sm-12">
+            <div class="padding-60px-lr md-padding-50px-lr sm-padding-30px-all xs-padding-25px-all">
+                <h5 class="margin-15px-bottom md-margin-10px-bottom font-size22 md-font-size20 xs-font-size18 font-weight-500"><a href="event-details.html" class="text-theme-color">Business Conference</a></h5>
+                <ul class="event-time margin-10px-bottom md-margin-5px-bottom">
+                    <li><i class="far fa-clock margin-10px-right"></i> 01:30 PM - 04:30 PM</li>
+                    <li><i class="fas fa-user margin-5px-right"></i> Speaker : John Sminth</li>
+                </ul>
+                <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore</p>
+                <a class="butn small margin-10px-top md-no-margin-top" href="event-details.html">Read More <i class="fas fa-long-arrow-alt-right margin-10px-left"></i></a>
+            </div>
+        </div>
+    </div>
+  
+    <div class="row align-items-center event-block no-gutters margin-40px-bottom">
+        <div class="col-lg-7 order-2 order-lg-1">
+            <div class="padding-60px-lr md-padding-50px-lr sm-padding-30px-all xs-padding-25px-all">
+                <h5 class="margin-15px-bottom md-margin-10px-bottom font-size22 md-font-size20 xs-font-size18 font-weight-500"><a href="event-details.html" class="text-theme-color">Craft Workshops</a></h5>
+                <ul class="event-time margin-10px-bottom md-margin-5px-bottom">
+                    <li><i class="far fa-clock margin-10px-right"></i> 09:00 AM - 09:30 PM</li>
+                    <li><i class="fas fa-user margin-5px-right"></i> Speaker : Alexa Zone</li>
+                </ul>
+                <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore</p>
+                <a class="butn small margin-10px-top md-no-margin-top" href="event-details.html">Read More <i class="fas fa-long-arrow-alt-right margin-10px-left"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-5 order-1 order-lg-2">
+            <div class="position-relative">
+                <img src="../images/appliances.jpg" style={{width: '450px', height: '280px'}} alt=""/>
+                <div class="events-date">
+                    <div class="font-size28">25</div>
+                    <div class="font-size14">Feb</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center event-block no-gutters margin-40px-bottom">
+        <div class="col-lg-5 col-sm-12">
+            <div class="position-relative">
+            <img src="../images/banner_style1.jpg" style={{width: '450px', height: '280px'}} alt=""/>
+                <div class="events-date">
+                    <div class="font-size28">20</div>
+                    <div class="font-size14">Feb</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 col-sm-12">
+            <div class="padding-60px-lr md-padding-50px-lr sm-padding-30px-all xs-padding-25px-all">
+                <h5 class="margin-15px-bottom md-margin-10px-bottom font-size22 md-font-size20 xs-font-size18 font-weight-500"><a href="event-details.html" class="text-theme-color">Mentorship Program</a></h5>
+                <ul class="event-time margin-10px-bottom md-margin-5px-bottom">
+                    <li><i class="far fa-clock margin-10px-right"></i> 09:20 AM - 12:00 AM</li>
+                    <li><i class="fas fa-user margin-5px-right"></i> Speaker : Avil Mex</li>
+                </ul>
+                <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore</p>
+                <a class="butn small margin-10px-top md-no-margin-top" href="event-details.html">Read More <i class="fas fa-long-arrow-alt-right margin-10px-left"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="row align-items-center event-block no-gutters margin-40px-bottom">
+        <div class="col-lg-7 order-2 order-lg-1">
+            <div class="padding-60px-lr md-padding-50px-lr sm-padding-30px-all xs-padding-25px-all">
+                <h5 class="margin-15px-bottom md-margin-10px-bottom font-size22 md-font-size20 xs-font-size18 font-weight-500"><a href="event-details.html" class="text-theme-color">Technical Events</a></h5>
+                <ul class="event-time margin-10px-bottom md-margin-5px-bottom">
+                    <li><i class="far fa-clock margin-10px-right"></i> 10:00 AM - 09:00 PM</li>
+                    <li><i class="fas fa-user margin-5px-right"></i> Speaker : Venil Monts</li>
+                </ul>
+                <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore</p>
+                <a class="butn small margin-10px-top md-no-margin-top" href="event-details.html">Read More <i class="fas fa-long-arrow-alt-right margin-10px-left"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-5 order-1 order-lg-2">
+            <div class="position-relative">
+            <img src="../images/banner_style1.jpg" style={{width: '450px', height: '280px'}} alt=""/>
+                <div class="events-date">
+                    <div class="font-size28">25</div>
+                    <div class="font-size14">Sep</div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="row align-items-center event-block no-gutters">
+        <div class="col-lg-5 col-sm-12">
+            <div class="position-relative">
+            <img src="../images/banner_style1.jpg" style={{width: '450px', height: '280px'}} alt=""/>
+                <div class="events-date">
+                    <div class="font-size28">10</div>
+                    <div class="font-size14">Oct</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 col-sm-12">
+            <div class="padding-60px-lr md-padding-50px-lr sm-padding-30px-all xs-padding-25px-all">
+                <h5 class="margin-15px-bottom md-margin-10px-bottom font-size22 md-font-size20 xs-font-size18 font-weight-500"><a href="event-details.html" class="text-theme-color">Startup Events</a></h5>
+                <ul class="event-time margin-10px-bottom md-margin-5px-bottom">
+                    <li><i class="far fa-clock margin-10px-right"></i> 11:00 AM - 09:00 PM</li>
+                    <li><i class="fas fa-map-marker-alt margin-5px-right"></i> Speaker : Mavil Aven</li>
+                </ul>
+                <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore</p>
+                <a class="butn small margin-10px-top md-no-margin-top" href="event-details.html">Read More <i class="fas fa-long-arrow-alt-right margin-10px-left"></i></a>
+            </div>
+        </div>
+    </div>
+
+</div> */}
+    </>
+  )
+}
 
 
 
 
-
-export { Introduction, Products_home, CategoriesProduct, Banner, Sale };
+export { Introduction, Products_home, CategoriesProduct, Banner, Sale, About };

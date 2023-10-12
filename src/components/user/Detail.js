@@ -512,7 +512,73 @@ function ProductPage() {
                   <b>
                     <span className="title">ĐÁNH GIÁ SẢN PHẨM</span>
                   </b>
-
+                  <div class="bg-white rounded  p-4 mb-4 clearfix graph-star-rating">
+                    <div class="graph-star-rating-header">
+                        <div class="star-rating">
+                            <a href="#"><i class="icofont-ui-rating active"></i></a>
+                            <a href="#"><i class="icofont-ui-rating active"></i></a>
+                            <a href="#"><i class="icofont-ui-rating active"></i></a>
+                            <a href="#"><i class="icofont-ui-rating active"></i></a>
+                            <a href="#"><i class="icofont-ui-rating"></i></a> <b class="text-black ml-2">334</b>
+                        </div>
+                        <p class="text-black mb-4 mt-2">Rated 3.5 out of 5</p>
+                    </div>
+                    <div class="graph-star-rating-body">
+                        <div class="rating-list">
+                            <div class="rating-list-left text-black">
+                                5 Star
+                            </div>
+                            <div class="rating-list-center">
+                                <div class="progress">
+                                    <div style={{width:'56%'}} aria-valuemax="5" aria-valuemin="0" aria-valuenow="5" role="progressbar" class="progress-bar bg-primary">
+                                        <span class="sr-only">80% Complete (danger)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rating-list-right text-black">56%</div>
+                        </div>
+                        <div class="rating-list">
+                            <div class="rating-list-left text-black">
+                                4 Star
+                            </div>
+                            <div class="rating-list-center">
+                                <div class="progress">
+                                    <div style={{width: '23%'}} aria-valuemax="5" aria-valuemin="0" aria-valuenow="5" role="progressbar" class="progress-bar bg-primary">
+                                        <span class="sr-only">80% Complete (danger)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rating-list-right text-black">23%</div>
+                        </div>
+                        <div class="rating-list">
+                            <div class="rating-list-left text-black">
+                                3 Star
+                            </div>
+                            <div class="rating-list-center">
+                                <div class="progress">
+                                    <div style={{width: '11%'}} aria-valuemax="5" aria-valuemin="0" aria-valuenow="5" role="progressbar" class="progress-bar bg-primary">
+                                        <span class="sr-only">80% Complete (danger)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rating-list-right text-black">11%</div>
+                        </div>
+                        <div class="rating-list">
+                            <div class="rating-list-left text-black">
+                                2 Star
+                            </div>
+                            <div class="rating-list-center">
+                                <div class="progress">
+                                    <div style={{width: '2%'}} aria-valuemax="5" aria-valuemin="0" aria-valuenow="5" role="progressbar" class="progress-bar bg-primary">
+                                        <span class="sr-only">80% Complete (danger)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rating-list-right text-black">02%</div>
+                        </div>
+                    </div>
+                   
+                </div>
                   <div className="pt-2">
                     <div className="mt-3">
                       {showAllComments ? (

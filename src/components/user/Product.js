@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Slogan } from "../../page/user/Navbar";
+import MainNavbar from "../../page/user/Navbar";
 import Footer from "../../page/user/Footer";
 import "../css/user/product.css";
 import "../css/user/home.css";
 import "../css/user/slider.css";
-import { Container, Row, Col, Form, InputGroup, Button, Card  } from 'react-bootstrap';
+import { Container, Row, Col, Form, InputGroup, Button, Card } from 'react-bootstrap';
 
 function Product() {
   const handleTDClick = (event) => {
@@ -24,12 +24,11 @@ function Product() {
   };
 
   return (
-    <React.Fragment>
+    <>
+      <nav >
+        <MainNavbar />
+      </nav>
       <div className='product'>
-        <nav >
-          {/* <Navbar /> */}
-        </nav>
-
         <section className="breadcrumb-section" style={{ backgroundImage: "url('images/best-saler-1.jpg')" }}>
           <Container>
             <Row>
@@ -42,25 +41,24 @@ function Product() {
             </Row>
           </Container>
         </section>
-
         <section className="product spad">
           <div className="container">
             <div className="row">
               <div className="col-lg-3 col-md-5">
                 <div className="sidebar">
-                <div class="hero__categories">
-            <div class="hero__categories__all">
-              <i class="fa fa-bars"></i>
-              <span>Danh mục sản phẩm</span>
-            </div>
-            <ul>
-              {/* {categories.map((category) => (
+                  <div class="hero__categories">
+                    <div class="hero__categories__all">
+                      <i class="fa fa-bars"></i>
+                      <span>Danh mục sản phẩm</span>
+                    </div>
+                    <ul>
+                      {/* {categories.map((category) => (
                 <li key={category.id}>
                   <a href="#">{category.type_category}</a>
                 </li>
               ))} */}
-            </ul>
-          </div>
+                    </ul>
+                  </div>
                   <div className="sidebar__item">
                     <h4>Giá</h4>
                     <div className="price-range-wrap">
@@ -75,14 +73,13 @@ function Product() {
                       </div>
                       <div className="range-slider">
                         <div className="price-input">
-                        <div className="slider-container">
-   </div>
+                          <div className="slider-container">
+                          </div>
                           <input type="text" id="minamount" />
                           <input type="text" id="maxamount" />
                         </div>
                       </div>
                     </div>
-
                     <div className="sidebar__item sidebar__item__color--option">
                       <h4>Màu sắc</h4>
                       <div className="sidebar__item__color sidebar__item__color--white">
@@ -122,7 +119,6 @@ function Product() {
                         </label>
                       </div>
                     </div>
-
                     <div className="sidebar__item">
                       <h4>Kích cỡ</h4>
                       <div className="sidebar__item__size">
@@ -155,9 +151,6 @@ function Product() {
                     <div className="latest-product__text">
                       <h4>Sản phẩm mới nhất</h4>
                       <div className="latest-product__slider owl-carousel">
-
-
-                        {/* Slide 2 */}
                         <div className="latest-prdouct__slider__item">
                           <a href="#" className="latest-product__item">
                             <div className="latest-product__item__pic">
@@ -169,8 +162,6 @@ function Product() {
                             </div>
                           </a>
                         </div>
-
-                        {/* Slide 3 */}
                         <div className="latest-prdouct__slider__item">
                           <a href="#" className="latest-product__item">
                             <div className="latest-product__item__pic">
@@ -192,7 +183,6 @@ function Product() {
                   <div className="section-title product__discount__title">
                     <h4><strong>ĐANG GIẢM GIÁ</strong> </h4>
                   </div>
-                  
                   <div>
                     <div class=" ">
                       <div className="all-items">
@@ -202,10 +192,8 @@ function Product() {
                               style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                             ></img>
                           </div>
-
                           <div className="div-text">
                             <h4><a href="#">Áo thun tay ngắn</a></h4>
-
                             <p>Lorem ipsum dolor sit amet consectetur.</p>
                             <div className="stars">
                               <i className="fa-solid fa-star"></i>
@@ -213,7 +201,6 @@ function Product() {
                               <i className="fa-solid fa-star"></i>
                               <i className="fa-solid fa-star"></i>
                               <i className="fa-regular fa-star-half-stroke"></i>
-
                             </div>
                             <div className="price">
                               <span>$120</span>
@@ -221,17 +208,14 @@ function Product() {
                             </div>
                           </div>
                         </div>
-
                         <div className="item">
                           <div className="div-img">
                             <img src="images/best-saler-3.jpg" alt=""
                               style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                             ></img>
                           </div>
-
                           <div className="div-text">
                             <h4><a href="#">Áo thun tay ngắn</a></h4>
-
                             <p>Lorem ipsum dolor sit amet consectetur.</p>
                             <div className="stars">
                               <i className="fa-solid fa-star"></i>
@@ -239,7 +223,6 @@ function Product() {
                               <i className="fa-solid fa-star"></i>
                               <i className="fa-solid fa-star"></i>
                               <i className="fa-regular fa-star-half-stroke"></i>
-
                             </div>
                             <div className="price">
                               <span>$120</span>
@@ -247,8 +230,6 @@ function Product() {
                             </div>
                           </div>
                         </div>
-
-
                         <div className="item">
                           <div className="div-img">
                             <img src="images/best-saler-2.jpg" alt=""
@@ -274,18 +255,14 @@ function Product() {
                             </div>
                           </div>
                         </div>
-
-
                         <div className="item">
                           <div className="div-img">
                             <img src="images/best-saler-1.jpg" alt=""
                               style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                             ></img>
                           </div>
-
                           <div className="div-text">
                             <h4><a href="#">Áo thun tay ngắn</a></h4>
-
                             <p>Lorem ipsum dolor sit amet consectetur.</p>
                             <div className="stars">
                               <i className="fa-solid fa-star"></i>
@@ -293,7 +270,6 @@ function Product() {
                               <i className="fa-solid fa-star"></i>
                               <i className="fa-solid fa-star"></i>
                               <i className="fa-regular fa-star-half-stroke"></i>
-
                             </div>
                             <div className="price">
                               <span>$120</span>
@@ -304,7 +280,6 @@ function Product() {
                       </div>
                     </div>
                   </div>
-
                 </div>
                 <div className="filter__item">
                   <div className="row">
@@ -337,10 +312,8 @@ function Product() {
                         style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                       ></img>
                     </div>
-
                     <div className="div-text">
                       <h4><a href="#">Áo thun tay ngắn</a></h4>
-
                       <p>Lorem ipsum dolor sit amet consectetur.</p>
                       <div className="stars">
                         <i className="fa-solid fa-star"></i>
@@ -348,7 +321,6 @@ function Product() {
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-regular fa-star-half-stroke"></i>
-
                       </div>
                       <div className="price">
                         <span>$120</span>
@@ -356,17 +328,14 @@ function Product() {
                       </div>
                     </div>
                   </div>
-
                   <div className="item">
                     <div className="div-img">
                       <img src="images/best-saler-3.jpg" alt=""
                         style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                       ></img>
                     </div>
-
                     <div className="div-text">
                       <h4><a href="#">Áo thun tay ngắn</a></h4>
-
                       <p>Lorem ipsum dolor sit amet consectetur.</p>
                       <div className="stars">
                         <i className="fa-solid fa-star"></i>
@@ -374,7 +343,6 @@ function Product() {
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-regular fa-star-half-stroke"></i>
-
                       </div>
                       <div className="price">
                         <span>$120</span>
@@ -382,18 +350,14 @@ function Product() {
                       </div>
                     </div>
                   </div>
-
-
                   <div className="item">
                     <div className="div-img">
                       <img src="images/best-saler-2.jpg" alt=""
                         style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                       ></img>
                     </div>
-
                     <div className="div-text">
                       <h4><a href="#">Áo thun tay ngắn</a></h4>
-
                       <p>Lorem ipsum dolor sit amet consectetur.</p>
                       <div className="stars">
                         <i className="fa-solid fa-star"></i>
@@ -401,7 +365,6 @@ function Product() {
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-regular fa-star-half-stroke"></i>
-
                       </div>
                       <div className="price">
                         <span>$120</span>
@@ -409,18 +372,14 @@ function Product() {
                       </div>
                     </div>
                   </div>
-
-
                   <div className="item">
                     <div className="div-img">
                       <img src="images/best-saler-1.jpg" alt=""
                         style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                       ></img>
                     </div>
-
                     <div className="div-text">
                       <h4><a href="#">Áo thun tay ngắn</a></h4>
-
                       <p>Lorem ipsum dolor sit amet consectetur.</p>
                       <div className="stars">
                         <i className="fa-solid fa-star"></i>
@@ -428,7 +387,6 @@ function Product() {
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-regular fa-star-half-stroke"></i>
-
                       </div>
                       <div className="price">
                         <span>$120</span>
@@ -444,10 +402,8 @@ function Product() {
                         style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                       ></img>
                     </div>
-
                     <div className="div-text">
                       <h4><a href="#">Áo thun tay ngắn</a></h4>
-
                       <p>Lorem ipsum dolor sit amet consectetur.</p>
                       <div className="stars">
                         <i className="fa-solid fa-star"></i>
@@ -455,7 +411,6 @@ function Product() {
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-regular fa-star-half-stroke"></i>
-
                       </div>
                       <div className="price">
                         <span>$120</span>
@@ -463,17 +418,14 @@ function Product() {
                       </div>
                     </div>
                   </div>
-
                   <div className="item">
                     <div className="div-img">
                       <img src="images/best-saler-3.jpg" alt=""
                         style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                       ></img>
                     </div>
-
                     <div className="div-text">
                       <h4><a href="#">Áo thun tay ngắn</a></h4>
-
                       <p>Lorem ipsum dolor sit amet consectetur.</p>
                       <div className="stars">
                         <i className="fa-solid fa-star"></i>
@@ -481,7 +433,6 @@ function Product() {
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-regular fa-star-half-stroke"></i>
-
                       </div>
                       <div className="price">
                         <span>$120</span>
@@ -489,18 +440,14 @@ function Product() {
                       </div>
                     </div>
                   </div>
-
-
                   <div className="item">
                     <div className="div-img">
                       <img src="images/best-saler-2.jpg" alt=""
                         style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                       ></img>
                     </div>
-
                     <div className="div-text">
                       <h4><a href="#">Áo thun tay ngắn</a></h4>
-
                       <p>Lorem ipsum dolor sit amet consectetur.</p>
                       <div className="stars">
                         <i className="fa-solid fa-star"></i>
@@ -508,7 +455,6 @@ function Product() {
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-solid fa-star"></i>
                         <i className="fa-regular fa-star-half-stroke"></i>
-
                       </div>
                       <div className="price">
                         <span>$120</span>
@@ -516,8 +462,6 @@ function Product() {
                       </div>
                     </div>
                   </div>
-
-
                   <div className="item">
                     <div className="div-img">
                       <img src="images/best-saler-1.jpg" alt=""
@@ -559,7 +503,7 @@ function Product() {
           <Footer />
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 }
 export default Product;

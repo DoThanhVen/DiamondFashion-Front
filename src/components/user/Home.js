@@ -1,6 +1,6 @@
 import React from "react";
 import  MainNavbar  from "../../page/user/Navbar";
-import { Banner, Introduction,Products_home, CategoriesProduct, Sale} from "./FormHome";
+import { Banner, Introduction,Products_home, CategoriesProduct, Sale,About} from "./HomePage";
 import Footer from "../../page/user/Footer";
 
 
@@ -28,6 +28,9 @@ function Home() {
         <Sale />
       </div>
    
+<div>
+  <About/>
+</div>
 
       <div id="footer">
         <Footer />
