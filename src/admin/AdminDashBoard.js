@@ -7,7 +7,7 @@ import Shops from "./Shops";
 import Storge from "./Storge";
 import { Link, useLocation } from "react-router-dom";
 import "../css/admin/nav.css";
-
+import { callAPI } from "../service/API.js";
 function Nav() {
   const location = useLocation();
   const isActiveHome = location.pathname === "/admin";
@@ -16,7 +16,7 @@ function Nav() {
   const isActiveTypeProduct = location.pathname === "/admin/categories";
   const isActiveListProduct = location.pathname === "/admin/products";
   const isActiveStorge = location.pathname === "/admin/storge";
-
+ 
   const handleTDClick = (event) => {
     const showMenu = event.currentTarget;
     const navElement = document.querySelector("#adminDashBoard nav");

@@ -1,0 +1,98 @@
+.card {
+    background-color: white;
+    box-shadow: 0 1px 5px lightgrey;
+}
+
+#addProduct {
+    padding: 20px;
+    border-bottom: 1px solid black;
+}
+
+.heading {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.color label,
+.size label,
+.quantity label,
+.product label {
+    width: 230px;
+    text-align: right;
+    padding: 15px;
+}
+
+.product .optionSelect {
+    padding: 10px;
+    border: 1px solid lightgrey;
+    border-radius: 7px;
+}
+
+.product .optionSelect:focus {
+    outline: none;
+}
+
+.color input,
+.size input,
+.quantity input {
+    width: calc(100% - 260px);
+    padding: 10px;
+    border: 1px solid lightgrey;
+    border-radius: 7px;
+}
+
+.color input:focus,
+.size input:focus,
+.quantity input:focus {
+    outline: none;
+}
+
+.action {
+    display: flex;
+    justify-content: end;
+    margin-right: 30px;
+}
+
+.action .buttonCreate,
+.action .buttonEdit {
+    width: 100px;
+    background-color: orangered;
+    color: white;
+    border: none;
+    padding: 7px 10px;
+    margin: 5px;
+}
+
+/*TABLE*/
+#tableStorge {
+    margin: 20px;
+    max-height: 300px;
+    overflow: auto;
+}
+
+#tableStorge::-webkit-scrollbar {
+    width: 6px;
+}
+
+#tableStorge::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+}
+
+#tableStorge::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+#tableStorge::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+}
+
+#tableStorge table {
+    width: 100%;
+}
+
+#tableStorge table thead {
+    border-bottom: 1px solid black;
+    position: sticky;
+    top: 0;
+}

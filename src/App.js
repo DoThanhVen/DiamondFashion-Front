@@ -5,7 +5,9 @@ import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
+    
     <Routes>
+      
       <Route path="/admin" element={<AdminDashBoard />}/>
       <Route path="/admin/accounts" element={<AdminDashBoard />}/>
       <Route path="/admin/shops" element={<AdminDashBoard />}/>
@@ -14,6 +16,9 @@ function App() {
       <Route path="/admin/storge" element={<AdminDashBoard />}/>
 
       <Route path="/business" element={<BusinessDashBoard />}/>
+      <Route path="/business/bill" element={<BusinessDashBoard />}/>
+      <Route path="/business/product" element={<BusinessDashBoard />}/>
+      <Route path="/business/storge" element={<BusinessDashBoard />}/>
     </Routes>
   );
 }

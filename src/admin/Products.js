@@ -1,15 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import ProductService from "../service/ProductService";
 import "../css/admin/product.css";
 
 function Products() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    ProductService.getProducts().then((response) => {
-      setProducts(response.data);
-    });
-  }, []);
+  const products = [];
 
   /*XỬ LÝ THANH TÌM KIẾM*/
   const [isOpenSearch, setIsOpenSearch] = useState(false);

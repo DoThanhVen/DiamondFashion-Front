@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from "react";
+import {callAPI} from "../service/API"
 import "../css/admin/home.css";
 function Home() {
+  
+  const [data, setdata] = useState([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    try {
+      const response = await callAPI(`/api/category`, "GET");
+      setdata(response);
+    } catch (error) {}
+  };
+  console.log(data)
   function formatCurrency(price) {
     const formatter = new Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -9,6 +23,7 @@ function Home() {
     });
     return formatter.format(price);
   }
+
   const Top10 = [
     {
       image: "banner-left.jpg",
