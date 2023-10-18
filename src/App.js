@@ -2,6 +2,8 @@ import React from "react";
 import AdminDashBoard from "./admin/AdminDashBoard";
 import BusinessDashBoard from "./business/BusinessDashBoard";
 import { Route, Routes } from "react-router-dom";
+import LoadProduct from "./business/testload";
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
       <Route path="/business/bill" element={<BusinessDashBoard />}/>
       <Route path="/business/product" element={<BusinessDashBoard />}/>
       <Route path="/business/storge" element={<BusinessDashBoard />}/>
+      <Route path="/admin/management" element={<LoadProduct />}/>
     </Routes>
   );
 }
