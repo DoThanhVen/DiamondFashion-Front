@@ -1,5 +1,5 @@
-import { callAPI } from "../service/API";
-import style from "../css/business/product.module.css";
+import { callAPI } from "../../service/API";
+import style from "../../css/business/product.module.css";
 import React, { useEffect, useState } from "react";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
