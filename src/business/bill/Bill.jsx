@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import style from "../../css/business/bill.module.css";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import style from "../../css/business/product.module.css";
-import ModelEdit from "./ModelEdit";
-import AddProduct from "./AddProduct";
-import ListAllProduct from "./ListAllProduct";
-import ListProductActive from "./ListProductActive";
-import ListProductUnactive from "./ListProductUnactive";
+import AllBill from "./AllBill";
+import CanceledBill from "./CanceledBill"
+import UnpaidBill from "./UnpaidBill"
 
-function Product() {
+function Bill() {
   const [value, setValue] = React.useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -42,7 +41,7 @@ function Product() {
                       fontWeight: "bold"
                     }
                   }}
-                  label="Đang Hoạt Động"
+                  label="Chờ xác nhận"
                   value="2"
                 />
                 <Tab
@@ -52,32 +51,19 @@ function Product() {
                       fontWeight: "bold"
                     }
                   }}
-                  label="Hết Hàng"
-                  value="3"
-                />
-                <Tab
-                  sx={{
-                    textTransform: "none",
-                    "&.Mui-selected": {
-                      fontWeight: "bold"
-                    }
-                  }}
-                  label="Thêm Sản Phẩm"
-                  value="4"
+                  label="Đã hủy"
+                  value="6"
                 />
               </TabList>
             </Box>
             <TabPanel value="1">
-              <ListAllProduct />
+              <AllBill />
             </TabPanel>
             <TabPanel value="2">
-              <ListProductActive />
+              <UnpaidBill />
             </TabPanel>
-            <TabPanel value="3">
-              <ListProductUnactive />
-            </TabPanel>
-            <TabPanel value="4">
-              <AddProduct />
+            <TabPanel value="6">
+              <CanceledBill />
             </TabPanel>
           </TabContext>
         </Box>
@@ -86,4 +72,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default Bill;

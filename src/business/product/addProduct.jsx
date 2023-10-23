@@ -1,8 +1,9 @@
-import { callAPI } from "../../service/API";
+import { callAPI } from '../../service/API'
 import style from "../../css/business/product.module.css";
 import React, { useEffect, useState } from "react";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 function AddProduct() {
     const [datacategory, setcategorydata] = useState([]);
     const [categoryItemData, setcategoryItem] = useState([]);
@@ -72,7 +73,7 @@ function AddProduct() {
             product_name: name,
             price: price,
             description: description,
-            status: true,
+            status: 0,
             quantity: quantityValue,
             categoryItem_product: {
                 id: valueCategoryItem
@@ -103,33 +104,40 @@ function AddProduct() {
     return (
         <React.Fragment>
             <div className={`${style.cardHeading}`}>Thông tin cơ bản</div>
-            <div className={`${style.listImage}`}>
-                {selectedImages.slice(0, 9).map((image, index) => (
-                    <div className={`${style.selectedImages}`} key={index}>
-                        <img src={image} alt={`Selected ${index}`} />
-                        <label onClick={() => handleDeleteImage(index)}>
-                            <i className="bx bx-trash"></i>
-                        </label>
+            <div className={`${style.addImage}`}>
+                <label>Hình ảnh sản phẩm</label>
+                <div className={`${style.infoImages}`}>
+                    <div>
+                        <span>* </span>
+                        <label> Hình ảnh tỷ lệ 1:1</label>
                     </div>
-                ))}
-                <input
-                    id="selectedImage"
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleImageChange}
-                    style={{ display: "none" }}
-                />
-                {selectedImages.length < 9 ? (
-                    <label
-                        htmlFor="selectedImage"
-                        className={`${style.labelSelected}`}
-                    >
-                        <i class="bx bx-image-add"></i>
-                        <span>Thêm hình ảnh ({selectedImages.length}/9)</span>
-                    </label>
-                ) : null}
-            </div>
+                    <div className={`${style.listImage}`}>
+                        {selectedImages.slice(0, 9).map((image, index) => (
+                            <div className={`${style.selectedImages}`} key={index}>
+                                <img src={image} alt={`Selected ${index}`} />
+                                <label onClick={() => handleDeleteImage(index)}>
+                                    <i className="bx bx-trash"></i>
+                                </label>
+                            </div>
+                        ))}
+                        <input
+                            id="selectedImage"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            style={{ display: "none" }}
+                        />
+                        {selectedImages.length < 9 ? (
+                            <label
+                                htmlFor="selectedImage"
+                                className={`${style.labelSelected}`}
+                            >
+                                <i class="bx bx-image-add"></i>
+                                <span>Thêm hình ảnh ({selectedImages.length}/9)</span>
+                            </label>
+                        ) : null}
+                    </div>
+                </div></div>
             <div className={`${style.productName}`}>
                 <label>Tên sản phẩm</label>
                 <input type="text" placeholder="Tên sản phẩm..." onChange={(e) => { setname(e.target.value) }}></input>

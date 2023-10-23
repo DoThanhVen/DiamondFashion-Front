@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { callAPI } from "../../service/API";
+import React, { useRef, useState } from "react";
 import style from "../../css/business/product.module.css";
-function ModelEdit({ data, closeModal }) {
+
+export default function ModelEdit({datacategory, data, closeModal }) {
+
     //SELECT IMAGE
     const [selectedImages, setSelectedImages] = useState([]);
     const handleImageChange = (e) => {
@@ -21,29 +22,6 @@ function ModelEdit({ data, closeModal }) {
       deletedImage.splice(index, 1);
       setSelectedImages(deletedImage);
     };
-    //LOẠI SẢN PHẨM
-    const categories = [
-      {
-        idCategory: "category1",
-        imageCategory: "tiktok.jpg",
-        type: "Áo"
-      },
-      {
-        idCategory: "category2",
-        imageCategory: "facebook.jpg",
-        type: "Quần"
-      },
-      {
-        idCategory: "category3",
-        imageCategory: "banner-left.jpg",
-        type: "Giày"
-      },
-      {
-        idCategory: "category4",
-        imageCategory: "banner-right-1.jpg",
-        type: "Điện Thoại"
-      }
-    ];
   
     const [valueCategory, setValueCategory] = React.useState(data.idCategory);
     const handleChangeCategory = (event) => {
@@ -146,9 +124,9 @@ function ModelEdit({ data, closeModal }) {
                 className={`${style.optionSelectType}`}
               >
                 <option value="">Loại Sản Phẩm...</option>
-                {categories.map((value, index) => (
-                  <option key={index} value={value.idCategory}>
-                    {value.type}
+                {datacategory.map((value, index) => (
+                  <option key={index} value={value.id}>
+                    {value.type_category}
                   </option>
                 ))}
               </select>
@@ -158,7 +136,7 @@ function ModelEdit({ data, closeModal }) {
                   onChange={handleChangeCategoryItem}
                   className={`${style.optionSelectType}`}
                 >
-                  <option value="">Phân Loại Sản Phẩm...</option>
+                  <option value="">Phân Sản Phẩm...</option>
                   {categoryItem.map((value, index) =>
                     valueCategory === value.idCategory ? (
                       <option key={index} value={value.idCategoryItem}>
@@ -182,4 +160,3 @@ function ModelEdit({ data, closeModal }) {
       </React.Fragment>
     );
   }
-  export default ModelEdit
