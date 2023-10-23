@@ -1,0 +1,101 @@
+.filter {
+    width: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 20px 30px;
+
+    .heading {
+        font-size: 20px;
+        font-weight: bold;
+    }
+}
+
+.listShop {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+
+    .cardShop {
+        width: 230px;
+        height: auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        margin-right: 20px;
+
+        .heading {
+            display: flex;
+
+            .image {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+            }
+
+            .content {
+                display: flex;
+                flex-direction: column;
+                margin-left: 10px;
+
+                .shopName {
+                    font-size: 15px;
+                    font-weight: 600;
+                }
+
+                .createDate {
+                    font-size: 13px;
+                    color: grey;
+                }
+            }
+
+        }
+
+        .address {
+            display: flex;
+            flex-direction: column;
+
+            .title {
+                margin: 10px 0;
+                font-weight: bold;
+            }
+
+            .content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .content label {
+                font-size: 15px;
+            }
+        }
+
+        .status {
+            display: flex;
+            justify-content: end;
+            margin-top: 5px;
+
+            .statusShop {
+                padding: 5px 8px;
+                font-size: 14px;
+                color: white;
+                border-radius: 20px;
+            }
+        }
+    }
+}
+
+.buttonPage {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.buttonPage a {
+    background-color: lightgrey;
+    color: black;
+    margin: 0 5px;
+}
