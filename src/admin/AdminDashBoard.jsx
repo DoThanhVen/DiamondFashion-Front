@@ -8,6 +8,7 @@ import ProductAdmin from "./product/ProductAdmin";
 import Statistical from "./statisitcal/Statistical";
 import Character from "./Character";
 import Error404 from "./Error404";
+import Login from "./Login"
 import style from "../css/admin/nav.module.css";
 import { Link, useLocation } from "react-router-dom";
 import { callAPI } from "../service/API.js";
@@ -129,7 +130,7 @@ function AdminDashboard() {
           </ul>
         </div>
         <div id={style.content}>
-          {isActiveHome ? <Error404 /> : null}
+          {isActiveHome ? <Login /> : null}
           {isActiveAccount ? <Account /> : null}
           {isActiveShop ? <Shop /> : null}
           {isActiveTypeProduct ? <Category /> : null}
