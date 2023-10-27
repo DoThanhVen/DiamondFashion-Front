@@ -4,6 +4,7 @@ import style from "../../css/business/product.module.css";
 export default function AddProduct() {
     //SELECT IMAGE
     const [selectedImages, setSelectedImages] = useState([]);
+    const handleChangeCategory = (event) => {
     const handleImageChange = (e) => {
       const files = e.target.files;
       const selectedImagesArray = Array.from(files)
