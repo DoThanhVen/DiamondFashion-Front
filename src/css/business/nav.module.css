@@ -2,6 +2,23 @@ html {
     background-color: rgb(245, 245, 245);
 }
 
+.showNav {
+    font-size: 30px;
+    border-radius: 50%;
+    padding: 10px;
+    color: black;
+    background-color: white;
+    filter: drop-shadow(0 1px 2px grey);
+    position: fixed;
+    bottom: 10px;
+    left: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 1s ease-in-out;
+    cursor: pointer;
+    z-index: 10;
+}
+
 .header {
     height: 70px;
     width: 100%;
@@ -12,64 +29,61 @@ html {
     justify-content: space-between;
     position: fixed;
     top: 0;
-}
 
-.header .logo {
-    display: flex;
-    align-items: center;
-    width: 30%;
-    margin-left: 20px;
-}
+    .logo {
+        display: flex;
+        align-items: center;
+        width: 50%;
+        margin-left: 20px;
+    }
 
-.header .logo img {
-    width: 100px;
-}
+    .logo img {
+        width: 100px;
+    }
 
-.header .logo a {
-    font-size: 20px;
-    color: black;
-    opacity: 0.8;
-}
+    .logo a {
+        font-size: 20px;
+        color: black;
+        opacity: 0.8;
+    }
 
-.header>div {
-    display: flex;
-    align-items: center;
-}
+    .others {
+        display: flex;
+        align-items: center;
 
-.header>div .account {
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding: 5px 5px;
-    border-radius: 40px;
-    transition: all .3s ease-in;
-    cursor: pointer;
+        .account {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 5px 5px;
+            border-radius: 40px;
+            transition: all .3s ease-in;
+            cursor: pointer;
 
-    .customerName {
-        font-size: 14px;
+            &:hover {
+                background-color: rgba(211, 211, 211, .5);
+            }
+
+            .customerName {
+                font-size: 14px;
+            }
+
+            .image {
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .label {
+                font-size: 14px;
+            }
+        }
+
     }
 }
 
-.header>div .account img {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.header>div .account label {
-    font-size: 14px;
-}
-
-.header>div .account:hover {
-    background-color: rgba(211, 211, 211, .5);
-}
-
-li {
-    list-style: none;
-}
-
-.header>div .notifycation {
+.notifycation {
     position: relative;
     width: 45px;
     height: 45px;
@@ -79,100 +93,98 @@ li {
     border-radius: 50%;
     cursor: pointer;
     transition: all .3s ease-in;
+
+    &:hover {
+        background-color: rgba(211, 211, 211, .5);
+    }
+
+    .i {
+        font-size: 22px;
+    }
+
+    .span {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        width: 20px;
+        height: 20px;
+        background-color: orangered;
+        color: white;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+    }
+
+    .card {
+        position: absolute;
+        width: 400px;
+        background-color: white;
+        top: 40px;
+        right: 0;
+        border-radius: 5px;
+        box-shadow: 0 0 10px lightgrey;
+
+        .cardHeader {
+            border-bottom: 1px solid lightgrey;
+            font-size: 15px;
+        }
+
+        .cardBody {
+            max-height: 300px;
+            overflow: auto;
+            padding: 0 !important;
+
+            .cardContent {
+                display: flex;
+
+                .image {
+                    width: 100px;
+                    height: 100px;
+                    object-fit: cover;
+                }
+
+                .content {
+                    width: calc(100% - 100px);
+                    margin: 0;
+                    padding: 0 !important;
+
+                    .title {
+                        padding: 0;
+                        margin-top: 10px;
+                        font-weight: 600;
+                    }
+
+                    .substance {
+                        padding: 0;
+                        font-size: 14px;
+                        color: grey;
+                    }
+
+                    .time {
+                        display: flex;
+                        padding: 0;
+                    }
+
+                    .time * {
+                        padding: 0;
+                        font-size: 14px;
+                        color: grey;
+                        padding-right: 7px;
+                    }
+                }
+            }
+        }
+
+        .cardFooter {
+            border-top: 1px solid lightgrey;
+        }
+    }
+
+    .card * {
+        padding: 10px;
+    }
 }
 
-.header>div .notifycation:hover {
-    background-color: rgba(211, 211, 211, .5);
-}
-
-.header>div .notifycation i {
-    font-size: 22px;
-}
-
-.header>div .notifycation span {
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    width: 20px;
-    height: 20px;
-    background-color: orangered;
-    color: white;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-}
-
-.header>div .notifycation .card {
-    position: absolute;
-    width: 400px;
-    background-color: white;
-    top: 40px;
-    right: 0;
-    border-radius: 5px;
-    box-shadow: 0 0 10px lightgrey;
-}
-
-.header>div .notifycation .card * {
-    padding: 10px;
-}
-
-.header>div .notifycation .card .cardHeader {
-    border-bottom: 1px solid lightgrey;
-    font-size: 15px;
-}
-
-.header>div .notifycation .card .cardBody {
-    max-height: 300px;
-    overflow: auto;
-}
-
-.cardBody {
-    padding: 0 !important;
-}
-
-.cardBody .cardContent {
-    display: flex;
-}
-
-.cardBody .cardContent img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-}
-
-.cardBody .cardContent .content {
-    width: calc(100% - 100px);
-    margin: 0;
-    padding: 0 !important;
-}
-
-.cardBody .cardContent .content .title {
-    padding: 0;
-    margin-top: 10px;
-    font-weight: 600;
-}
-
-.cardBody .cardContent .content .substance {
-    padding: 0;
-    font-size: 14px;
-    color: grey;
-}
-
-.cardBody .cardContent .content .time {
-    display: flex;
-    padding: 0;
-}
-
-.cardBody .cardContent .content .time * {
-    padding: 0;
-    font-size: 14px;
-    color: grey;
-    padding-right: 7px;
-}
-
-.header>div .notifycation .card .cardFooter {
-    border-top: 1px solid lightgrey;
-}
 
 .content {
     margin-top: 70px;
@@ -191,21 +203,49 @@ li {
     transition: all .5s ease-in;
     float: left;
     position: fixed;
+
+    &.active{
+        transform: translateX(0);
+        z-index: 5;
+    }
+
+    .li {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menuItem {
+        padding: 20px 15px;
+        font-size: 16px;
+        color: black;
+    }
 }
 
-.menu li {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
+/*RESPONSIVE*/
+@media screen and (max-width: 567px) {
+    .header {
+        .logo a {
+            display: none;
+        }
+
+        .logo {
+            width: auto;
+        }
+    }
 }
 
-.menuItem {
-    padding: 20px 15px;
-    font-size: 16px;
-    color: black;
-}
+@media screen and (max-width:754px) {
+    .showNav {
+        opacity: 1;
+        visibility: visible;
+    }
 
-.nav-link {
-    padding: 0;
-    cursor: pointer;
+    .menu {
+        transform: translateX(-100%);
+    }
+
+    .content {
+        width: 100%;
+    }
 }

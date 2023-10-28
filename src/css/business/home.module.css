@@ -42,28 +42,6 @@ body {
     transition: all .2s ease-in-out;
 }
 
-/* .cardContentActivity:hover::after {
-    position: absolute;
-    content: "";
-    background-color: rgb(167, 167, 167);
-    width: 10px;
-    height: 100%;
-    left: -10px;
-    top: 5px;
-    transform: skewY(-45deg);
-}
-
-.cardContentActivity:hover::before {
-    position: absolute;
-    content: "";
-    background-color: grey;
-    width: 100%;
-    height: 10px;
-    left: -5px;
-    bottom: -10px;
-    transform: skewX(-45deg);
-} */
-
 .cardTitleActivity {
     font-size: 15px;
     text-align: center;
@@ -132,6 +110,7 @@ body {
     color: grey;
 }
 
+/*RESPONSIVE*/
 @media screen and (max-width:950px) {
     .cardAnalysis {
         flex-direction: column;

@@ -15,8 +15,10 @@ function Navbar() {
   const isActiveProduct = location.pathname === "/business/product";
   const isActiveStorge = location.pathname === "/business/storge";
   const isActiveEditShop = location.pathname === "/business/shop";
-
+  //SHOW THÔNG BÁO
   const [activeNotifycation, setNotifycation] = useState(false);
+  //SHOW MENU
+  const [activeMenu, setActiveMenu] = useState(false);
 
   //DANH SÁCH MENU
   const menuItems = [
@@ -47,16 +49,14 @@ function Navbar() {
       icon: "bx bx-store-alt",
       mapping: "/business/storge",
       active: isActiveStorge
-    }
-    ,
+    },
     {
       id: 4,
       label: "Thông Tin Cửa Hàng",
       icon: "bi bi-pencil-square",
       mapping: "/business/shop",
       active: isActiveEditShop
-    }
-    ,
+    },
     {
       id: 5,
       label: "Đăng Xuất",
@@ -75,15 +75,23 @@ function Navbar() {
   return (
     <React.Fragment>
       <div id={style.businessDashBoard}>
+        <i
+          className={`bx bx-list-ul ${style.showNav}`}
+          onClick={() => setActiveMenu(!activeMenu)}
+        />
         <div className={`${style.header}`}>
           <div className={`${style.logo}`}>
             <img src="/images/diamond.png" alt="Hình Ảnh" />
             <Nav.Link href="/business">Kênh Người Bán</Nav.Link>
           </div>
-          <div>
+          <div className={`${style.others}`}>
             <div className={`${style.account}`}>
-              <img src="/images/banner-left.jpg" alt="Hình Ảnh" />
-              <label className={style.customerName}>Tên Người Dùng</label>
+              <img
+                className={style.image}
+                src="/images/banner-left.jpg"
+                alt="Hình Ảnh"
+              />
+              <label className={style.label}>Tên Người Dùng</label>
             </div>
             <div
               className={`${style.notifycation}`}
@@ -94,10 +102,10 @@ function Navbar() {
               }}
             >
               <i
-                className={`bx bx-bell`}
+                className={`bx bx-bell ${style.i}`}
                 onClick={() => setNotifycation(!activeNotifycation)}
               />
-              <span>5</span>
+              <span className={style.span}>5</span>
               <div
                 className={`${style.card}`}
                 style={{ display: activeNotifycation ? "block" : "none" }}
@@ -107,7 +115,11 @@ function Navbar() {
                 </div>
                 <div className={`${style.cardBody}`}>
                   <div className={`${style.cardContent}`}>
-                    <img src="/images/banner-left.jpg" alt="Hình Ảnh" />
+                    <img
+                      className={style.image}
+                      src="/images/banner-left.jpg"
+                      alt="Hình Ảnh"
+                    />
                     <div className={`${style.content}`}>
                       <div className={`${style.title}`}>Đặt Hàng</div>
                       <div className={`${style.substance}`}>
@@ -126,9 +138,13 @@ function Navbar() {
             </div>
           </div>
         </div>
-        <div className={`${style.menu}`}>
+        <div className={`${style.menu} ${activeMenu ? style.active : ""}`}>
           {menuItems.map(item =>
-            <Link to={`${item.mapping}`} className={`p-0`}>
+            <Link
+              to={`${item.mapping}`}
+              onClick={() => setActiveMenu(false)}
+              className={`p-0 ${style.li}`}
+            >
               <div
                 className={`${style.menuItem}`}
                 style={item.active ? styleMenuActive : {}}
