@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/user/checkout.css";
-import MainNavbar from "../../components/user/Navbar";
-import Footer from "../../components/user/Footer";
+import MainNavbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 
 class CheckoutForm extends React.Component {
   render() {

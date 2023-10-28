@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "../css/user/detail.css";
-import MainNavbar from "../../components/user/Navbar";
-import Footer from "../../components/user/Footer";
+import MainNavbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import { products, image } from './data';
 
 import ReactDOM from 'react-dom';
@@ -332,7 +332,7 @@ function ProductPage() {
         </div>
       </section>
 
-      <div className="container ">
+      <div className="container mt-4">
         <div className="row gx-4 ">
           <div className="col-lg-8 mb-4 d-flex">
             <img
@@ -795,19 +795,11 @@ function ProductPage() {
             </div>
           </div>
         </div>
-      </section>
-
-
-
-
-
-
-
-
-      <div id="footer">
+      </section> 
+    </div >
+    <div id="footer">
         <Footer />
       </div>
-    </div >
     </>
   );
 

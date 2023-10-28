@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import MainNavbar from "../../components/user/Navbar";
-import Footer from "../../components/user/Footer";
+import MainNavbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import "../css/user/cart.css";
 import "../css/user/home.css";
 

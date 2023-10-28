@@ -1,5 +1,5 @@
 import React from "react";
-import "../user/footer.css";
+import "./footer.css";
 
 function Footer() {
   return (
@@ -43,7 +43,7 @@ function Footer() {
                 <b>Phone: </b>0999000999
               </li>
               <li className={`menu-item`}>
-                <b>Email: </b>diamondfashion@gmail.com
+                <b>Email: </b>diamondshop@gmail.com
               </li>
             </ul>
           </div>
@@ -53,27 +53,20 @@ function Footer() {
           <div className={`content`}>
             <ul className={`menu`}>
               <li className={`menu-item`}>
-                <a href="#">
-                  {" "}
-                  <img src="images/facebook.jpg"></img>
+                <a href="/#">
+                  <img src="/images/facebook.jpg" alt="facebook"></img>
                 </a>
               </li>
               <li className={`menu-item`}>
-                <a href="#">
-                  {" "}
-                  <img src="images/instagram.jpg"></img>
+                <a href="/#">
+                  <img src="/images/instagram.jpg" alt="Instagram" />
+
                 </a>
               </li>
+             
               <li className={`menu-item`}>
-                <a href="#">
-                  {" "}
-                  <img src="images/youtube.jpg"></img>
-                </a>
-              </li>
-              <li className={`menu-item`}>
-                <a href="#">
-                  {" "}
-                  <img src="images/tiktok.jpg"></img>
+                <a href="/#">
+                  <img src="/images/tiktok.jpg" alt="Tiktok"></img>
                 </a>
               </li>
             </ul>
@@ -89,7 +82,7 @@ function Footer() {
           </div>
         </div>
         <div className={`column`}>
-          <img src="images/bo-cong-thuong.jpg"></img>
+          <img src="/images/bo-cong-thuong.jpg" alt=""></img>
         </div>
       </div>
     </React.Fragment>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import MainNavbar from "../../components/user/Navbar";
-import Footer from "../../components/user/Footer";
+import MainNavbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 
 import axios from "axios";
 import "../css/user/home.css";
@@ -50,13 +50,13 @@ function Home() {
   const [categories, setCategories] = useState([]);
   const [showMore, setShowMore] = useState(false);
 
-  useEffect(() => {
-    // Gọi API để lấy danh sách
-    fetch("")
-      .then((response) => response.json())
-      .then((data) => setCategories(data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+  // useEffect(() => {
+  //   // Gọi API để lấy danh sách
+  //   fetch("")
+  //     .then((response) => response.json())
+  //     .then((data) => setCategories(data))
+  //     .catch((error) => console.error("Error fetching data:", error));
+  // }, []);
 
   const handleShowMore = () => {
     setShowMore(true);
@@ -170,14 +170,14 @@ function Home() {
             <div className="col-xs-12 col-sm-12 col-md-9 ">
               <div className="container bg-white p-2 " style={{ borderRadius: '8px' }}>
                 <div className="gird-container">
-                  <div className="gird-item tall" style={{ backgroundImage: "url('images/bn1.jpg')" }}>
+                  <div className="gird-item tall" style={{ backgroundImage: "url('images/bn8.jpg')" }}>
                     <div className="ejercico">
                       <a href="archivos/acrodeoncss/index.html">
                         PHONG CÁCH
                       </a>
                     </div>
                   </div>
-                  <div className="gird-item" style={{ backgroundImage: "url('images/bn3.jpg')" }}>
+                  <div className="gird-item" style={{ backgroundImage: "url('images/bn9.jpg')" }}>
                     <div className="ejercico">
                       <a href="archivos/caja/index.html">
                         CAJA 2
@@ -233,7 +233,7 @@ function Home() {
                 <div className="titile">
                   <div className="container bg-white">
                     <nav className="navbar navbar-expand-md navbar-light bg-white">
-                      <div className="container-fluid p-0"> <a className="navbar-brand text-uppercase fw-800" href="#"><span className="border-red pe-2">GỢI Ý DÀNH CHO BẠN</span></a> <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNav" aria-controls="myNav" aria-expanded="false" aria-label="Toggle navigation"> <span className="fas fa-bars"></span> </button>
+                      <div className="container-fluid p-0"> <a className="navbar-brand text-uppercase fw-800" href="#"><span className="border-red pe-2">SẢN PHẨM MỚI NHẤT</span></a> <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNav" aria-controls="myNav" aria-expanded="false" aria-label="Toggle navigation"> <span className="fas fa-bars"></span> </button>
                         <div className="collapse navbar-collapse" id="myNav">
                           <div className="navbar-nav ms-auto">
                             <a className="nav-link active" aria-current="page" href="#">Xem nhiều hơn</a>
@@ -252,21 +252,21 @@ function Home() {
                 <div className="row px-xl-2">
                   <div className="col-lg-6">
                     <div className="product-offer mb-30" style={{ height: '200px' }}>
-                      <img className="img-fluid" src="images/best-saler-4.jpg" alt="" />
+                      <img className="img-fluid" src="images/home_banner2.jpg" alt="" />
                       <div className="offer-text">
-                        <h6 className="text-white text-uppercase">Save 20%</h6>
-                        <h3 className="text-white mb-3">Special Offer</h3>
+                        <h6 className="text-white text-uppercase">Tại đây</h6>
+                        <h4 className="text-white text-uppercase mb-3">Sản phẩm đa dạng</h4>
                         <a href="/product" className="btn" style={{ background: "#319F43 ", color: '#fff' }} >Mua sắm ngay</a>
                       </div>
                     </div>
                   </div>
                   <div className="col-lg-6">
                     <div className="product-offer mb-30" style={{ height: '200px' }}>
-                      <img className="img-fluid" src="images/best-saler-4.jpg" alt="" />
+                      <img className="img-fluid" src="images/home_banner1.jpg" alt="" />
                       <div className="offer-text">
-                        <h6 className="text-white text-uppercase">Save 20%</h6>
-                        <h3 className="text-white mb-3">Special Offer</h3>
-                        <a href="" className="btn" style={{ background: "#319F43 ", color: '#fff' }}>Mua sắm ngay</a>
+                        <h6 className="text-white text-uppercase">Tại đây</h6>
+                        <h4 className="text-white mb-3 text-uppercase">Có tất cả những gì mà bạn cần</h4>
+                        <a href="/" className="btn" style={{ background: "#319F43 ", color: '#fff' }}>Mua sắm ngay</a>
                       </div>
                     </div>
                   </div>

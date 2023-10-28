@@ -1,6 +1,6 @@
 import React from 'react';
-import MainNavbar from "../../components/user/Navbar";
-import Footer from "../../components/user/Footer";
+import MainNavbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 function OrderList() {
 
     return (

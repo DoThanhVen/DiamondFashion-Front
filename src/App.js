@@ -14,9 +14,10 @@ import Order from "./pages/user/Order"
 import SuggestedProducts from "./pages/user/SuggestedProducts";
 import RecommendedProducts from "./pages/user/RecommendedProducts";
 
-import HomeAdmin from "./components/admin/HomeAdmin"
 
 import Otp from "./pages/account/Otp";
+import ContactInfo from "./pages/user/ContactInfo";
+import Policy from "./pages/user/Policy";
 
 // import AdminDashBoard from "./componentadmin/AdminDashBoard";
 import { Route, Routes } from "react-router-dom";
@@ -27,7 +28,7 @@ function App() {
       <Route path="/" element={<Home />}/>
       <Route path="/login" element={<Login />}/>
       <Route path="/cart" element={<Cart />}/>
-      <Route path="/products/:id" element={<Product />}/>
+      <Route path="/category/:id" element={<Product />} exact />
       <Route path="/detail" element={<Detail/>}/>
       <Route path="/newProducts" element={<NewProducts/>}/>
       <Route path="/orderDetail" element={<OrderDetail/>}/>
@@ -35,11 +36,14 @@ function App() {
       <Route path="/profile" element={<Profile/>}/>
       <Route path="/order" element={<Order/>}/>
 
-       <Route path="/homeAdmin" element={<HomeAdmin/>}/>
+
        <Route path="/suggestedProducts" element={<SuggestedProducts/>}/>
        <Route path="/recommendedProducts" element={<RecommendedProducts />}/>
       
       <Route path="/otp" element={<Otp/>} />
+      <Route path="/contact" element={<ContactInfo/>} />
+      <Route path="/policy" element={<Policy/>} />
+
     </Routes>
   );
 }

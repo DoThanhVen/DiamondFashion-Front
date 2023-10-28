@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
-import MainNavbar from "../../components/user/Navbar";
-import Footer from "../../components/user/Footer";
+import MainNavbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import "../css/user/product.css";
 import "../css/user/home.css";
 import "../css/user/slider.css";
-import { useLocation, useParams } from "react-router-dom";
-import axios from 'axios';
-import {
-  Container,
-  Row,
-  Col
-} from "react-bootstrap";
+import { useLocation, useParams, Link } from "react-router-dom";
+import axios from "axios";
+import { Container, Row, Col } from "react-bootstrap";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
-import { NULL } from "sass";
+import ListGroup from 'react-bootstrap/ListGroup';
 
 function valuetext(value) {
   return `${value}°C`;
@@ -22,43 +18,34 @@ function valuetext(value) {
 
 function Product() {
   const [value1, setValue1] = React.useState([20, 37]);
-  const [valueMin,setValueMin] = useState(null)
-  const [valueMax,setValueMax] = useState(null)
-  
-
+  const [valueMin, setValueMin] = useState(null);
+  const [valueMax, setValueMax] = useState(null);
   const handleChange1 = (event, newValue) => {
     setValue1(newValue);
-    setValueMin(newValue[0])
-    setValueMax(newValue[1])
-    console.log("MIN: "+valueMin+" MAX: "+valueMax)
+    setValueMin(newValue[0]);
+    setValueMax(newValue[1]);
+    console.log("MIN: " + valueMin + " MAX: " + valueMax);
   };
-
-  const { id } = useParams();
   const location = useLocation();
   const listCategory = location.state?.listCategory;
 
+  // Call API 
   const [categoryItem, setCategoryItem] = useState(null);
   const [products, setProducts] = useState([]);
+  const { id } = useParams();
   useEffect(() => {
-    if (listCategory) {
-      setCategoryItem(listCategory);
-    }
-  }, [listCategory]);
-
-  useEffect(() => {
-    // Gọi API hoặc lấy danh sách sản phẩm dựa trên categoryItem hoặc categoryItem.type_category
-    if (categoryItem) {
-      axios.get(`http://localhost:8080/api/product?type_category=${categoryItem.type_category}`)
-        .then((response) => {
-          if (response.status === 200) {
-            setProducts(response.data);
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
-    }
-  }, [categoryItem]);
+    axios.get(`http://localhost:8080/api/category/${id}`)
+      .then(response => {
+        if (Array.isArray(response.data.listCategory)) {
+          setCategoryItem(response.data.listCategory);
+        } else {
+          console.error("Received non-array data:", response.data);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, [id]);
 
   return (
     <>
@@ -67,8 +54,12 @@ function Product() {
       </nav>
       <div className="product">
         <section
-          className="breadcrumb-section"
-          style={{ backgroundImage: "url('images/best-saler-1.jpg')" }}
+          className="breadcrumb-section container"
+          style={{
+            backgroundImage: "url('/images/product_banner.jpg')",
+            backgroundSize: "cover",
+            width: '100%'
+          }}
         >
           <Container>
             <Row>
@@ -96,29 +87,25 @@ function Product() {
                       <i className="fa fa-bars"></i>
                       <span>Danh mục sản phẩm</span>
                     </div>
-                    <ul className="list-group list-group-flush">
-                      {categoryItem && Array.isArray(categoryItem)
-                        ? categoryItem.map((item) => (
-                            <li  className="list-group-item" key={item.id}>
-                             {item.type_category_item}
-                            </li>
-                          ))
-                        : null}
-                    </ul>
+                    {Array.isArray(categoryItem)
+                      ? categoryItem.map((item) => (
+                        <ListGroup variant="flush" key={item.id}>
+                          <ListGroup.Item> {item.type_category_item}</ListGroup.Item>
+
+                        </ListGroup>
+                      ))
+                      : null}
                   </div>
                   <div className="col-lg-9 col-md-7">
-              {/* Hiển thị danh sách sản phẩm */}
-              <ul>
-                {products.map((product) => (
-                  <li key={product.id}>
-                    <h2>{product.product_name}</h2>
-                    <p>{product.description}</p>
-                    <p>Giá: {product.price} VNĐ</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
+                    {/* Hiển thị danh sách sản phẩm */}
+                    <ul>
+                      {products.map(product => (
+                        <li key={product.id}>
+                          <Link to={`/product/${product.id}`}>{product.product_name}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                   <div className="sidebar__item mt-4">
                     <h4>Giá</h4>
                     <div className="price-range-wrap pb-4">
@@ -213,7 +200,7 @@ function Product() {
                           <a href="#" className="latest-product__item">
                             <div className="latest-product__item__pic">
                               <img
-                                src="images/best-saler-4.jpg"
+                                src="/images/best-saler-4.jpg"
                                 alt=""
                                 style={{ width: "150px" }}
                               />
@@ -228,7 +215,7 @@ function Product() {
                           <a href="#" className="latest-product__item">
                             <div className="latest-product__item__pic">
                               <img
-                                src="images/best-saler-4.jpg"
+                                src="/images/best-saler-4.jpg"
                                 alt=""
                                 style={{ width: "150px" }}
                               />
@@ -254,7 +241,7 @@ function Product() {
                             <div className="container-fluid p-0">
                               <a
                                 className="navbar-brand text-uppercase fw-800"
-                                href="/#" 
+                                href="/#"
                               >
                                 <span className="border-red pe-2">
                                   DANH SÁCH SẢN PHẨM
@@ -269,14 +256,12 @@ function Product() {
                                 aria-expanded="false"
                                 aria-label="Toggle navigation"
                               >
-                                
                                 <span className="fas fa-bars"></span>
                               </button>
                               <div
                                 className="collapse navbar-collapse"
                                 id="myNav"
-                              >
-                              </div>
+                              ></div>
                             </div>
                           </nav>
 
@@ -304,7 +289,6 @@ function Product() {
                                 Winter Sweater
                               </div>
                               <div className="d-flex align-content-center justify-content-center">
-                              
                                 <span className="fas fa-star"></span>
                                 <span className="fas fa-star"></span>
                                 <span className="fas fa-star"></span>
@@ -336,7 +320,6 @@ function Product() {
                                 Denim Dresses
                               </div>
                               <div className="d-flex align-content-center justify-content-center">
-                              
                                 <span className="fas fa-star"></span>
                                 <span className="fas fa-star"></span>
                                 <span className="fas fa-star"></span>
@@ -441,7 +424,6 @@ function Product() {
                             </div>
                             <div className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
                               <div className="product">
-                                
                                 <img
                                   src="https://images.pexels.com/photos/6764040/pexels-photo-6764040.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
                                   alt=""
@@ -463,7 +445,6 @@ function Product() {
                                 Denim Dresses
                               </div>
                               <div className="d-flex align-content-center justify-content-center">
-                                
                                 <span className="fas fa-star"></span>
                                 <span className="fas fa-star"></span>
                                 <span className="fas fa-star"></span>
@@ -474,7 +455,6 @@ function Product() {
                             </div>
                             <div className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
                               <div className="product">
-                                
                                 <img
                                   src="https://images.pexels.com/photos/914668/pexels-photo-914668.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
                                   alt=""
@@ -492,11 +472,9 @@ function Product() {
                                 </ul>
                               </div>
                               <div className="title pt-4 pb-1">
-                                
                                 Empire Waist Dresses
                               </div>
                               <div className="d-flex align-content-center justify-content-center">
-                                
                                 <span className="fas fa-star"></span>
                                 <span className="fas fa-star"></span>
                                 <span className="fas fa-star"></span>
@@ -507,7 +485,6 @@ function Product() {
                             </div>
                             <div className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
                               <div className="product">
-                                
                                 <img
                                   src="https://images.pexels.com/photos/6311392/pexels-photo-6311392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
                                   alt=""
@@ -529,7 +506,6 @@ function Product() {
                                 Pinafore Dresses
                               </div>
                               <div className="d-flex align-content-center justify-content-center">
-                                
                                 <span className="fas fa-star"></span>
                                 <span className="fas fa-star"></span>
                                 <span className="fas fa-star"></span>
@@ -556,7 +532,6 @@ function Product() {
             </div>
           </div>
         </section>
-
         <div id="footer">
           <Footer />
         </div>
