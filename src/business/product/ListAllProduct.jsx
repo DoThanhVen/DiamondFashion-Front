@@ -33,9 +33,9 @@ export default function ListProduct() {
 
     const columns = Array.from(rowElement.querySelectorAll("label"));
     const id = columns[1].innerText;
-    
+
     setModalData({
-      id, datacategory,getdataProduct
+      id, datacategory, getdataProduct
     });
 
     setIsModalOpen(true);
@@ -69,8 +69,6 @@ export default function ListProduct() {
     const reponseItem = await callAPI(`/api/category/${id}`, "GET")
     setcategoryItem(reponseItem.listCategory)
   }
-
-
 
   //PAGE
   // const [currentPage, setCurrentPage] = useState(1);
@@ -137,6 +135,10 @@ export default function ListProduct() {
     const newValue = event.target.value;
     setNumberMaxValue(newValue);
   };
+  const handleDelete = async (id) => {
+    await callAPI(`/api/product/${id}`, 'DELETE')
+    getdataProduct()  
+  }
 
   return (
     <React.Fragment>
@@ -257,7 +259,9 @@ export default function ListProduct() {
                     ? "Chờ Phê Duyệt"
                     : value.status === 1
                       ? "Đang Hoạt Động"
-                      : value.status === 2 ? "Cấm Hoạt Động" : "Lỗi"}
+                      : value.status === 2 ? "Dừng Hoạt Động" : value.status === 3 ? "Cấm hoạt động" : "Lỗi"
+
+                  }
                 </span>
               </label>
               <label className={style.column}>

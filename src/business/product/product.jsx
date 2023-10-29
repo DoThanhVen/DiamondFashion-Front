@@ -6,7 +6,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import style from "../../css/business/product.module.css";
 import ModelEdit from "./ModelEdit";
-import AddProduct from "./AddProduct";
+import AddProduct from "./addProduct";
 import ListAllProduct from "./ListAllProduct";
 import ListProductActive from "./ListProductActive";
 import ListProductUnactive from "./ListProductUnactive";
