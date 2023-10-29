@@ -16,7 +16,8 @@ function valuetext(value) {
   return `${value}°C`;
 }
 
-function Product() {
+export default function LikeProduct() {
+
   const [value1, setValue1] = React.useState([20, 37]);
   const [valueMin, setValueMin] = useState(null);
   const [valueMax, setValueMax] = useState(null);
@@ -26,30 +27,10 @@ function Product() {
     setValueMax(newValue[1]);
     console.log("MIN: " + valueMin + " MAX: " + valueMax);
   };
-  const location = useLocation();
-  const listCategory = location.state?.listCategory;
-
-  // Call API 
-  const [categoryItem, setCategoryItem] = useState(null);
-  const [products, setProducts] = useState([]);
-  const { id } = useParams();
-  useEffect(() => {
-    axios.get(`http://localhost:8080/api/category/${id}`)
-      .then(response => {
-        if (Array.isArray(response.data.listCategory)) {
-          setCategoryItem(response.data.listCategory);
-        } else {
-          console.error("Received non-array data:", response.data);
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }, [id]);
 
   return (
-    <>
-      <nav>
+    <div>
+       <nav>
         <MainNavbar />
       </nav>
       <div className="product">
@@ -81,32 +62,17 @@ function Product() {
           <div className="container">
             <div className="row">
               <div className="col-lg-3 col-md-5">
-                <div className="sidebar mt-4" style={{ position: 'sticky', top: '20px' }}>
+                <div className="sidebar" style={{ position: 'sticky', top: '20px' }}>
                   <div className="hero__categories">
-                    <div className="hero__categories__all">
-                      <i className="fa fa-bars"></i>
-                      <span>Danh mục sản phẩm</span>
-                    </div>
-                    {Array.isArray(categoryItem)
-                      ? categoryItem.map((item) => (
-                        <ListGroup variant="flush" key={item.id}>
-                          <ListGroup.Item> {item.type_category_item}</ListGroup.Item>
-</ListGroup>
-                      ))
-                      : null}
+
+
                   </div>
                   <div className="col-lg-9 col-md-7">
                     {/* Hiển thị danh sách sản phẩm */}
-                    <ul>
-                      {products.map(product => (
-                        <li key={product.id}>
-                          <Link to={`/product/${product.id}`}>{product.product_name}</Link>
-                        </li>
-                      ))}
-                    </ul>
+
                   </div>
                   <div className="sidebar__item mt-4">
-                    <h4>Giá</h4>
+                    <h5>GIÁ</h5>
                     <div className="price-range-wrap pb-4">
                       <Box sx={{ width: 300 }}>
                         <Slider
@@ -123,6 +89,21 @@ function Product() {
                           {value1[0]} - {value1[1]}
                         </Typography>
                       </Box>
+                    </div>
+                    <div className="sidebar__item sidebar__item__color--option">
+                      <h5>Ngày</h5>
+                      <div class="form-check">
+                        <input class="form-check-input1" type="radio" name="flexRadioDefault1" id="flexRadioDefault1" />
+                        <label class="form-check-label1" for="flexRadioDefault1">
+                          Sắp xếp theo tăng dần
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input1" type="radio" name="flexRadioDefault1" id="flexRadioDefault2" checked />
+                        <label class="form-check-label" for="flexRadioDefault2">
+                          Sắp xếp theo giảm dần
+                        </label>
+                      </div>
                     </div>
                     <div className="sidebar__item sidebar__item__color--option">
                       <h5>Sắp xếp giá</h5>
@@ -173,43 +154,7 @@ function Product() {
                       </div>
                     </div>
                   </div>
-                  <div className="sidebar__item mt-4">
-                    <div className="latest-product__text">
-                      <h4>Sản phẩm mới nhất</h4>
-                      <div className="latest-product__slider owl-carousel">
-                        <div className="latest-prdouct__slider__item">
-                          <a href="#" className="latest-product__item">
-                            <div className="latest-product__item__pic">
-                              <img
-                                src="/images/best-saler-4.jpg"
-                                alt=""
-                                style={{ width: "150px" }}
-                              />
-                            </div>
-                            <div className="latest-product__item__text">
-                              <h6>Crab Pool Security</h6>
-                              <span>$30.00</span>
-                            </div>
-                          </a>
-                        </div>
-                        <div className="latest-prdouct__slider__item">
-                          <a href="#" className="latest-product__item">
-                            <div className="latest-product__item__pic">
-                              <img
-                                src="/images/best-saler-4.jpg"
-                                alt=""
-                                style={{ width: "150px" }}
-                              />
-                            </div>
-                            <div className="latest-product__item__text">
-                              <h6>Crab Pool Security</h6>
-                              <span>$30.00</span>
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+
                 </div>
               </div>
               <div className="col-lg-9 col-md-7">
@@ -225,7 +170,7 @@ function Product() {
                                 href="/#"
                               >
                                 <span className="border-red pe-2">
-                                  DANH SÁCH SẢN PHẨM
+                                  DANH SÁCH SẢN PHẨM BẠN YÊU THÍCH
                                 </span>
                               </a>
                               <button
@@ -501,7 +446,7 @@ function Product() {
                     </div>
                   </div>
                 </div>
-                <div className="product__pagination">
+                <div className="product__pagination pb-4">
                   <a href="#">1</a>
                   <a href="#">2</a>
                   <a href="#">3</a>
@@ -517,7 +462,7 @@ function Product() {
           <Footer />
         </div>
       </div>
-    </>
-  );
+      
+    </div>
+  )
 }
-export default Product;

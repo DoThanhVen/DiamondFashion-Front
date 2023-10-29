@@ -208,43 +208,11 @@ class CheckoutForm extends React.Component {
                           </h5>
                         </div>
                         <div>
-                          <h5 className="font-size-14 mb-3">
-                            Phương thức thanh toán :
-                          </h5>
+                        <p className="text-muted text-truncate mb-4">
+                            Phương thức thanh toán
+                          </p>
                           <div className="row">
-                            <div className="col-lg-3 col-sm-6">
-                              <div data-bs-toggle="collapse">
-                                <label className="card-radio-label">
-                                  <input
-                                    type="radio"
-                                    name="pay-method"
-                                    id="pay-methodoption1"
-                                    className="card-radio-input"
-                                  />
-                                  <span className="card-radio py-3 text-center text-truncate">
-                                    <i className="bx bx-credit-card d-block h2 mb-3"></i>
-                                    Credit / Debit Card
-                                  </span>
-                                </label>
-                              </div>
-                            </div>
-
-                            <div className="col-lg-3 col-sm-6">
-                              <div>
-                                <label className="card-radio-label">
-                                  <input
-                                    type="radio"
-                                    name="pay-method"
-                                    id="pay-methodoption2"
-                                    className="card-radio-input"
-                                  />
-                                  <span className="card-radio py-3 text-center text-truncate">
-                                    <i className="bx bxl-paypal d-block h2 mb-3"></i>
-                                    Paypal
-                                  </span>
-                                </label>
-                              </div>
-                            </div>
+                            
 
                             <div className="col-lg-3 col-sm-6">
                               <div>
@@ -372,27 +340,27 @@ class CheckoutForm extends React.Component {
 
                         <tr>
                           <td colSpan="2">
-                            <h5 className="font-size-14 text-start">
+                            <p className="font-size-4 text-start">
                               Giảm giá :
-                            </h5>
+                            </p>
                           </td>
                           <td>- $ 78</td>
                         </tr>
 
                         <tr>
                           <td colSpan="2">
-                            <h5 className="font-size-14 text-start">
+                            <p className="font-size-4 text-start">
                               Phí vận chuyển :
-                            </h5>
+                            </p>
                           </td>
                           <td>$ 25</td>
                         </tr>
 
                         <tr className="bg-light">
                           <td colSpan="2">
-                            <h5 className="font-size-14 text-start">
+                            <p className="font-size-4 text-start">
                               Tổng cộng:
-                            </h5>
+                            </p>
                           </td>
                           <td>$ 745.2</td>
                         </tr>

@@ -29,8 +29,8 @@ const MainNavbar = () => {
                 {/* Top Right */}
                 <div className="right-content">
                   <ul className="list-main">
-                    <li><i className="ti-location-pin"></i> <a href="/#">Đăng ký bán hàng</a></li>
-                    <li><i className="ti-user"></i> <a href="/#">Tài khoản của tôi</a></li>
+                    <li><i className="ti-location-pin"></i> <a href="/salesRegistration">Đăng ký bán hàng</a></li>
+                    <li><i className="ti-user"></i> <a href="/profile">Tài khoản của tôi</a></li>
                     <li><i className="ti-power-off"></i><a href="/login">Đăng nhập</a></li>
                   </ul>
                 </div>
@@ -40,7 +40,7 @@ const MainNavbar = () => {
           </div>
         </div>
         {/* End Topbar */}
-        <div className="middle-inner">
+        <div className="middle-inner border-bottom">
           <div className="container">
             <div className="row">
               <div className="col-lg-2 col-md-2 col-12">
@@ -80,6 +80,9 @@ const MainNavbar = () => {
                     <Navbar.Collapse id="basic-navbar-nav " >
                       <Nav className="me-auto  mb-lg-0 container " style={{ paddingTop: '5px' }}>
                         <Nav.Link href="/" style={{ fontSize: '14px' }}>Trang chủ</Nav.Link>
+                        <Nav.Link href="/cart" style={{ fontSize: '14px' }}>Giỏ hàng</Nav.Link>
+                        <Nav.Link href="/order" style={{ fontSize: '14px' }}>Đơn hàng của tôi</Nav.Link>
+                        <Nav.Link href="/likeProduct" style={{ fontSize: '14px' }}>Danh sách yêu thích</Nav.Link>
                         <Nav.Link href="/policy" style={{ fontSize: '14px' }}>Chính sách</Nav.Link>
                         <Nav.Link href="/contact" style={{ fontSize: '14px' }}>Thông tin liên hệ</Nav.Link>
                       </Nav>
@@ -91,39 +94,39 @@ const MainNavbar = () => {
                 <div className="right-bar">
                   {/* Search Form */}
                   <div className="sinlge-bar">
-                    <a href="/likePage" className="single-icon"><i className="fa-regular fa-heart"></i></a>
+                    <a href="/likeProduct" className="single-icon"><i className="fa-regular fa-heart"></i></a>
                   </div>
                   <div className="sinlge-bar">
-                    <a href="/#" className="single-icon"><i className="fa-solid fa-user"></i></a>
+                    <a href="/profile" className="single-icon"><i className="fa-solid fa-user"></i></a>
                   </div>
                   <div className="sinlge-bar shopping">
-                    <a href="/#" className="single-icon"><i className="fa-solid fa-bag-shopping"></i> <span className="total-count">2</span></a>
+                    <a href="/cart" className="single-icon"><i className="fa-solid fa-bag-shopping"></i> <span className="total-count">2</span></a>
                     {/* Shopping Item */}
                     <div className="shopping-item">
                       <div className="dropdown-cart-header">
-                        <span>2 Items</span>
-                        <a href="#">View Cart</a>
+                        <span>2 sản phẩm</span>
+                        <a href="/cart">Xem giỏ hàng</a>
                       </div>
                       <ul className="shopping-list">
                         <li>
                           <a href="#" className="remove" title="Remove this item"><i className="fa fa-remove"></i></a>
                           <a className="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#" /></a>
-                          <h4><a href="#">Woman Ring</a></h4>
-                          <p className="quantity">1x - <span className="amount">$99.00</span></p>
+                          <h4><a href="#">Sản phẩm 1</a></h4>
+                          <p className="quantity">1 - <span className="amount">$99.00</span></p>
                         </li>
                         <li>
                           <a href="#" className="remove" title="Remove this item"><i className="fa fa-remove"></i></a>
                           <a className="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#" /></a>
-                          <h4><a href="#">Woman Necklace</a></h4>
+                          <h4><a href="#">Sản phẩm 2</a></h4>
                           <p className="quantity">1x - <span className="amount">$35.00</span></p>
                         </li>
                       </ul>
                       <div className="bottom">
                         <div className="total">
-                          <span>Total</span>
+                          <span>Tổng</span>
                           <span className="total-amount">$134.00</span>
                         </div>
-                        <a href="/checkout" className="btn animate">Checkout</a>
+                        <a href="/checkout" className="btn animate">Thanh toán</a>
                       </div>
                     </div>
                     {/*/ End Shopping Item */}

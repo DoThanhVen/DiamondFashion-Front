@@ -8,7 +8,7 @@ import NewProducts from "./pages/user/NewProducts";
 
 import OrderDetail from "./pages/user/OrderDetail"
 import Checkout from "./pages/user/Checkout"
-import Profile from "./pages/user/Profile"
+import Profile from "./pages/account/Profile"
 import Order from "./pages/user/Order"
 
 import SuggestedProducts from "./pages/user/SuggestedProducts";
@@ -16,8 +16,12 @@ import RecommendedProducts from "./pages/user/RecommendedProducts";
 
 
 import Otp from "./pages/account/Otp";
+import Register from "./pages/account/Register";
+import SalesRegistration from "./pages/account/SalesRegistration";
+
 import ContactInfo from "./pages/user/ContactInfo";
 import Policy from "./pages/user/Policy";
+import LikeProduct from "./pages/user/LikeProduct";
 
 // import AdminDashBoard from "./componentadmin/AdminDashBoard";
 import { Route, Routes } from "react-router-dom";
@@ -41,8 +45,11 @@ function App() {
        <Route path="/recommendedProducts" element={<RecommendedProducts />}/>
       
       <Route path="/otp" element={<Otp/>} />
+      <Route path="/register" element={<Register/>} />
+      <Route path="/salesRegistration" element={<SalesRegistration/>} />
       <Route path="/contact" element={<ContactInfo/>} />
       <Route path="/policy" element={<Policy/>} />
+      <Route path="/likeProduct" element={<LikeProduct/>} />
 
     </Routes>
   );
