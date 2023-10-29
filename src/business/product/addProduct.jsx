@@ -79,7 +79,7 @@ function AddProduct() {
                 id: valueCategoryItem
             }
         })
-        if (reponse) {
+        if (reponse&&selectedImages.length>0) {
             try {
                 const formData = new FormData();
                 imagesave.forEach((image, index) => {

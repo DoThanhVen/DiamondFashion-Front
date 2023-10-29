@@ -11,23 +11,24 @@ export default function ModelEdit({ onReload, data, closeModal }) {
   const [valueCategoryItem, setValueCategoryItem] = useState()
   const [categoryItemData, setcategoryItem] = useState([]);
   const [imagesave, setimagesave] = useState([]);
-  const [productnew, setproductnew] = useState({});
   const [description, setdescription] = useState('')
+  const [reget, setreget] = useState(false)
+  const [name, setname] = useState('')
+  const [price, setprice] = useState('')
 
   useEffect(() => {
     getdataproductbyid()
   }
-    , []);
+    , [reget]);
 
   const getdataproductbyid = async () => {
     const reponse = await callAPI(`/api/product/${data.id}`, "GET")
     setproduct(reponse)
+    setname(reponse.product_name)
+    setprice(reponse.price)
     setValueCategoryItem(reponse.categoryItem_product.id)
   }
 
-  function onChangeinput(e) {
-    setproductnew({ ...product, [e.target.name]: e.target.value })
-  }
 
   //SELECT IMAGE
   const handleImageChange = (e) => {
@@ -77,15 +78,15 @@ export default function ModelEdit({ onReload, data, closeModal }) {
   const handleSubmit = async () => {
 
     const reponse = await callAPI(`/api/product/${product.id}`, "PUT", {
-      product_name: productnew.product_name,
-      price: productnew.price,
+      product_name: name,
+      price: price,
       description: description,
       status: 0,
       categoryItem_product: {
         id: valueCategoryItem
       }
     })
-    if (reponse) {
+    if (reponse && selectedImages.length > 0) {
       try {
         const formData = new FormData();
         imagesave.forEach((image, index) => {
@@ -103,6 +104,7 @@ export default function ModelEdit({ onReload, data, closeModal }) {
         console.error('Error for', error);
       }
     }
+    setreget(true)
     closeModal()
     onReload()
 
@@ -163,11 +165,11 @@ export default function ModelEdit({ onReload, data, closeModal }) {
           </div>
           <div className={`${style.productName}`}>
             <label>Tên sản phẩm</label>
-            <input type="text" defaultValue={product.product_name} onChange={onChangeinput} name="product_name"></input>
+            <input type="text" defaultValue={product.product_name} onChange={(e)=>{setname(e.target.value)}} name="product_name"></input>
           </div>
           <div className={`${style.productName}`}>
             <label>Giá sản phẩm</label>
-            <input type="text" defaultValue={product.price} onChange={onChangeinput} name="price"></input>
+            <input type="text" defaultValue={product.price} onChange={(e)=>{setprice(e.target.value)}} name="price"></input>
           </div>
           <div className={`${style.category}`}>
             <label>Ngành hàng</label>

@@ -70,8 +70,6 @@ export default function ListProduct() {
     setcategoryItem(reponseItem.listCategory)
   }
 
-
-
   //PAGE
   // const [currentPage, setCurrentPage] = useState(1);
   // const [totalPages, setTotalPages] = useState(0);
@@ -284,30 +282,7 @@ export default function ListProduct() {
             </div>
           )}
         </div>
-        {/* <div className={`${style.buttonPage}`}>
-          <Nav.Link className={`btn`} onClick={() => handlePageChange(1)}>
-            <i className="bi bi-chevron-bar-left" />
-          </Nav.Link>
-          <Nav.Link
-            className={`btn`}
-            onClick={() => handlePageChange(currentPage - 1)}
-          >
-            <i className="bi bi-caret-left" />
-          </Nav.Link>
-          <Nav.Link
-            className={`btn`}
-            onClick={() => handlePageChange(currentPage + 1)}
-          >
-            <i className="bi bi-caret-right" />
-          </Nav.Link>
-          <Nav.Link
-            className={`btn`}
-            onClick={() =>
-              handlePageChange(Math.ceil(listProduct.length / numberPage))}
-          >
-            <i className="bi bi-chevron-bar-right" />
-          </Nav.Link>
-        </div> */}
+  
       </div>
       {isModalOpen && <ModelEdit onReload={getdataProduct} data={modalData} closeModal={closeModal} />}
     </React.Fragment>
