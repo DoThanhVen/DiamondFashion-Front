@@ -1,0 +1,152 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, 文泉驛正黑, "WenQuanYi Zen Hei", "Hiragino Sans GB", "儷黑 Pro", "LiHei Pro", "Heiti TC", 微軟正黑體, "Microsoft JhengHei UI", "Microsoft JhengHei", sans-serif;
+}
+
+.text {
+    color: white;
+}
+
+.card {
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 1px 5px lightgrey;
+}
+
+/*DANH SÁCH CẦN LÀM*/
+.cardActivity {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.cardContentActivity {
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    width: 25%;
+    transition: all .2s ease-in-out;
+}
+
+.cardContentActivity:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 10px grey;
+    background-color: whitesmoke;
+}
+
+.cardContentActivity::after,
+.cardContentActivity::before {
+    transition: all .2s ease-in-out;
+}
+
+/* .cardContentActivity:hover::after {
+    position: absolute;
+    content: "";
+    background-color: rgb(167, 167, 167);
+    width: 10px;
+    height: 100%;
+    left: -10px;
+    top: 5px;
+    transform: skewY(-45deg);
+}
+
+.cardContentActivity:hover::before {
+    position: absolute;
+    content: "";
+    background-color: grey;
+    width: 100%;
+    height: 10px;
+    left: -5px;
+    bottom: -10px;
+    transform: skewX(-45deg);
+} */
+
+.cardTitleActivity {
+    font-size: 15px;
+    text-align: center;
+    color: black;
+}
+
+.cardAmount {
+    font-weight: bold;
+    color: blue;
+    font-size: 18px;
+    text-align: center;
+}
+
+.heading {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.title {
+    font-size: 14px;
+    color: grey;
+    font-weight: bold;
+    opacity: .6;
+}
+
+@media screen and (max-width:890px) {
+    .cardContentActivity {
+        width: 50%;
+    }
+}
+
+/*PHÂN TÍCH BÁN HÀNG*/
+.cardAnalysis {
+    display: flex;
+}
+
+.cardAnalysisContent:nth-child(1) {
+    width: 70%;
+}
+
+.cardAnalysisContent:nth-child(2) {
+    display: flex;
+    width: 30%;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.cardAnalysisContent:nth-child(2)>div {
+    padding: 20px;
+    width: 100%;
+}
+
+.cardAnalysisHeading {
+    font-size: 13px;
+    font-weight: bold;
+    color: grey;
+}
+
+.cardAnalysisAmount {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.cardAnalysisTitle {
+    font-size: 13px;
+    color: grey;
+}
+
+@media screen and (max-width:950px) {
+    .cardAnalysis {
+        flex-direction: column;
+    }
+
+    .cardAnalysisContent:nth-child(1) {
+        width: 100%;
+    }
+
+    .cardAnalysisContent:nth-child(2) {
+        width: 100%;
+        flex-direction: row;
+    }
+
+    .cardAnalysisContent:nth-child(2)>div {
+        width: 50%;
+    }
+}
