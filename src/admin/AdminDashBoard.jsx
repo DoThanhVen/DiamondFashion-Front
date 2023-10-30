@@ -130,7 +130,7 @@ function AdminDashboard() {
           </ul>
         </div>
         <div id={style.content}>
-          {isActiveHome ? <Login /> : null}
+          {isActiveHome ? <Loading /> : null}
           {isActiveAccount ? <Account /> : null}
           {isActiveShop ? <Shop /> : null}
           {isActiveTypeProduct ? <Category /> : null}

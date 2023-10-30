@@ -4,6 +4,7 @@ import ModelEdit from "./ModelEdit";
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
 import { callAPI } from "../../service/API";
+import Loading from "../../admin/Loading";
 
 const numberPage = 10;
 //DANH SÁCH SẢN PHẨM
@@ -137,6 +138,9 @@ export default function ListProduct() {
     const newValue = event.target.value;
     setNumberMaxValue(newValue);
   };
+if(listProduct.length<1){
+  <Loading/>
+}
 
   return (
     <React.Fragment>
