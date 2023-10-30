@@ -275,7 +275,7 @@ export default function ListProduct() {
               </label>
               <label className={style.column}>
                 <i
-                  className={`bi bi-pencil-square ${style.buttonEdit}`}
+                  className={`bi bi-x ms-2 ${style.buttonEdit}`}
                   onClick={() => handleDelete(value.id)}
                 />
               </label>
