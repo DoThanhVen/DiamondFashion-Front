@@ -1,49 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "../../css/business/storge.module.css";
 import Nav from "react-bootstrap/Nav";
+import { callAPI } from "../../service/API";
 
-const numberPage = 10;
-//DANH SÁCH SẢN PHẨM
-const listProduct = [
-  {
-    idProduct: "product",
-    image: "instagram.jpg",
-    productName: "Áo Sơ Mi Nam Cực Quyến Rũ",
-    typeCategory: "Áo",
-    typeCategoryItem: "Áo Sơ Mi",
-    price: 123000,
-    createDate: "23/10/2023",
-    status: 1
-  },
-  {
-    idProduct: "product002",
-    image: "facebook.jpg",
-    productName: "Áo Thun Nam",
-    typeCategory: "Áo Thun",
-    typeCategoryItem: "Áo Thun",
-    price: 123000,
-    createDate: "23/10/2023",
-    status: 1
-  }
-];
+
 function ListStorge() {
-  //PAGE
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(listProduct.length / numberPage);
+  const [listProduct, setdataproduct] = useState([]);
 
-  if (currentPage < 1) {
-    setCurrentPage(1);
-  } else if (currentPage > totalPages) {
-    setCurrentPage(totalPages);
+  const log = useRef(true)
+  useEffect(() => {
+    if (log.current) {
+      log.current = false
+      getdataProduct()
+    }
+  }, []);
+
+  const getdataProduct = async () => {
+    const reponse = await callAPI(`/api/product`, "GET");
+    setdataproduct(reponse)
   }
-  const startIndex = (currentPage - 1) * numberPage;
-  const endIndex = startIndex + numberPage;
 
-  const listPage = listProduct.slice(startIndex, endIndex);
-
-  const handlePageChange = page => {
-    setCurrentPage(page);
-  };
   return (
     <React.Fragment>
       <div className={`${style.listProduct}`}>
@@ -55,61 +31,34 @@ function ListStorge() {
             <label className={style.column}>Tên SP</label>
             <label className={style.column}>Loại SP</label>
             <label className={style.column}>Số lượng</label>
-            <label className={style.column} />
+            
           </div>
-          {listPage.map((value, index) =>
+          {listProduct.map((value, index) =>
             <div key={index} className={style.tableBody}>
               <label className={style.column}>
-                {currentPage * numberPage - numberPage + index + 1}
+                {index}
               </label>
               <label className={style.column}>
-                {value.idProduct}
+                {value.id}
               </label>
               <label className={style.column}>
-                <img
-                  className={style.image}
-                  src={`/images/${value.image}`}
-                  alt="Hình Ảnh"
-                />
+                    {value?.image_product.length > 0 ? (value?.image_product.map((value) => (
+                      <img className={style.image} src={`http://localhost:8080/api/uploadImageProduct/${value.url}`} alt="Hình Ảnh"></img>)
+                    )) : <img className={style.image} src={`/images/nullImage.png`} alt="Hình Ảnh"></img>}
+                  </label>
+              <label className={style.column}>
+                {value.product_name}
               </label>
               <label className={style.column}>
-                {value.productName}
-              </label>
+                    {value.categoryItem_product.type_category_item}
+                  </label>
+                 
               <label className={style.column}>
-                {value.typeCategoryItem}
+              {value.quantity}
               </label>
-              <label className={style.column}>
-                999
-              </label>
-              <label className={style.column}>
-                <i className={`bi bi-pencil-square ${style.buttonEdit}`} />
-              </label>
+             
             </div>
           )}
-        </div>
-        <div className={`${style.buttonPage}`}>
-          <Nav.Link className={`btn`} onClick={() => handlePageChange(1)}>
-            <i className="bi bi-chevron-bar-left" />
-          </Nav.Link>
-          <Nav.Link
-            className={`btn`}
-            onClick={() => handlePageChange(currentPage - 1)}
-          >
-            <i className="bi bi-caret-left" />
-          </Nav.Link>
-          <Nav.Link
-            className={`btn`}
-            onClick={() => handlePageChange(currentPage + 1)}
-          >
-            <i className="bi bi-caret-right" />
-          </Nav.Link>
-          <Nav.Link
-            className={`btn`}
-            onClick={() =>
-              handlePageChange(Math.ceil(listProduct.length / numberPage))}
-          >
-            <i className="bi bi-chevron-bar-right" />
-          </Nav.Link>
         </div>
       </div>
     </React.Fragment>

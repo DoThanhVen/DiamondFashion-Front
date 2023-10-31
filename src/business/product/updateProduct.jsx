@@ -3,6 +3,7 @@ import style from "../../css/business/product.module.css";
 import { callAPI } from "../../service/API";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ProductService from "../../service/ProductService";
 
 export default function ModelEdit({ onReload, data, closeModal }) {
   const [product, setproduct] = useState({});
@@ -22,7 +23,7 @@ export default function ModelEdit({ onReload, data, closeModal }) {
     , [reget]);
 
   const getdataproductbyid = async () => {
-    const reponse = await callAPI(`/api/product/${data.id}`, "GET")
+    const reponse = await ProductService.getProductbyId(data.id)
     setproduct(reponse)
     setname(reponse.product_name)
     setprice(reponse.price)
@@ -75,39 +76,10 @@ export default function ModelEdit({ onReload, data, closeModal }) {
     setValueCategoryItem(selectedOptionValue);
   };
 
-  const handleSubmit = async () => {
-
-    const reponse = await callAPI(`/api/product/${product.id}`, "PUT", {
-      product_name: name,
-      price: price,
-      description: description,
-      status: 0,
-      categoryItem_product: {
-        id: valueCategoryItem
-      }
-    })
-    if (reponse && selectedImages.length > 0) {
-      try {
-        const formData = new FormData();
-        imagesave.forEach((image, index) => {
-          formData.append(`images`, image);
-        });
-        formData.append('idProduct', reponse.data.id);
-        const config = {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          }
-        };
-        await callAPI(`/api/uploadImageProduct`, 'POST', formData
-          , config);
-      } catch (error) {
-        console.error('Error for', error);
-      }
-    }
-    setreget(true)
+  const handleSubmit = () => {
+    ProductService.updateProduct(product.id, name, price, description, 0, valueCategoryItem, selectedImages, imagesave);
+    setreget(true) 
     closeModal()
-    onReload()
-
   }
 
   return (
@@ -165,11 +137,11 @@ export default function ModelEdit({ onReload, data, closeModal }) {
           </div>
           <div className={`${style.productName}`}>
             <label>Tên sản phẩm</label>
-            <input type="text" defaultValue={product.product_name} onChange={(e)=>{setname(e.target.value)}} name="product_name"></input>
+            <input type="text" defaultValue={product.product_name} onChange={(e) => { setname(e.target.value) }} name="product_name"></input>
           </div>
           <div className={`${style.productName}`}>
             <label>Giá sản phẩm</label>
-            <input type="text" defaultValue={product.price} onChange={(e)=>{setprice(e.target.value)}} name="price"></input>
+            <input type="text" defaultValue={product.price} onChange={(e) => { setprice(e.target.value) }} name="price"></input>
           </div>
           <div className={`${style.category}`}>
             <label>Ngành hàng</label>

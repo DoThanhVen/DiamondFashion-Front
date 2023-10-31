@@ -4,6 +4,7 @@ import ModelEdit from "./updateProduct";
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
 import { callAPI } from "../../service/API";
+import ProductService from "../../service/ProductService";
 
 const numberPage = 10;
 //DANH SÁCH SẢN PHẨM
@@ -43,6 +44,8 @@ export default function ListProduct() {
   const closeModal = () => {
     setIsModalOpen(false);
     setModalData({});
+    alert('Update succesfully')
+    getdataProduct()
   };
 
   const log = useRef(true)
@@ -55,9 +58,8 @@ export default function ListProduct() {
   }, []);
 
   const getdataProduct = async () => {
-    const reponse = await callAPI(`/api/product`, "GET");
+    const reponse = await ProductService.getAllProduct();
     setdataproduct(reponse)
-    console.log(reponse)
   }
 
   const getdataCategory = async () => {
@@ -220,71 +222,80 @@ export default function ListProduct() {
             <label className={style.column}>Ngày tạo</label>
             <label className={style.column} />
           </div>
-          {listProduct.map((value, index) =>
-            <div key={index} className={style.tableBody}>
-              <label className={style.column}>
-                {index + 1}
-              </label>
-              <label className={style.column}>
-                {value.id}
-              </label>
-              <label className={style.column}>
-                {value?.image_product.length > 0 ? (value?.image_product.map((value) => (
-                  <img className={style.image} src={`http://localhost:8080/api/uploadImageProduct/${value.url}`} alt="Hình Ảnh"></img>)
-                )) : <img className={style.image} src={`/images/nullImage.png`} alt="Hình Ảnh"></img>}
-              </label>
-              <label className={style.column}>
-                {value.product_name}
-              </label>
-              <label className={style.column}>
-                {value.categoryItem_product.type_category_item}
-              </label>
-              <label className={style.column}>
-                {formatCurrency(value.price, 0)}
-              </label>
-              <label className={style.column}>
-                <span
-                  className={style.status}
-                  style={{
-                    backgroundColor:
-                      value.status === 0
-                        ? "#34219E"
+          {listProduct.length < 1 ? (
+            <label>Null</label>
+          ) : (
+            
+              listProduct.map((value, index) =>
+                <div key={index} className={style.tableBody}>
+                  <label className={style.column}>
+                    {index + 1}
+                  </label>
+                  <label className={style.column}>
+                    {value.id}
+                  </label>
+                  <label className={style.column}>
+                    {value?.image_product.length > 0 ? (value?.image_product.map((value) => (
+                      <img className={style.image} src={`${ProductService.getImage()}/${value.url}`} alt="Hình Ảnh"></img>)
+                    )) : <img className={style.image} src={`/images/nullImage.png`} alt="Hình Ảnh"></img>}
+                  </label>
+                  <label className={style.column}>
+                    {value.product_name}
+                  </label>
+                  <label className={style.column}>
+                    {value.categoryItem_product.type_category_item}
+                  </label>
+                  <label className={style.column}>
+                    {formatCurrency(value.price, 0)}
+                  </label>
+                  <label className={style.column}>
+                    <span
+                      className={style.status}
+                      style={{
+                        backgroundColor:
+                          value.status === 0
+                            ? "#34219E"
+                            : value.status === 1
+                              ? "green"
+                              : value.status === 2 ? "red" : "#E74C3C"
+                      }}
+                      value={`${value.status}`}
+                    >
+                      {value.status === 0
+                        ? "Chờ Phê Duyệt"
                         : value.status === 1
-                          ? "green"
-                          : value.status === 2 ? "red" : "#E74C3C"
-                  }}
-                  value={`${value.status}`}
-                >
-                  {value.status === 0
-                    ? "Chờ Phê Duyệt"
-                    : value.status === 1
-                      ? "Đang Hoạt Động"
-                      : value.status === 2 ? "Dừng Hoạt Động" : value.status === 3 ? "Cấm hoạt động" : "Lỗi"
+                          ? "Đang Hoạt Động"
+                          : value.status === 2 ? "Dừng Hoạt Động" : value.status === 3 ? "Cấm hoạt động" : "Lỗi"
 
-                  }
-                </span>
-              </label>
-              <label className={style.column}>
-                {value.create_date}
-              </label>
-              <label className={style.column}>
-                <i
-                  className={`bi bi-pencil-square ${style.buttonEdit}`}
-                  onClick={handleClickEditProduct}
-                />
-              </label>
-              <label className={style.column}>
-                <i
-                  className={`bi bi-x ms-2 ${style.buttonEdit}`}
-                  onClick={() => handleDelete(value.id)}
-                />
-              </label>
-            </div>
-          )}
+                      }
+                    </span>
+                  </label>
+                  <label className={style.column}>
+                    {value.create_date}
+                  </label>
+                  <label className={style.column}>
+                    <i
+                      className={`bi bi-pencil-square ${style.buttonEdit}`}
+                      onClick={handleClickEditProduct}
+                    />
+                  </label>
+                  <label className={style.column}>
+                    <i
+                      className={`bi bi-x ms-2 ${style.buttonEdit}`}
+                      onClick={() => handleDelete(value.id)}
+                    />
+                  </label>
+                </div>
+              )
+            
+          )
+
+          }
+
         </div>
   
       </div>
-      {isModalOpen && <ModelEdit onReload={getdataProduct} data={modalData} closeModal={closeModal} />}
+      {isModalOpen && <ModelEdit data={modalData} closeModal={closeModal} />}
     </React.Fragment>
   );
 }

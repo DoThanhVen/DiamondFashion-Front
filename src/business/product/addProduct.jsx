@@ -3,6 +3,7 @@ import style from "../../css/business/product.module.css";
 import React, { useEffect, useState } from "react";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ProductService from '../../service/ProductService';
 
 function AddProduct() {
     const [datacategory, setcategorydata] = useState([]);
@@ -15,12 +16,11 @@ function AddProduct() {
     const [name, setname] = useState('')
     const [price, setprice] = useState('')
     const [description, setdescription] = useState('')
-    const [reload, setreload] = useState(false)
 
 
     useEffect(() => {
         getdataCategory()
-    }, [reload]);
+    }, []);
 
     const getdataCategory = async () => {
         const reponse = await callAPI(`/api/category`, "GET");
@@ -66,40 +66,6 @@ function AddProduct() {
         deletedImage.splice(index, 1);
         setSelectedImages(deletedImage);
     };
-
-
-    const handleSubmit = async () => {
-        const reponse = await callAPI(`/api/product/shop/1`, "POST", {
-            product_name: name,
-            price: price,
-            description: description,
-            status: 0,
-            quantity: quantityValue,
-            categoryItem_product: {
-                id: valueCategoryItem
-            }
-        })
-        if (reponse&&selectedImages.length>0) {
-            try {
-                const formData = new FormData();
-                imagesave.forEach((image, index) => {
-                    formData.append(`images`, image);
-                });
-                formData.append('idProduct', reponse.data.id);
-                const config = {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    }
-                };
-                await callAPI(`/api/uploadImageProduct`, 'POST', formData
-                    , config);
-            } catch (error) {
-                console.error('Error for', error);
-            }
-        }
-        setreload(true);
-    }
-
 
     return (
         <React.Fragment>
@@ -196,7 +162,7 @@ function AddProduct() {
                 }}
 
             />
-            <button className={`${style.buttonCreateProduct}`} onClick={handleSubmit}>LƯU SẢN PHẨM</button>
+            <button className={`${style.buttonCreateProduct}`} onClick={() => { ProductService.addProduct(name, price, description, 0, valueCategoryItem, quantityValue, selectedImages, imagesave) }}>LƯU SẢN PHẨM</button>
         </React.Fragment >
     );
 }
