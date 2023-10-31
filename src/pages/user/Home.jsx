@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MainNavbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-
+import "../css/user/responsive.css";
 import axios from "axios";
 import "../css/user/home.css";
 import "../css/user/modal.css";

@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import "../css/user/suggestedProducts.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import "../css/user/responsive.css";
 
 const SidebarM = () => {
   const [categories, setCategories] = useState([]);
-  const handleSetValueCategory = (idCategory) => {
-    localStorage.setItem("idCategory", idCategory);
-  };
+  
   useEffect(() => {
     // Gọi API 
     axios.get('http://localhost:8080/api/category')
@@ -16,7 +14,7 @@ const SidebarM = () => {
         setCategories(response.data);
       })
       .catch(error => {
-        console.error(error);
+        console.log(error);
       });
   }, []);
 

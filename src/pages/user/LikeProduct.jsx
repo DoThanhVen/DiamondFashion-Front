@@ -28,9 +28,27 @@ export default function LikeProduct() {
     console.log("MIN: " + valueMin + " MAX: " + valueMax);
   };
 
+  const [dateSorting, setDateSorting] = useState('ascending');
+  const [priceSorting, setPriceSorting] = useState('ascending');
+  const [ratingFilter, setRatingFilter] = useState('5'); // Default to 5 stars
+
+
+  const handleDateSortingChange = (e) => {
+    setDateSorting(e.target.value);
+  };
+
+  const handlePriceSortingChange = (e) => {
+    setPriceSorting(e.target.value);
+  };
+
+  const handleRatingFilterChange = (e) => {
+    setRatingFilter(e.target.value);
+  };
+
+
   return (
     <div>
-       <nav>
+      <nav>
         <MainNavbar />
       </nav>
       <div className="product">
@@ -92,65 +110,112 @@ export default function LikeProduct() {
                     </div>
                     <div className="sidebar__item sidebar__item__color--option">
                       <h5>Ngày</h5>
-                      <div class="form-check">
-                        <input class="form-check-input1" type="radio" name="flexRadioDefault1" id="flexRadioDefault1" />
-                        <label class="form-check-label1" for="flexRadioDefault1">
-                          Sắp xếp theo tăng dần
-                        </label>
+                      <div className="form-check">
+                        <input
+                          type="radio"
+                          id="ascendingDate"
+                          name="dateSorting"
+                          value="ascending"
+                          checked={dateSorting === 'ascending'}
+                          onChange={handleDateSortingChange}
+                        />
+                        <label htmlFor="ascendingDate">Sắp xếp theo tăng dần</label>
                       </div>
-                      <div class="form-check">
-                        <input class="form-check-input1" type="radio" name="flexRadioDefault1" id="flexRadioDefault2" checked />
-                        <label class="form-check-label" for="flexRadioDefault2">
-                          Sắp xếp theo giảm dần
-                        </label>
+                      <div className="form-check">
+                        <input
+                          type="radio"
+                          id="descendingDate"
+                          name="dateSorting"
+                          value="descending"
+                          checked={dateSorting === 'descending'}
+                          onChange={handleDateSortingChange}
+                        />
+                        <label htmlFor="descendingDate">Sắp xếp theo giảm dần</label>
                       </div>
                     </div>
+
                     <div className="sidebar__item sidebar__item__color--option">
                       <h5>Sắp xếp giá</h5>
-                      <div class="form-check">
-                        <input class="form-check-input2" type="radio" name="flexRadioDefault2" id="flexRadioDefault1" />
-                        <label class="form-check-label2" for="flexRadioDefault1">
-                          Sắp xếp theo tăng dần
-                        </label>
+                      <div className="form-check">
+                        <input
+                          type="radio"
+                          id="ascendingPrice"
+                          name="priceSorting"
+                          value="ascending"
+                          checked={priceSorting === 'ascending'}
+                          onChange={handlePriceSortingChange}
+                        />
+                        <label htmlFor="ascendingPrice">Sắp xếp theo tăng dần</label>
                       </div>
-                      <div class="form-check">
-                        <input class="form-check-input2" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" checked />
-                        <label class="form-check-label2" for="flexRadioDefault2">
-                          Sắp xếp theo giảm dần
-                        </label>
+                      <div className="form-check">
+                        <input
+                          type="radio"
+                          id="descendingPrice"
+                          name="priceSorting"
+                          value="descending"
+                          checked={priceSorting === 'descending'}
+                          onChange={handlePriceSortingChange}
+                        />
+                        <label htmlFor="descendingPrice">Sắp xếp theo giảm dần</label>
                       </div>
                     </div>
+
                     <div className="sidebar__item sidebar__item__color--option">
                       <h5>Đánh giá</h5>
-                      <div class="form-check">
-                        <input class="form-check-input3" type="radio" name="flexRadioDefault3" id="flexRadioDefault1" />
-                        <label class="form-check-label3" for="flexRadioDefault1">
-                          5 sao
-                        </label>
+                      <div className="form-check">
+                        <input
+                          type="radio"
+                          id="fiveStarRating"
+                          name="ratingFilter"
+                          value="5"
+                          checked={ratingFilter === '5'}
+                          onChange={handleRatingFilterChange}
+                        />
+                        <label htmlFor="fiveStarRating">5 sao</label>
                       </div>
-                      <div class="form-check">
-                        <input class="form-check-input3" type="radio" name="flexRadioDefault3" id="flexRadioDefault2" checked />
-                        <label class="form-check-label3" for="flexRadioDefault2">
-                          4 sao
-                        </label>
+                      <div className="form-check">
+                        <input
+                          type="radio"
+                          id="fourStarRating"
+                          name="ratingFilter"
+                          value="4"
+                          checked={ratingFilter === '4'}
+                          onChange={handleRatingFilterChange}
+                        />
+                        <label htmlFor="fourStarRating">4 sao</label>
                       </div>
-                      <div class="form-check">
-                        <input class="form-check-input3" type="radio" name="flexRadioDefault3" id="flexRadioDefault3" checked />
-                        <label class="form-check-label3" for="flexRadioDefault3">
-                          3 sao
-                        </label>
+                      <div className="form-check">
+                        <input
+                          type="radio"
+                          id="threeStarRating"
+                          name="ratingFilter"
+                          value="3"
+                          checked={ratingFilter === '3'}
+                          onChange={handleRatingFilterChange}
+                        />
+                        <label htmlFor="threeStarRating">3 sao</label>
                       </div>
-                      <div class="form-check">
-                        <input class="form-check-input3" type="radio" name="flexRadioDefault3" id="flexRadioDefault4" checked />
-                        <label class="form-check-label3" for="flexRadioDefault4">
-                          2 sao
-                        </label>
+                      <div className="form-check">
+                        <input
+                          type="radio"
+                          id="twoStarRating"
+                          name="ratingFilter"
+                          value="2"
+                          checked={ratingFilter === '2'}
+                          onChange={handleRatingFilterChange}
+                        />
+                        <label htmlFor="twoStarRating">2 sao</label>
                       </div>
-                      <div class="form-check pb-4">
-                        <input class="form-check-input3" type="radio" name="flexRadioDefault3" id="flexRadioDefault5" checked />
-                        <label class="form-check-label3" for="flexRadioDefault5">
-                          1 sao
-                        </label>
+                      <div className="form-check pb-4">
+                        <input
+                          type="radio"
+                          id="oneStarRating"
+                          name="ratingFilter"
+                          value="1"
+                          checked={ratingFilter === '1'}
+                          onChange={handleRatingFilterChange}
+                        />
+                        <label htmlFor="oneStarRating">1 sao</label>
                       </div>
                     </div>
                   </div>
@@ -462,7 +527,7 @@ export default function LikeProduct() {
           <Footer />
         </div>
       </div>
-      
+
     </div>
   )
 }
