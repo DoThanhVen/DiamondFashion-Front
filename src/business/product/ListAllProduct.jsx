@@ -56,18 +56,23 @@ export default function ListProduct() {
 
   const getdataProduct = async () => {
     const reponse = await callAPI(`/api/product`, "GET");
-    setdataproduct(reponse)
-    console.log(reponse)
+    if(reponse){
+      setdataproduct(reponse)
+    }
   }
 
   const getdataCategory = async () => {
     const reponse = await callAPI(`/api/category`, "GET");
-    setcategorydata(reponse)
+    if(reponse){
+      setcategorydata(reponse)
+    }
   }
 
   const getdataCategoryItem = async (id) => {
     const reponseItem = await callAPI(`/api/category/${id}`, "GET")
-    setcategoryItem(reponseItem.listCategory)
+    if(reponseItem){
+      setcategoryItem(reponseItem.listCategory)
+    }
   }
 
   //PAGE
@@ -96,6 +101,11 @@ export default function ListProduct() {
   //FORM SEARCH
   const [selectedOption, setSelectedOption] = React.useState("");
   const [valueOption, setValueOption] = React.useState("");
+  const [textInput,setTextInput]=useState("");
+
+  const handleSetTextInput =(text)=>{
+    setTextInput(text)
+  }
   const handleChangeOption = event => {
     const selectedOptionValue = event.target.value;
     let text = "";
@@ -116,12 +126,16 @@ export default function ListProduct() {
   const handleChangeCategory = (event) => {
     const selectedOptionValue = event.target.value;
     setValueCategory(selectedOptionValue);
-    getdataCategoryItem(event.target.value)
+    if(selectedOptionValue!==""){
+      getdataCategoryItem(event.target.value)
+    }
   };
 
   const handleChangeCategoryItem = (event) => {
     const selectedOptionValue = event.target.value;
-    setValueCategoryItem(selectedOptionValue);
+    if(selectedOptionValue!==""){
+      setValueCategoryItem(selectedOptionValue);
+    }
   };
   //INPUT NUMBER
   const [numberMinValue, setNumberMinValue] = useState(0);
@@ -139,7 +153,13 @@ export default function ListProduct() {
     await callAPI(`/api/product/${id}`, 'DELETE')
     getdataProduct()  
   }
-
+  //TÌM KIẾM
+  const handleFind = async ()=>{
+    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}`;
+    const response = await callAPI(url,"GET");
+    console.log(url)
+    console.log(response)
+  }
   return (
     <React.Fragment>
       <div className={`${style.action}`}>
@@ -149,13 +169,15 @@ export default function ListProduct() {
             onChange={handleChangeOption}
             className={`${style.optionSelect}`}
           >
-            <option value="idProduct">Mã Sản Phẩm</option>
-            <option value="productName">Tên Sản Phẩm</option>
+            <option value="">Lựa chọn</option>
+            <option value="id">Mã Sản Phẩm</option>
+            <option value="product_name">Tên Sản Phẩm</option>
           </select>
           <input
             className={`${style.inputSearch}`}
             type="text"
             placeholder={`${selectedOption ? selectedOption : "Tìm kiếm"}...`}
+            onChange={(e)=>handleSetTextInput(e.target.value)}
           />
         </div>
         <div className={`${style.typeProduct}`}>
@@ -205,7 +227,7 @@ export default function ListProduct() {
             onChange={handleNumberMaxChange}
           />
         </div>
-        <button className={`${style.buttonSearch}`}>Tìm Kiếm</button>
+        <button className={`${style.buttonSearch}`} onClick={()=>handleFind()}>Tìm Kiếm</button>
       </div>
       <div className={`${style.listProduct}`}>
         <div className={style.table}>
@@ -229,8 +251,8 @@ export default function ListProduct() {
                 {value.id}
               </label>
               <label className={style.column}>
-                {value?.image_product.length > 0 ? (value?.image_product.map((value) => (
-                  <img className={style.image} src={`http://localhost:8080/api/uploadImageProduct/${value.url}`} alt="Hình Ảnh"></img>)
+                {value?.image_product.length > 0 ? (value?.image_product.map((value,index) => (
+                  <img key={index} className={style.image} src={`http://localhost:8080/api/uploadImageProduct/${value.url}`} alt="Hình Ảnh"></img>)
                 )) : <img className={style.image} src={`/images/nullImage.png`} alt="Hình Ảnh"></img>}
               </label>
               <label className={style.column}>

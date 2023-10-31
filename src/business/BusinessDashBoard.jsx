@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Home from "./Home";
 import Bill from "./bill/Bill";
-import Product from "./product/Product";
+import Product from "./product/product";
 import Storge from "./storge/Storge";
 import Shop from "./shop/Shop";
 import { Link, useLocation } from "react-router-dom";
