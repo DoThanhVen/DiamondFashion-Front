@@ -9,11 +9,7 @@ export default function Otp() {
   const handleInputChange = (e, index) => {
     const input = e.target;
     let value = input.value;
-
-    // Ensure the value is a single digit
     value = value.replace(/[^0-9]/g, "");
-
-    // Update the input value with the sanitized value
     input.value = value;
 
     if (value.length === 1) {

@@ -18,6 +18,8 @@ import RecommendedProducts from "./pages/user/RecommendedProducts";
 import Otp from "./pages/account/Otp";
 import Register from "./pages/account/Register";
 import SalesRegistration from "./pages/account/SalesRegistration";
+import ForgotPass from "./pages/account/ForgotPass";
+import NewPass from "./pages/account/NewPass";
 
 import ContactInfo from "./pages/user/ContactInfo";
 import Policy from "./pages/user/Policy";
@@ -43,9 +45,10 @@ function App() {
 
        <Route path="/suggestedProducts" element={<SuggestedProducts/>}/>
        <Route path="/recommendedProducts" element={<RecommendedProducts />}/>
-      
+       <Route path="/forgotPass" element={<ForgotPass/>} />
       <Route path="/otp" element={<Otp/>} />
       <Route path="/register" element={<Register/>} />
+      <Route path="/newPass" element={<NewPass/>} />
       <Route path="/salesRegistration" element={<SalesRegistration/>} />
       <Route path="/contact" element={<ContactInfo/>} />
       <Route path="/policy" element={<Policy/>} />

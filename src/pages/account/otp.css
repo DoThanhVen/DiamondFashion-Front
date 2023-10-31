@@ -1,8 +1,8 @@
-.OTP{
+.OTP {
   min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .formOTP {
@@ -10,7 +10,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 300px;
+  width: 400px;
   background-color: white;
   border-radius: 12px;
   padding: 20px;

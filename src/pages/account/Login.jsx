@@ -49,7 +49,7 @@ function Login() {
                         </div>
                         <div className="d-flex justify-content-between">
                           <button type="submit" className="btn btn-primary">Đăng nhập</button>
-                          <a href="#l" className="forgot-link float-right text-primary">Quên mật khẩu?</a>
+                          <a href="/forgotPass" className="forgot-link float-right text-primary">Quên mật khẩu?</a>
                         </div>
                         <div className="or mt-4">
                           <span>hoặc</span>
