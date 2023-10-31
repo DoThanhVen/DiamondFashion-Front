@@ -159,6 +159,7 @@ export default function ListProduct() {
     const response = await callAPI(url,"GET");
     console.log(url)
     console.log(response)
+    setdataproduct(response)
   }
   return (
     <React.Fragment>

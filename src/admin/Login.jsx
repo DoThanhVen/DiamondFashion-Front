@@ -1,36 +1,46 @@
 import React, { useState } from "react";
-import axios from "axios";
-import ThongBao from "../service/ThongBao";
+import { useSelector, useDispatch } from "react-redux";
+import { getDataLogin } from "../service/Actions";
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const handleLogin = (title, status) => {
-    ThongBao(title, status);
+  const [username, setUsername] = useState("username");
+  const [password, setPassword] = useState("password");
+
+  const login = useSelector(state => state.dataLogin);
+  const dispatch = useDispatch();
+
+  const data = {
+    username: username,
+    password: password
   };
+
+  const handleLogin = () => {
+    dispatch(getDataLogin(data));
+  };
+
   return (
     <React.Fragment>
-      <label htmlFor="username">Username</label>
-      <br />
+      <div>
+        SHOW {login.username}
+      </div>
       <input
         type="text"
-        id="username"
+        placeholder="Username"
+        value={username}
         onChange={e => setUsername(e.target.value)}
       />
-      <br />
-      <label htmlFor="password">Password</label>
-      <br />
       <input
-        type="text"
-        id="password"
+        type="password"
+        placeholder="Password"
+        value={password}
         onChange={e => setPassword(e.target.value)}
       />
-      <br />
       <button
-        className={`btn btn-primary mt-3`}
-        onClick={() => handleLogin("Xin chào?", "success")}
+        type="submit"
+        className="btn btn-primary"
+        onClick={() => handleLogin()}
       >
-        ĐĂNG NHẬP
+        Đăng nhập
       </button>
     </React.Fragment>
   );
