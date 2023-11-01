@@ -1,39 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "../../css/admin/category/editcategory.module.css";
+import CategoryService from "../../service/CategoryService";
+import { useNavigate } from "react-router";
 
-const listCategory = [
-  {
-    idCategory: "category1",
-    categoryName: "Phân Loại"
-  },
-  {
-    idCategory: "category1",
-    categoryName: "Phân Loại"
-  },
-  {
-    idCategory: "category1",
-    categoryName: "Phân Loại"
-  },
-  {
-    idCategory: "category1",
-    categoryName: "Phân Loại"
-  },
-  {
-    idCategory: "category1",
-    categoryName: "Phân Loại"
-  },
-  {
-    idCategory: "category1",
-    categoryName: "Phân Loại"
-  }
-];
+
 function EditCategory() {
   //SELECT IMAGE
   const [selectedImage, setSelectedImage] = useState(null);
+  const [listCategory, setListcategory] = useState([])
+  const [type_category, setTypeCate] = useState('')
+  const [type_categoryItem, setTypeCateItem] = useState('')
+  const [valueCategory, setValueCategory] = useState('')
+  const [category, setcategory] = useState({})
+  const [image, setimage] = useState()
+  const navigate=useNavigate();
 
+  const log = useRef(true)
+  useEffect(() => {
+    if (log.current) {
+      log.current = false
+      getdataCategory()
+    }
+  }, []);
+
+  const getdataCategory = async () => {
+    const reponse = await CategoryService.getAllCategory();
+    setListcategory(reponse)
+  }
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-
+    setimage(file);
     if (file.size > 800 * 1024) {
       alert(
         "Kích thước ảnh quá lớn. Vui lòng chọn ảnh có kích thước nhỏ hơn 1MB."
@@ -46,7 +42,19 @@ function EditCategory() {
       reader.readAsDataURL(file);
     }
   };
-
+  window.addEventListener("load", function () {
+    let params = new URLSearchParams(window.location.search);
+    var paramID = params.get("idCategory");
+    console.log('param',paramID)
+    if (paramID != null) {
+      const data=CategoryService.getAllCategoryById(paramID);
+      data.then(result=>{
+        setcategory(result)
+        setSelectedImage(`http://localhost:8080/api/uploadImageProduct/${result.image}`)
+      })
+    }
+  })
+  console.log(category)
   return (
     <React.Fragment>
       <div className={style.header}>
@@ -91,13 +99,15 @@ function EditCategory() {
             <input
               className={style.inputText}
               type="text"
+              defaultValue={category.type_category}
               placeholder="Tên loại..."
+              onChange={(e) => { setTypeCate(e.target.value) }}
             ></input>
             <div className={style.formButton}>
-              <button className={style.button}>
+              <button className={style.button} onClick={() => { CategoryService.addCategory(type_category, image) }}>
                 <i className="bi bi-plus-lg"></i> THÊM
               </button>
-              <button className={style.button}>
+              <button className={style.button} onClick={() => {CategoryService.updateCategory(category.id,type_category, image);navigate('/admin/categories');alert('Update succesfully'); window.location.reload();}}>
                 <i className="bi bi-pencil-square"></i> SỬA
               </button>
               <button className={style.button}>
@@ -110,19 +120,23 @@ function EditCategory() {
           </div>
           <div className={style.column}>
             <label className={style.heading}>Phân loại sản phẩm</label>
-            <select className={style.select}>
+            <select className={style.select}
+              value={valueCategory}
+              onChange={(e) => { setValueCategory(e.target.value) }}
+            >
               <option value="">Lựa chọn</option>
               {listCategory.map((value, index) => (
-                <option value={value.idCategory}>{value.categoryName}</option>
+                <option value={value.id}>{value.type_category}</option>
               ))}
             </select>
             <input
               className={style.inputText}
               type="text"
               placeholder="Tên phân loại..."
+              onChange={(e) => { setTypeCateItem(e.target.value) }}
             ></input>
             <div className={style.formButton}>
-              <button className={style.button}>
+              <button className={style.button} onClick={() => { CategoryService.addCategoryItem(valueCategory, type_categoryItem) }}>
                 <i className="bi bi-plus-lg"></i> THÊM
               </button>
               <button className={style.button}>

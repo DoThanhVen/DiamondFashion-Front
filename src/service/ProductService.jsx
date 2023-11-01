@@ -9,11 +9,18 @@ class ProductService {
             price: price,
             description: description,
             status: status,
-            quantity: quantityValue,
+            create_date:new Date(),
             categoryItem_product: {
                 id: valueCategoryItem
             }
         })
+        if (reponse) {
+            await callAPI(`/api/product/createStorage/${reponse.data.id}`, 'POST', {
+                quantity: quantityValue,
+                create_date:new Date()
+            })
+        }
+
         if (reponse && selectedImages.length > 0) {
             try {
                 const formData = new FormData();
@@ -34,12 +41,12 @@ class ProductService {
         }
     }
 
-    updateProduct = async (productid,name,price,description,status,valueCategoryItem,selectedImages,imagesave) => {
+    updateProduct = async (productid, name, price, description, status, valueCategoryItem, selectedImages, imagesave) => {
         const reponse = await callAPI(`${url}/${productid}`, "PUT", {
             product_name: name,
             price: price,
             description: description,
-            status: status  ,
+            status: status,
             categoryItem_product: {
                 id: valueCategoryItem
             }
@@ -74,7 +81,7 @@ class ProductService {
         return reponse;
     }
 
-    getImage=()=>{
+    getImage = () => {
         return 'http://localhost:8080/api/uploadImageProduct';
     }
 }

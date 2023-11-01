@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import style from "../../css/business/storge.module.css";
 import Nav from "react-bootstrap/Nav";
 import { callAPI } from "../../service/API";
-
+import ProductService from "../../service/ProductService";
 
 function ListStorge() {
   const [listProduct, setdataproduct] = useState([]);
@@ -16,7 +16,7 @@ function ListStorge() {
   }, []);
 
   const getdataProduct = async () => {
-    const reponse = await callAPI(`/api/product`, "GET");
+    const reponse = await ProductService.getAllProduct();
     setdataproduct(reponse)
   }
 
@@ -52,9 +52,8 @@ function ListStorge() {
               <label className={style.column}>
                     {value.categoryItem_product.type_category_item}
                   </label>
-                 
               <label className={style.column}>
-              {value.quantity}
+              {value.storage?.quantity}
               </label>
              
             </div>

@@ -1,252 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "../../css/admin/category/listcategory.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 import Nav from "react-bootstrap/Nav";
-import dayjs, { Dayjs } from "dayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "react-datepicker/dist/react-datepicker.css";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import CategoryService from "../../service/CategoryService";
+import { Link } from "react-router-dom";
 
-const numberPage = 10;
-const listCategory = [
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: true,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      },
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      },
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      },
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: false,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: false,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: true,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: true,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: true,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: false,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: false,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: false,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: false,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: false,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: false,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: false,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      },
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      },
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      },
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      },
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      },
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      },
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: false,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  },
-  {
-    idCategory: "category001",
-    categoryName: "Tên Loại",
-    image: "banner-left.jpg",
-    status: false,
-    listCategoryItem: [
-      {
-        idCategoryItem: "item123",
-        categoryItemName: "Tên Phân Loại Sản Phẩm"
-      }
-    ]
-  }
-];
 
 function ListCategory() {
-  //PAGE
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(listCategory.length / numberPage);
+  const [listCategory, setListcategory] = useState([])
 
-  if (currentPage < 1) {
-    setCurrentPage(1);
-  } else if (currentPage > totalPages) {
-    setCurrentPage(totalPages);
+  const log = useRef(true)
+  useEffect(() => {
+    if (log.current) {
+      log.current = false
+      getdataCategory()
+    }
+  }, []);
+
+  const getdataCategory = async () => {
+    const reponse = await CategoryService.getAllCategory();
+    setListcategory(reponse)
   }
-  const startIndex = (currentPage - 1) * numberPage;
-  const endIndex = startIndex + numberPage;
 
-  const listPage = listCategory.slice(startIndex, endIndex);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
   return (
     <React.Fragment>
       <div className={style.listCategory}>
@@ -265,28 +41,28 @@ function ListCategory() {
             <label className={style.column}>Trạng thái</label>
             <label className={style.column}></label>
           </div>
-          {listPage.map((value, index) => (
+          {listCategory.map((value, index) => (
             <div key={index} className={style.tableBody}>
               <label className={style.column}>
-                {currentPage * numberPage - numberPage + index + 1}
+                {index}
               </label>
-              <label className={style.column}>{value.idCategory}</label>
+              <label className={style.column}>{value.id}</label>
               <label className={style.column}>
                 <img
                   className={style.image}
-                  src={`/images/${value.image}`}
+                  src={`http://localhost:8080/api/uploadImageProduct/${value.image}`}
                   alt="Hình Ảnh"
                 ></img>
               </label>
-              <label className={style.column}>{value.categoryName}</label>
+              <label className={style.column}>{value.type_category}</label>
               <div className={style.column}>
-                {value.listCategoryItem.map((valueCategory, indexCategory) => (
+                {value.listCategory?.map((valueCategory, indexCategory) => (
                   <ul key={indexCategory} className={style.menu}>
                     <li className={style.menuItem}>
-                      {valueCategory.categoryItemName}
+                      {valueCategory.type_category_item}
                       <a
                         className={style.buttonEditItem}
-                        href={`#${valueCategory.idCategoryItem}`}
+                        href={`#${valueCategory.id}`}
                       >
                         <i className="bi bi-pencil-square"></i>
                       </a>
@@ -305,7 +81,7 @@ function ListCategory() {
               <label className={style.column}>
                 <a
                   className={style.buttonEditItem}
-                  href={`#${value.idCategory}`}
+                  href={`http://localhost:3000/admin/categories?idCategory=${value.id}`}
                 >
                   <i className="bi bi-pencil-square"></i>
                 </a>
@@ -313,31 +89,7 @@ function ListCategory() {
             </div>
           ))}
         </div>
-        <div className={`${style.buttonPage}`}>
-          <Nav.Link className={`btn`} onClick={() => handlePageChange(1)}>
-            <i className="bi bi-chevron-bar-left"></i>
-          </Nav.Link>
-          <Nav.Link
-            className={`btn`}
-            onClick={() => handlePageChange(currentPage - 1)}
-          >
-            <i className="bi bi-caret-left"></i>
-          </Nav.Link>
-          <Nav.Link
-            className={`btn`}
-            onClick={() => handlePageChange(currentPage + 1)}
-          >
-            <i className="bi bi-caret-right"></i>
-          </Nav.Link>
-          <Nav.Link
-            className={`btn`}
-            onClick={() =>
-              handlePageChange(Math.ceil(listCategory.length / numberPage))
-            }
-          >
-            <i className="bi bi-chevron-bar-right"></i>
-          </Nav.Link>
-        </div>
+
       </div>
     </React.Fragment>
   );
