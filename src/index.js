@@ -4,14 +4,24 @@ import App from "./App"
 import { BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { Provider } from "react-redux";
+import { combineReducers, createStore } from "redux";
+import { dataLogin } from "./service/Reducers";
 
+const allReducers = combineReducers({
+  dataLogin
+});
+
+const store = createStore(allReducers);
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </React.StrictMode>
   </BrowserRouter>
 );

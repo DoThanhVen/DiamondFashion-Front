@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MainNavbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import username from "../account/Login.jsx"
 
 import axios from "axios";
 import "../css/user/home.css";
@@ -19,7 +20,6 @@ import SidebarM from "./SuggestedProducts"
 import RecommendedProducts from "./RecommendedProducts"
 import ProductSmall from "./ProductSmall";
 import ProductIntroduction from "./ProductIntroduction";
-
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -44,8 +44,7 @@ function SamplePrevArrow(props) {
 }
 
 function Home() {
-
-
+  const name = username;
 
   const [categories, setCategories] = useState([]);
   const [showMore, setShowMore] = useState(false);

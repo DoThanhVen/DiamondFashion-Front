@@ -1,22 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import "../account/login.css";
 import MainNavbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import ReCAPTCHA from "react-google-recaptcha";
-// import "../css/user/register_login.css"
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getDataLogin } from "../../service/Actions";
 
 function Login() {
-  const showPassword = (event) => {
-    const eye = event.currentTarget;
-    const inputPass = document.querySelector("input#password");
-    eye.classList.toggle("bi-eye");
-    if (eye.classList.contains("bi-eye")) {
-      inputPass.type = "text";
-    } else {
-      inputPass.type = "password";
-    }
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const data = {
+    username: username,
+    password: password
   };
 
+  const domain = process.env.REACT_APP_API || "http://localhost:8080";
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    axios
+      .post(domain + "/api/account/login", { username, password })
+      .then(response => {
+        console.log(response);
+        if (response.data.success) {
+          dispatch(getDataLogin(data));
+          alert(response.data.message)
+          navigate("/")
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  
   const onChange = () => {
 
   };
@@ -37,19 +61,21 @@ function Login() {
                         <h3 className="h4 font-weight-bold text-theme">Đăng nhập</h3>
                       </div>
                       <h6 className="h5 mb-0">Chào mừng đến với Diamond Shop!</h6>
-                      <p className="text-muted mt-2 mb-5">Nhập địa chỉ email và mật khẩu của bạn để truy cập.</p>
+                      <p className="text-muted mt-2 mb-5">Nhập tên đăng nhập và mật khẩu của bạn để truy cập.</p>
                       <form>
                         <div className="form-group">
-                          <label htmlFor="exampleInputEmail1">Địa chỉ email</label>
-                          <input typeName="email" className="form-control" id="exampleInputEmail1" />
+                          <label htmlFor="exampleInputEmail1">Tên Tài Khoản</label>
+                          <input typeName="email" className="form-control" id="username"
+                            onChange={e => setUsername(e.target.value)} />
                         </div>
                         <div className="form-group mb-5 mt-4">
                           <label htmlFor="exampleInputPassword1">Mật khẩu</label>
-                          <input type="password" className="form-control" id="exampleInputPassword1" />
+                          <input type="password" className="form-control" id="password"
+                            onChange={e => setPassword(e.target.value)} />
                         </div>
                         <div className="d-flex justify-content-between">
-                          <button type="submit" className="btn btn-primary">Đăng nhập</button>
-                          <a href="#l" className="forgot-link float-right text-primary">Quên mật khẩu?</a>
+                          <button type="submit" className="btn btn-primary" onClick={handleLogin}>Đăng nhập</button>
+                          <a href="/forgotPass" className="forgot-link float-right text-primary">Quên mật khẩu?</a>
                         </div>
                         <div className="or mt-4">
                           <span>hoặc</span>
@@ -76,7 +102,7 @@ function Login() {
                 </div>
               </div>
             </div>
-           
+
           </div>
         </div>
       </div>

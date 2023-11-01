@@ -18,6 +18,7 @@ import RecommendedProducts from "./pages/user/RecommendedProducts";
 import Otp from "./pages/account/Otp";
 import Register from "./pages/account/Register";
 import SalesRegistration from "./pages/account/SalesRegistration";
+import ForgotPass from "./pages/account/ForgotPass";
 
 import ContactInfo from "./pages/user/ContactInfo";
 import Policy from "./pages/user/Policy";
@@ -29,28 +30,28 @@ import { Route, Routes } from "react-router-dom";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />}/>
-      <Route path="/login" element={<Login />}/>
-      <Route path="/cart" element={<Cart />}/>
-      <Route path="/category/:id" element={<Product />} exact />
-      <Route path="/detail" element={<Detail/>}/>
-      <Route path="/newProducts" element={<NewProducts/>}/>
-      <Route path="/orderDetail" element={<OrderDetail/>}/>
-      <Route path="/checkout" element={<Checkout/>}/>
-      <Route path="/profile" element={<Profile/>}/>
-      <Route path="/order" element={<Order/>}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/category/:id" element={<Product />} exact />
+        <Route path="/detail" element={<Detail />} />
+        <Route path="/newProducts" element={<NewProducts />} />
+        <Route path="/orderDetail" element={<OrderDetail />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/order" element={<Order />} />
 
 
-       <Route path="/suggestedProducts" element={<SuggestedProducts/>}/>
-       <Route path="/recommendedProducts" element={<RecommendedProducts />}/>
-      
-      <Route path="/otp" element={<Otp/>} />
-      <Route path="/register" element={<Register/>} />
-      <Route path="/salesRegistration" element={<SalesRegistration/>} />
-      <Route path="/contact" element={<ContactInfo/>} />
-      <Route path="/policy" element={<Policy/>} />
-      <Route path="/likeProduct" element={<LikeProduct/>} />
+        <Route path="/suggestedProducts" element={<SuggestedProducts />} />
+        <Route path="/recommendedProducts" element={<RecommendedProducts />} />
 
+        <Route path="/forgotPass" element={<ForgotPass />} />
+        <Route path="/otp" element={<Otp />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/salesRegistration" element={<SalesRegistration />} />
+        <Route path="/contact" element={<ContactInfo />} />
+        <Route path="/policy" element={<Policy />} />
+        <Route path="/likeProduct" element={<LikeProduct />} />
     </Routes>
   );
 }

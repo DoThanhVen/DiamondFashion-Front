@@ -1,13 +1,17 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import './nav.css';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+
 const MainNavbar = () => {
+
+  const login = useSelector(state => state.dataLogin);
+
   return (
     <>
       <header className="header shop">
@@ -32,6 +36,7 @@ const MainNavbar = () => {
                     <li><i className="ti-location-pin"></i> <a href="/salesRegistration">Đăng ký bán hàng</a></li>
                     <li><i className="ti-user"></i> <a href="/profile">Tài khoản của tôi</a></li>
                     <li><i className="ti-power-off"></i><a href="/login">Đăng nhập</a></li>
+                    <li><i className="ti-power-off"></i><a href="/profile">{login.username}</a></li>
                   </ul>
                 </div>
                 {/* End Top Right */}
@@ -45,7 +50,7 @@ const MainNavbar = () => {
             <div className="row">
               <div className="col-lg-2 col-md-2 col-12">
                 {/* Logo */}
-                <div className="logo " style={{marginTop: '12px', marginLeft: '80px'}}>
+                <div className="logo " style={{ marginTop: '12px', marginLeft: '80px' }}>
                   <a href="/"><img src="/images/Diamond.png" alt="" style={{ width: '115px' }} /></a>
                 </div>
                 {/*/ End Logo */}
