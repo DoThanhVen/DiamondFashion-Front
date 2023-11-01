@@ -1,27 +1,28 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getDataLogin } from "../service/Actions";
+import axios from "axios";
+import { callAPI } from "../service/API";
 
 function Login() {
-  const [username, setUsername] = useState("username");
-  const [password, setPassword] = useState("password");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async e => {
+    console.log("US: " + username + " PW: " + password);
+    const url = `/api/account/login?username=${username}&password=${password}`
+    const response = await callAPI(url, "GET");
+    console.log(response);
+  };
 
   const login = useSelector(state => state.dataLogin);
   const dispatch = useDispatch();
 
-  const data = {
-    username: username,
-    password: password
-  };
-
-  const handleLogin = () => {
-    dispatch(getDataLogin(data));
-  };
-
   return (
     <React.Fragment>
-      <div>
-        SHOW {login.username}
+      <div className={`card mb-3`}>
+        <label>THÔNG TIN ĐĂNG NHẬP:</label>
+        <br />
       </div>
       <input
         type="text"
