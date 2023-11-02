@@ -149,7 +149,6 @@ export default function ModelEdit({ onReload, data, closeModal }) {
               value={valueCategory}
               onChange={handleChangeCategory}
               className={`${style.optionSelectType}`}
-
             >
               <option value="">Loại Sản Phẩm...</option>
               {data.datacategory.map((value, index) => {

@@ -2,31 +2,40 @@ import React, { useEffect, useRef, useState } from "react";
 import style from "../../css/admin/category/editcategory.module.css";
 import CategoryService from "../../service/CategoryService";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { getIdcategoryItemUpdate, getIdcategoryUpdate } from "../../service/Actions";
 
 
 function EditCategory() {
-  //SELECT IMAGE
+  const dispatch = useDispatch();
   const [selectedImage, setSelectedImage] = useState(null);
-  const [listCategory, setListcategory] = useState([])
   const [type_category, setTypeCate] = useState('')
   const [type_categoryItem, setTypeCateItem] = useState('')
-  const [valueCategory, setValueCategory] = useState('')
+  const [valueCategory, setValueCategory] = useState()
   const [category, setcategory] = useState({})
+  const [categoryItem, setcategoryItem] = useState({})
   const [image, setimage] = useState()
-  const navigate=useNavigate();
-
-  const log = useRef(true)
+  const navigate = useNavigate();
+  const [listCategory, setListcategory] = useState([])
+  const [reload, setreload] = useState(false)
+  //GET DATA REDUX
+  const data = useSelector((state) => state.allDataCategory);
+  const idCategory = useSelector((state) => state.idCategoryUpdate);
+  const idCategoryItem = useSelector((state) => state.idCategoryItemUpdate);
   useEffect(() => {
-    if (log.current) {
-      log.current = false
-      getdataCategory()
+    if (Array.isArray(data)) {
+      setListcategory(data);
+      if (listCategory !== null && idCategory !== 0 && idCategoryItem === 0) {
+        getCategoryId();
+      } else if (listCategory !== null && idCategory === 0 && idCategoryItem !== 0) {
+        getCategoryItemId();
+      } else if (idCategory !== 0 && idCategoryItem !== 0 && listCategory !== null) {
+        getCategoryId();
+        getCategoryItemId();
+      }
     }
-  }, []);
+  }, [idCategory, idCategoryItem, reload]);
 
-  const getdataCategory = async () => {
-    const reponse = await CategoryService.getAllCategory();
-    setListcategory(reponse)
-  }
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setimage(file);
@@ -42,19 +51,53 @@ function EditCategory() {
       reader.readAsDataURL(file);
     }
   };
-  window.addEventListener("load", function () {
-    let params = new URLSearchParams(window.location.search);
-    var paramID = params.get("idCategory");
-    console.log('param',paramID)
-    if (paramID != null) {
-      const data=CategoryService.getAllCategoryById(paramID);
-      data.then(result=>{
+
+  const handleUpdateCategory = async () => {
+    const result = await CategoryService.updateCategory(category.id, type_category, image);
+    if (result) {
+      alert('Update successfully');
+      document.getElementById('idInputcategory').value = '';
+      setSelectedImage(null);
+      setcategory({});
+      dispatch(getIdcategoryUpdate(0));
+      navigate('/admin/categories');
+    }
+  }
+
+  const handleUpdateCategoryItem = async () => {
+    const result = await CategoryService.updateCategoryItem(categoryItem.id, valueCategory, type_categoryItem);
+    if (result) {
+      alert('Update successfully');
+      document.getElementById('idInputcategoryItem').value = '';
+      dispatch(getIdcategoryItemUpdate(0));
+      navigate('/admin/categories');
+    }
+  }
+  const getCategoryId = () => {
+    if (idCategory !== 0) {
+      const data = CategoryService.getAllCategoryById(idCategory);
+      data.then(result => {
+        document.getElementById('idInputcategory').value = result.type_category;
         setcategory(result)
         setSelectedImage(`http://localhost:8080/api/uploadImageProduct/${result.image}`)
       })
     }
-  })
-  console.log(category)
+  }
+
+  const getCategoryItemId = async () => {
+    const data = await CategoryService.getAllCategoryItemById(idCategoryItem);
+    const matchingCategory = listCategory.find((category) =>
+      category.listCategory.some((listItem) => listItem.id === data.id)
+    )
+    if (matchingCategory) {
+      setValueCategory(matchingCategory.id);
+      document.getElementById('idInputcategoryItem').value = data.type_category_item;
+      setcategoryItem(data);
+    } else {
+      setreload(true)
+    }
+  }
+
   return (
     <React.Fragment>
       <div className={style.header}>
@@ -99,15 +142,24 @@ function EditCategory() {
             <input
               className={style.inputText}
               type="text"
+              id="idInputcategory"
               defaultValue={category.type_category}
               placeholder="Tên loại..."
               onChange={(e) => { setTypeCate(e.target.value) }}
             ></input>
             <div className={style.formButton}>
-              <button className={style.button} onClick={() => { CategoryService.addCategory(type_category, image) }}>
+              <button className={style.button} onClick={() => {
+                const reponse = CategoryService.addCategory(type_category, image);
+                if (reponse) {
+                  reponse.then(e => {
+                    dispatch(getIdcategoryUpdate(e.data.id))
+                  })
+                }
+
+              }}>
                 <i className="bi bi-plus-lg"></i> THÊM
               </button>
-              <button className={style.button} onClick={() => {CategoryService.updateCategory(category.id,type_category, image);navigate('/admin/categories');alert('Update succesfully'); window.location.reload();}}>
+              <button className={style.button} onClick={handleUpdateCategory}>
                 <i className="bi bi-pencil-square"></i> SỬA
               </button>
               <button className={style.button}>
@@ -132,15 +184,23 @@ function EditCategory() {
             <input
               className={style.inputText}
               type="text"
+              id="idInputcategoryItem"
               placeholder="Tên phân loại..."
               onChange={(e) => { setTypeCateItem(e.target.value) }}
             ></input>
             <div className={style.formButton}>
-              <button className={style.button} onClick={() => { CategoryService.addCategoryItem(valueCategory, type_categoryItem) }}>
+              <button className={style.button} onClick={() => {
+                const reponse = CategoryService.addCategoryItem(valueCategory, type_categoryItem)
+                if (reponse) {
+                  reponse.then(e => {
+                    dispatch(getIdcategoryItemUpdate(e.data.id))
+                  })
+                }
+              }}>
                 <i className="bi bi-plus-lg"></i> THÊM
               </button>
-              <button className={style.button}>
-                <i className="bi bi-pencil-square"></i> SỬA
+              <button className={style.button} onClick={handleUpdateCategoryItem}>
+                <i className="bi bi-pencil-square" ></i> SỬA
               </button>
               <button className={style.button}>
                 <i className="bi bi-x-lg"></i> XÓA

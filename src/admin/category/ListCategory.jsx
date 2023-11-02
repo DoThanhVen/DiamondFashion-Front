@@ -1,28 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import style from "../../css/admin/category/listcategory.module.css";
 import "react-datepicker/dist/react-datepicker.css";
-import Nav from "react-bootstrap/Nav";
-import "react-datepicker/dist/react-datepicker.css";
-import CategoryService from "../../service/CategoryService";
-import { Link } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getIdcategoryItemUpdate, getIdcategoryUpdate } from "../../service/Actions";
 
 function ListCategory() {
-  const [listCategory, setListcategory] = useState([])
+  const [listCategory, setlistcategory] = useState([])
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.allDataCategory);
 
-  const log = useRef(true)
   useEffect(() => {
-    if (log.current) {
-      log.current = false
-      getdataCategory()
+    if (Array.isArray(data)) {
+      setlistcategory(data);
     }
-  }, []);
-
-  const getdataCategory = async () => {
-    const reponse = await CategoryService.getAllCategory();
-    setListcategory(reponse)
-  }
-
+  }, [data]);
   return (
     <React.Fragment>
       <div className={style.listCategory}>
@@ -60,12 +51,10 @@ function ListCategory() {
                   <ul key={indexCategory} className={style.menu}>
                     <li className={style.menuItem}>
                       {valueCategory.type_category_item}
-                      <a
-                        className={style.buttonEditItem}
-                        href={`#${valueCategory.id}`}
-                      >
-                        <i className="bi bi-pencil-square"></i>
-                      </a>
+                      <i className="bi bi-pencil-square" onClick={() => {
+                        dispatch(getIdcategoryItemUpdate(valueCategory.id));
+                      }}></i>
+
                     </li>
                   </ul>
                 ))}
@@ -79,12 +68,9 @@ function ListCategory() {
                 </span>
               </label>
               <label className={style.column}>
-                <a
-                  className={style.buttonEditItem}
-                  href={`http://localhost:3000/admin/categories?idCategory=${value.id}`}
-                >
-                  <i className="bi bi-pencil-square"></i>
-                </a>
+                <i className="bi bi-pencil-square" onClick={() => {
+                  dispatch(getIdcategoryUpdate(value.id));
+                }}></i>
               </label>
             </div>
           ))}
