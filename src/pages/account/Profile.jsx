@@ -4,8 +4,24 @@ import Footer from "../../components/Footer";
 import '../account/profile.css';
 import { useNavigate } from "react-router";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+
 
 function Profile_User() {
+
+  const login = useSelector(state => state.dataLogin);
+
+  const username = login.username;
+  const [password, setPassword] = useState("");
+  const [fullname, setFullname] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
+  const [district, setDistrict] = useState("");
+  const [ward, setWard] = useState("");
+  const [address, setAddress] = useState("");
+  const [id_card, setId_card] = useState("");
+
 
   const [selectedImage, setSelectedImage] = useState(null);
   const fileInputRef = useRef(null);
@@ -13,6 +29,24 @@ function Profile_User() {
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
+
+  const domain = process.env.REACT_APP_API || "http://localhost:8080";
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault()
+    axios
+      .post(domain + "/api/account/updateprofile", {username, password, fullname, id_card, phone, email, city, district, ward, address })
+      .then(response => {
+        console.log(response);
+        if (response.data.success) {
+          alert(response.data.message);
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -48,7 +82,7 @@ function Profile_User() {
                           onChange={handleFileChange}
                         />
                       </div>
-                      <h5 class="user-name">Tên tài khoản</h5>
+                      <h5 class="user-name">{login.username}</h5>
                       <h6 class="user-date">Ngày tạo: 20/10/2023</h6>
                     </div>
                     <div class="about">
@@ -99,26 +133,20 @@ function Profile_User() {
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
-                        <label for="username">Tên tài khoản:</label>
-                        <input type="text" class="form-control" id="username" />
-                      </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                      <div class="form-group">
                         <label for="fullName">Họ tên:</label>
-                        <input type="text" class="form-control" id="fullName" />
+                        <input type="text" class="form-control" name="fullname" id="fullName" onChange={e => setFullname(e.target.value)} />
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
                         <label for="phone">Số điện thoại:</label>
-                        <input type="text" class="form-control" id="phone" />
+                        <input type="text" class="form-control" id="phone" onChange={e => setPhone(e.target.value)}/>
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
                         <label for="email">Địa chỉ email:</label>
-                        <input type="url" class="form-control" id="email" />
+                        <input type="url" class="form-control" id="email" onChange={e => setEmail(e.target.value)} />
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -126,13 +154,13 @@ function Profile_User() {
                         <label for="email">Giới tính:</label>
                         <div className='d-flex'>
                           <div className="form-check">
-                            <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked />
+                            <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="true" checked />
                             <label className="form-check-label" for="gridRadios1">
                               Nam
                             </label>
                           </div>
                           <div className="form-check " style={{ marginLeft: '40px' }}>
-                            <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2" />
+                            <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="false" />
                             <label className="form-check-label" for="gridRadios2">
                               Nữ
                             </label>
@@ -148,33 +176,39 @@ function Profile_User() {
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
                         <label for="ciTy">Thành phố:</label>
-                        <input type="name" class="form-control" id="ciTy" />
+                        <input type="name" class="form-control" id="ciTy" onChange={e => setCity(e.target.value)}/>
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
-                        <label for="Street">Đường</label>
-                        <input type="name" class="form-control" id="Street" />
+                        <label for="Street">Quận/Huyện</label>
+                        <input type="name" class="form-control" id="district" onChange={e => setDistrict(e.target.value)}/>
                       </div>
                     </div>
 
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
-                        <label for="ward">Phường</label>
-                        <input type="text" class="form-control" id="ward" />
+                        <label for="ward">Phường/Xã</label>
+                        <input type="text" class="form-control" id="ward" onChange={e => setWard(e.target.value)}/>
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
-                        <label for="adress">Địa chỉ chi tiết (Số nhà):</label>
-                        <input type="text" class="form-control" id="adress" />
+                        <label for="address">Địa chỉ chi tiết (Số nhà):</label>
+                        <input type="text" class="form-control" id="address" onChange={e => setAddress(e.target.value)} />
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="address">Căn cước công dân:</label>
+                        <input type="text" class="form-control" id="id_card" onChange={e => setId_card(e.target.value)} />
                       </div>
                     </div>
                   </div>
                   <div class="row gutters mt-4">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                       <div class="text-right">
-                        <button type="button" id="submit" name="submit" class="btn btn-primary" >Cập nhật</button>
+                        <button type="button" id="submit" name="submit" class="btn btn-primary" onClick={handleUpdateProfile}>Cập nhật</button>
                       </div>
                     </div>
                   </div>
