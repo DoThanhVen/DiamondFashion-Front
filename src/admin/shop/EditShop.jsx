@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import style from "../../css/admin/shop/editshop.module.css";
-import Nav from "react-bootstrap/Nav";
+import { useDispatch, useSelector } from "react-redux";
+
 
 function EditShop() {
-  //SELECT IMAGE
-  const [selectedImage, setSelectedImage] = useState(null);
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.allDataShop);
+  const idShop = useSelector((state) => state.idShop);
 
+  const [shopName,setshopName]=useState('')
+  //const [shopName,setshopName]=useState('')
+  const [selectedImage, setSelectedImage] = useState(null);
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 

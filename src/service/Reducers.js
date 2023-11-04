@@ -30,3 +30,20 @@ export const allDataCategory = (state = {}, action) => {
       return state;
   }
 };
+//Shop
+export const allDataShop = (state = {}, action) => {
+  switch (action.type) {
+    case "GET_ALL_SHOP":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+export const idShop = (state = 0, action) => {
+  switch (action.type) {
+    case "GET_ID_SHOP":
+      return action.payload;
+    default:
+      return state;
+  }
+};

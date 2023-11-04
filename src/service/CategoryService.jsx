@@ -40,6 +40,11 @@ class CategoryService {
 
     };
 
+    deleteCategory=async (id)=>{
+        const response = await callAPI(`${urlCategory}/${id}`, 'DELETE');
+        return response;
+    }
+
 
 
 
@@ -70,6 +75,11 @@ class CategoryService {
             const reponse = await callAPI(`${urlCategoryItem}/${id}`, 'PUT', formData)
             return reponse;
         
+    }
+
+    deleteCategoryItem=async (id)=>{
+        const response = await callAPI(`${urlCategoryItem}/${id}`, 'DELETE');
+        return response;
     }
 
 } export default new CategoryService();

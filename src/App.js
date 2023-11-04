@@ -10,6 +10,7 @@ function App() {
       <Route path="/admin" element={<AdminDashBoard />}/>
       <Route path="/admin/accounts" element={<AdminDashBoard />}/>
       <Route path="/admin/shops" element={<AdminDashBoard />}/>
+      <Route path="/admin/shop/shopdetail" element={<AdminDashBoard />}/>
       <Route path="/admin/categories" element={<AdminDashBoard />}/>
       <Route path="/admin/products" element={<AdminDashBoard />}/>
       <Route path="/admin/bills" element={<AdminDashBoard />}/>

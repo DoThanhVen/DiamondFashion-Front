@@ -12,6 +12,7 @@ function ListCategory() {
   useEffect(() => {
     if (Array.isArray(data)) {
       setlistcategory(data);
+      console.log('ca',data)
     }
   }, [data]);
   return (

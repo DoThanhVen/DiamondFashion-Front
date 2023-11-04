@@ -44,7 +44,6 @@ export default function ListProduct() {
   const closeModal = () => {
     setIsModalOpen(false);
     setModalData({});
-    alert('Update succesfully')
     getdataProduct()
   };
 

@@ -8,8 +8,10 @@ import { allData } from "./service/Reducers";
 import { idCategoryUpdate } from "./service/Reducers";
 import { allDataCategory } from "./service/Reducers";
 import { idCategoryItemUpdate } from "./service/Reducers";
+import { allDataShop } from "./service/Reducers";
+import { idShop } from "./service/Reducers";
 const allReducers = combineReducers({
-  allData,idCategoryUpdate,allDataCategory,idCategoryItemUpdate
+  allData,idCategoryUpdate,allDataCategory,idCategoryItemUpdate,allDataShop,idShop
 });
 
 const store = createStore(allReducers);

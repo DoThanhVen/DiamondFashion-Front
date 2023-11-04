@@ -39,6 +39,7 @@ class ProductService {
                 console.error('Error for', error);
             }
         }
+        return reponse;
     }
 
     updateProduct = async (productid, name, price, description, status, valueCategoryItem, selectedImages, imagesave) => {
@@ -69,6 +70,7 @@ class ProductService {
                 console.error('Error for', error);
             }
         }
+        return reponse;
     }
 
     getAllProduct = async () => {

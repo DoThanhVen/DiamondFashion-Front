@@ -76,8 +76,11 @@ export default function ModelEdit({ onReload, data, closeModal }) {
     setValueCategoryItem(selectedOptionValue);
   };
 
-  const handleSubmit = () => {
-    ProductService.updateProduct(product.id, name, price, description, 0, valueCategoryItem, selectedImages, imagesave);
+  const handleSubmit =async () => {
+    const reponse=await ProductService.updateProduct(product.id, name, price, description, 0, valueCategoryItem, selectedImages, imagesave);
+    if(reponse.status==='SUCCESS'){
+      alert('Update succesfully')
+    }
     setreget(true) 
     closeModal()
   }

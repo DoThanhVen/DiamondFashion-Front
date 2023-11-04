@@ -17,6 +17,7 @@ function AdminDashboard() {
   const isActiveHome = location.pathname === "/admin";
   const isActiveAccount = location.pathname === "/admin/accounts";
   const isActiveShop = location.pathname === "/admin/shops";
+  const isActiveShopDetail = location.pathname === "/admin/shop/shopdetail";
   const isActiveTypeProduct = location.pathname === "/admin/categories";
   const isActiveListProduct = location.pathname === "/admin/products";
   const isActiveStatistical = location.pathname === "/admin/statistical";
@@ -129,7 +130,7 @@ function AdminDashboard() {
         <div id={style.content}>
           {isActiveHome ? <Home /> : null}
           {isActiveAccount ? <Account /> : null}
-          {isActiveShop ? <Shop /> : null}
+          {isActiveShop || isActiveShopDetail ? <Shop /> : null}
           {isActiveTypeProduct ? <Category /> : null}
           {isActiveListProduct ? <ProductAdmin /> : null}
           {isActiveStatistical ? <Statistical /> : null}

@@ -22,3 +22,16 @@ export const getAllCategory = (data) => {
     payload: data
   };
 }
+//Shop
+export const getAllShop = (data) => {
+  return {
+    type: "GET_ALL_SHOP",
+    payload: data
+  };
+}
+export const getIdShop = (id) => {
+  return {
+    type: "GET_ID_SHOP",
+    payload: id
+  };
+}

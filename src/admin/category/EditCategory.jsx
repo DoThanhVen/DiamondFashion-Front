@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import style from "../../css/admin/category/editcategory.module.css";
 import CategoryService from "../../service/CategoryService";
-import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getIdcategoryItemUpdate, getIdcategoryUpdate } from "../../service/Actions";
 
@@ -14,36 +13,37 @@ function EditCategory() {
   const [valueCategory, setValueCategory] = useState()
   const [category, setcategory] = useState({})
   const [categoryItem, setcategoryItem] = useState({})
-  const [image, setimage] = useState()
-  const navigate = useNavigate();
+  const [image, setimage] = useState(null)
   const [listCategory, setListcategory] = useState([])
-  const [reload, setreload] = useState(false)
+  const [reload, setreload] = useState(0)
   //GET DATA REDUX
   const data = useSelector((state) => state.allDataCategory);
   const idCategory = useSelector((state) => state.idCategoryUpdate);
   const idCategoryItem = useSelector((state) => state.idCategoryItemUpdate);
   useEffect(() => {
-    if (Array.isArray(data)) {
-      setListcategory(data);
-      if (listCategory !== null && idCategory !== 0 && idCategoryItem === 0) {
-        getCategoryId();
-      } else if (listCategory !== null && idCategory === 0 && idCategoryItem !== 0) {
-        getCategoryItemId();
-      } else if (idCategory !== 0 && idCategoryItem !== 0 && listCategory !== null) {
-        getCategoryId();
-        getCategoryItemId();
+      if (Array.isArray(data)) {
+        setListcategory(data);
+        if (listCategory !== null && idCategory !== 0 && idCategoryItem === 0) {
+          getCategoryId();
+        } else if (listCategory !== null && idCategory === 0 && idCategoryItem !== 0) {
+          getCategoryItemId();
+        } else if (idCategory !== 0 && idCategoryItem !== 0 && listCategory !== null) {
+          getCategoryId();
+          getCategoryItemId();
+        }
       }
-    }
+
   }, [idCategory, idCategoryItem, reload]);
+
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setimage(file);
     if (file.size > 800 * 1024) {
       alert(
         "Kích thước ảnh quá lớn. Vui lòng chọn ảnh có kích thước nhỏ hơn 1MB."
       );
     } else {
+      setimage(file);
       const reader = new FileReader();
       reader.onload = (event) => {
         setSelectedImage(event.target.result);
@@ -60,7 +60,6 @@ function EditCategory() {
       setSelectedImage(null);
       setcategory({});
       dispatch(getIdcategoryUpdate(0));
-      navigate('/admin/categories');
     }
   }
 
@@ -70,14 +69,12 @@ function EditCategory() {
       alert('Update successfully');
       document.getElementById('idInputcategoryItem').value = '';
       dispatch(getIdcategoryItemUpdate(0));
-      navigate('/admin/categories');
     }
   }
   const getCategoryId = () => {
     if (idCategory !== 0) {
       const data = CategoryService.getAllCategoryById(idCategory);
       data.then(result => {
-        document.getElementById('idInputcategory').value = result.type_category;
         setcategory(result)
         setSelectedImage(`http://localhost:8080/api/uploadImageProduct/${result.image}`)
       })
@@ -91,13 +88,43 @@ function EditCategory() {
     )
     if (matchingCategory) {
       setValueCategory(matchingCategory.id);
-      document.getElementById('idInputcategoryItem').value = data.type_category_item;
       setcategoryItem(data);
     } else {
-      setreload(true)
+      setreload(reload+1)
     }
   }
 
+  const handleDeleteCategory = async () => {
+    const reponse = await CategoryService.deleteCategory(idCategory)
+    console.log(reponse)
+    if (reponse.status === "SUCCESS") {
+      alert('Delete successfully')
+      document.getElementById('idInputcategory').value = '';
+      setSelectedImage(null);
+      setcategory({});
+      dispatch(getIdcategoryUpdate(0));
+      setreload(reload+1)
+    } else {
+      alert('Delete error')
+    }
+  }
+
+  const handleDeleteCategoryItem = async () => {
+    const reponse = await CategoryService.deleteCategoryItem(idCategoryItem)
+    if (reponse.status === "SUCCESS") {
+      alert('Delete successfully')
+      document.getElementById('idInputcategoryItem').value = '';
+      dispatch(getIdcategoryItemUpdate(0));
+    } else {
+      alert('Delete error')
+    }
+  }
+
+  if (listCategory.length < 1||listCategory.length<listCategory.length+1) {
+    setTimeout(() => {
+      setreload(reload+1)
+    }, 100);
+  }
   return (
     <React.Fragment>
       <div className={style.header}>
@@ -149,20 +176,23 @@ function EditCategory() {
             ></input>
             <div className={style.formButton}>
               <button className={style.button} onClick={() => {
-                const reponse = CategoryService.addCategory(type_category, image);
-                if (reponse) {
-                  reponse.then(e => {
-                    dispatch(getIdcategoryUpdate(e.data.id))
-                  })
+                if (type_category === '' || image === null) {
+                  alert('Please fill in all value')
+                } else {
+                  const reponse = CategoryService.addCategory(type_category, image);
+                  if (reponse) {
+                    reponse.then(e => {
+                      dispatch(getIdcategoryUpdate(e.data.id))
+                    })
+                  }
                 }
-
               }}>
                 <i className="bi bi-plus-lg"></i> THÊM
               </button>
-              <button className={style.button} onClick={handleUpdateCategory}>
+              <button className={style.button} onClick={handleUpdateCategory} >
                 <i className="bi bi-pencil-square"></i> SỬA
               </button>
-              <button className={style.button}>
+              <button className={style.button} onClick={handleDeleteCategory}>
                 <i className="bi bi-x-lg"></i> XÓA
               </button>
               <button className={style.button}>
@@ -172,7 +202,8 @@ function EditCategory() {
           </div>
           <div className={style.column}>
             <label className={style.heading}>Phân loại sản phẩm</label>
-            <select className={style.select}
+            <select
+              className={style.select}
               value={valueCategory}
               onChange={(e) => { setValueCategory(e.target.value) }}
             >
@@ -190,11 +221,15 @@ function EditCategory() {
             ></input>
             <div className={style.formButton}>
               <button className={style.button} onClick={() => {
-                const reponse = CategoryService.addCategoryItem(valueCategory, type_categoryItem)
-                if (reponse) {
-                  reponse.then(e => {
-                    dispatch(getIdcategoryItemUpdate(e.data.id))
-                  })
+                if (valueCategory === '' || type_categoryItem === '') {
+                  alert('Please fill in all value')
+                } else {
+                  const reponse = CategoryService.addCategoryItem(valueCategory, type_categoryItem)
+                  if (reponse) {
+                    reponse.then(e => {
+                      dispatch(getIdcategoryItemUpdate(e.data.id))
+                    })
+                  }
                 }
               }}>
                 <i className="bi bi-plus-lg"></i> THÊM
@@ -202,7 +237,7 @@ function EditCategory() {
               <button className={style.button} onClick={handleUpdateCategoryItem}>
                 <i className="bi bi-pencil-square" ></i> SỬA
               </button>
-              <button className={style.button}>
+              <button className={style.button} onClick={handleDeleteCategoryItem}>
                 <i className="bi bi-x-lg"></i> XÓA
               </button>
               <button className={style.button}>
