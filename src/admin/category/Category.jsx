@@ -6,11 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCategory } from "../../service/Actions";
 function Category() {
   const dispatch = useDispatch();
-  const idCategory = useSelector((state) => state.idCategoryUpdate);
-  const idCategoryItem = useSelector((state) => state.idCategoryItemUpdate);
+  // const idCategory = useSelector((state) => state.idCategoryUpdate);
+  // const idCategoryItem = useSelector((state) => state.idCategoryItemUpdate);
+  const reload = useSelector((state) => state.reloadPage);
   useEffect(() => {
     getdataCategory()
-  }, [idCategory,idCategoryItem]);
+  }, [reload]);
 
   const getdataCategory = async () => {
     const reponse = await CategoryService.getAllCategory();

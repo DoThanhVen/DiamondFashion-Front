@@ -48,17 +48,17 @@ function ListCategory() {
               </label>
               <label className={style.column}>{value.type_category}</label>
               <div className={style.column}>
+                <ul className={style.menu}>
                 {value.listCategory?.map((valueCategory, indexCategory) => (
-                  <ul key={indexCategory} className={style.menu}>
-                    <li className={style.menuItem}>
+                    <li key={indexCategory} className={style.menuItem}>
                       {valueCategory.type_category_item}
                       <i className="bi bi-pencil-square" onClick={() => {
                         dispatch(getIdcategoryItemUpdate(valueCategory.id));
                       }}></i>
 
                     </li>
-                  </ul>
                 ))}
+                </ul>
               </div>
               <label className={style.column}>
                 <span

@@ -35,3 +35,10 @@ export const getIdShop = (id) => {
     payload: id
   };
 }
+
+export const reloadPage = (load) => {
+  return {
+    type: "RELOAD_PAGE",
+    payload: load
+  };
+}
