@@ -76,7 +76,6 @@ function ListCategory() {
             </div>
           ))}
         </div>
-
       </div>
     </React.Fragment>
   );

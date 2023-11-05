@@ -42,6 +42,7 @@ body {
     transition: all .2s ease-in-out;
 }
 
+<<<<<<< HEAD
 /* .cardContentActivity:hover::after {
     position: absolute;
     content: "";
@@ -64,6 +65,8 @@ body {
     transform: skewX(-45deg);
 } */
 
+=======
+>>>>>>> FE_ADMIN
 .cardTitleActivity {
     font-size: 15px;
     text-align: center;
@@ -132,6 +135,10 @@ body {
     color: grey;
 }
 
+<<<<<<< HEAD
+=======
+/*RESPONSIVE*/
+>>>>>>> FE_ADMIN
 @media screen and (max-width:950px) {
     .cardAnalysis {
         flex-direction: column;
