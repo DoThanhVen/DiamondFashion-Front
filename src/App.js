@@ -8,16 +8,8 @@ function App() {
 
   return (
     <Routes>
-      {isLogin ? (
-        <Route path="/admin/*" element={<AdminDashBoard />} />
-      ) : (
-        <Route path="/admin/*" element={<Navigate to="/" />} />
-      )}
-      {isLogin ? (
-        <Route path="/business/*" element={<BusinessDashBoard />} />
-      ) : (
-        <Route path="/business/*" element={<Navigate to="/" />} />
-      )}
+      <Route path="/admin/*" element={<AdminDashBoard />}/>
+      <Route path="/business/*" element={<BusinessDashBoard />}/>
     </Routes>
   );
 }

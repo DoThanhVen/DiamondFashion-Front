@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import style from "../../css/business/product.module.css";
-import ModelEdit from "./ModelEdit";
+import ModelEdit from "./updateProduct";
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
 import { callAPI } from "../../service/API";
-import {ThongBao} from "../../service/ThongBao";
+import { ThongBao, Toastify } from "../../service/ThongBao";
 
 const numberPage = 10;
 //DANH SÁCH SẢN PHẨM
@@ -81,8 +81,9 @@ export default function ListProduct() {
     const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=1`;
     const response = await callAPI(url, "GET");
     if (response) {
-      setdataproduct(response);
+      setdataproduct(response.data);
     }
+    ThongBao(response.message, response.status);
   };
 
   const getdataCategory = async () => {
@@ -125,8 +126,8 @@ export default function ListProduct() {
     if (selectedOptionValue !== "") {
       getdataCategoryItem(event.target.value);
     }
-    if(selectedOptionValue === ""){
-      setValueCategoryItem("")
+    if (selectedOptionValue === "") {
+      setValueCategoryItem("");
     }
   };
 
@@ -147,11 +148,10 @@ export default function ListProduct() {
   //TÌM KIẾM
   const handleFind = async () => {
     const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=1`;
-    console.log(url)
     const response = await callAPI(url, "GET");
     if (response) {
       setdataproduct(response.data);
-      setCurrentPage(1)
+      setCurrentPage(1);
     }
     ThongBao(response.message, response.status);
   };
@@ -246,7 +246,9 @@ export default function ListProduct() {
           </div>
           {listPage.map((value, index) => (
             <div key={index} className={style.tableBody}>
-              <label className={style.column}>{((currentPage - 1) * numberPage) + (index + 1)}</label>
+              <label className={style.column}>
+                {(currentPage - 1) * numberPage + (index + 1)}
+              </label>
               <label className={style.column}>{value.id}</label>
               <label className={style.column}>
                 {value?.image_product.length > 0 ? (

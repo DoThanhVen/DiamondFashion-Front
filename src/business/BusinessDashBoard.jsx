@@ -56,8 +56,7 @@ function Navbar() {
       icon: "bi bi-pencil-square",
       mapping: "/business/shop",
       active: isActiveEditShop
-    }
-    ,
+    },
     {
       id: 5,
       label: "Đăng Xuất",

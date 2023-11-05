@@ -4,7 +4,7 @@ function Loading() {
   return (
     <React.Fragment>
       <div className={style.cardLoading}>
-        <div className={style.loading1}>
+        {/* <div className={style.loading1}>
           <label className={style.label}>L</label>
           <label className={style.label}>O</label>
           <label className={style.label}>A</label>
@@ -15,7 +15,7 @@ function Loading() {
           <label className={style.label}>.</label>
           <label className={style.label}>.</label>
           <label className={style.label}>.</label>
-        </div>
+        </div> */}
         <div className={style.loading2}>
           <label className={style.label} />
           <label className={style.label} />
@@ -23,7 +23,7 @@ function Loading() {
           <label className={style.label} />
           <label className={style.label} />
         </div>
-        <div className={style.loading3} />
+        {/* <div className={style.loading3} />
         <div className={style.loading4}>
           <div className={style.row}>
             <div className={style.label}>.</div>
@@ -36,7 +36,7 @@ function Loading() {
             <div className={style.label}>.</div>
             <div className={style.label}>.</div>
           </div>
-        </div>
+        </div> */}
       </div>
     </React.Fragment>
   );

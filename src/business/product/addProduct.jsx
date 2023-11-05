@@ -1,7 +1,7 @@
 import { callAPI } from "../../service/API";
 import style from "../../css/business/product.module.css";
 import React, { useEffect, useState } from "react";
-import { ThongBao } from "../../service/ThongBao";
+import  ModalAction from "../../service/ModalAction";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
@@ -67,7 +67,7 @@ function AddProduct() {
   };
 
   const handleSubmit = async () => {
-    ThongBao(
+    ModalAction(
       "Bạn có muốn thêm mới sản phẩm?",
       "/api/product/shop/1",
       "POST",
@@ -207,3 +207,4 @@ function AddProduct() {
   );
 }
 export default AddProduct;
+

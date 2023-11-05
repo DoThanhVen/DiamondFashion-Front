@@ -5,7 +5,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import style from "../../css/business/product.module.css";
-import ModelEdit from "./ModelEdit";
+import ModelEdit from "./updateProduct";
 import AddProduct from "./addProduct";
 import ListAllProduct from "./ListAllProduct";
 import ListProductActive from "./ListProductActive";

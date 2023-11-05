@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import style from "../../css/business/product.module.css";
-import ModelEdit from "./ModelEdit";
+import ModelEdit from "./updateProduct";
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
 import { callAPI } from "../../service/API";
@@ -78,10 +78,14 @@ export default function ListProduct() {
   }, []);
 
   const getdataProduct = async () => {
-    const reponse = await callAPI(`/api/product`, "GET");
-    if (reponse) {
-      setdataproduct(reponse);
+    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=`;
+    const response = await callAPI(url, "GET");
+    if (response) {
+      setdataproduct(response.data);
+      setCurrentPage(1);
     }
+    ThongBao(response.message,response.status)
+    console.log(response)
   };
 
   const getdataCategory = async () => {
@@ -146,13 +150,12 @@ export default function ListProduct() {
   //TÌM KIẾM
   const handleFind = async () => {
     const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=`;
-    console.log(url);
     const response = await callAPI(url, "GET");
     if (response) {
       setdataproduct(response.data);
-      Toastify();
       setCurrentPage(1);
     }
+    ThongBao(response.message,response.status)
   };
   return (
     <React.Fragment>

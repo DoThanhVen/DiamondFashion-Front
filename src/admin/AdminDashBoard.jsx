@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Loading from "./Loading";
+import Home from "./Home";
 import Account from "./account/Account";
 import Shop from "./shop/Shop";
 import Bill from "./bill/Bill";
 import Category from "./category/Category";
 import ProductAdmin from "./product/ProductAdmin";
 import Statistical from "./statisitcal/Statistical";
-import Character from "./Character";
-import Error404 from "./Error404";
 import style from "../css/admin/nav.module.css";
 import { Link, useLocation } from "react-router-dom";
 import { callAPI } from "../service/API.js";
@@ -19,6 +17,7 @@ function AdminDashboard() {
   const isActiveHome = location.pathname === "/admin";
   const isActiveAccount = location.pathname === "/admin/accounts";
   const isActiveShop = location.pathname === "/admin/shops";
+  const isActiveShopDetail = location.pathname === "/admin/shop/shopdetail";
   const isActiveTypeProduct = location.pathname === "/admin/categories";
   const isActiveListProduct = location.pathname === "/admin/products";
   const isActiveStatistical = location.pathname === "/admin/statistical";
@@ -129,8 +128,9 @@ function AdminDashboard() {
           </ul>
         </div>
         <div id={style.content}>
+          {isActiveHome ? <Home /> : null}
           {isActiveAccount ? <Account /> : null}
-          {isActiveShop ? <Shop /> : null}
+          {isActiveShop || isActiveShopDetail ? <Shop /> : null}
           {isActiveTypeProduct ? <Category /> : null}
           {isActiveListProduct ? <ProductAdmin /> : null}
           {isActiveStatistical ? <Statistical /> : null}

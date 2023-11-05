@@ -1,172 +1,75 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "../../css/admin/shop/listshop.module.css";
-import Nav from "react-bootstrap/Nav";
-
-const numberPage = 8;
-const listShop = [
-  {
-    image: "banner-left.jpg",
-    shopName: "Tên cửa hàng",
-    createDate: "20/10/2023",
-    city: "Hồ Chí Minh",
-    district: "12",
-    ward: "Tô Ký",
-    address: "123/23",
-    status: true
-  },
-  {
-    image: "banner-left.jpg",
-    shopName: "Tên cửa hàng",
-    createDate: "20/10/2023",
-    city: "Hồ Chí Minh",
-    district: "12",
-    ward: "Tô Ký",
-    address: "123/23",
-    status: true
-  },
-  {
-    image: "banner-left.jpg",
-    shopName: "Tên cửa hàng",
-    createDate: "20/10/2023",
-    city: "Hồ Chí Minh",
-    district: "12",
-    ward: "Tô Ký",
-    address: "123/23",
-    status: false
-  },
-  {
-    image: "banner-left.jpg",
-    shopName: "Tên cửa hàng",
-    createDate: "20/10/2023",
-    city: "Hồ Chí Minh",
-    district: "12",
-    ward: "Tô Ký",
-    address: "123/23",
-    status: true
-  },
-  {
-    image: "banner-left.jpg",
-    shopName: "Tên cửa hàng",
-    createDate: "20/10/2023",
-    city: "Hồ Chí Minh",
-    district: "12",
-    ward: "Tô Ký",
-    address: "123/23",
-    status: false
-  },
-  {
-    image: "banner-left.jpg",
-    shopName: "Tên cửa hàng",
-    createDate: "20/10/2023",
-    city: "Hồ Chí Minh",
-    district: "12",
-    ward: "Tô Ký",
-    address: "123/23",
-    status: false
-  },
-  {
-    image: "banner-left.jpg",
-    shopName: "Tên cửa hàng",
-    createDate: "20/10/2023",
-    city: "Hồ Chí Minh",
-    district: "12",
-    ward: "Tô Ký",
-    address: "123/23",
-    status: true
-  },
-  {
-    image: "banner-left.jpg",
-    shopName: "Tên cửa hàng",
-    createDate: "20/10/2023",
-    city: "Hồ Chí Minh",
-    district: "12",
-    ward: "Tô Ký",
-    address: "123/23",
-    status: true
-  }
-];
+import { useDispatch, useSelector } from "react-redux";
+import { getIdShop } from "../../service/Actions";
+import ModelAccess from "./ModelAccess";
 function ListShop() {
-  //PAGE
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(listShop.length / numberPage);
+  const [listShop, setListShop] = useState([])
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.allDataShop);
+  const [showModal, setShowModal] = useState(false);
 
-  if (currentPage < 1) {
-    setCurrentPage(1);
-  } else if (currentPage > totalPages) {
-    setCurrentPage(totalPages);
-  }
-  const startIndex = (currentPage - 1) * numberPage;
-  const endIndex = startIndex + numberPage;
-
-  const listPage = listShop.slice(startIndex, endIndex);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  const openModal = () => {
+    setShowModal(true);
   };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+  useEffect(() => {
+    if (Array.isArray(data)) {
+      setListShop(data);
+    }
+
+  }, [data]);
   return (
     <React.Fragment>
       <div className={style.filter}>
         <label className={style.heading}>Danh sách cửa hàng</label>
       </div>
       <div className={style.listShop}>
-        {listPage.map((value, index) => (
-          <div className={style.cardShop}>
+        {listShop.map((value, index) => (
+          <div className={style.cardShop} key={index}>
             <div className={style.heading}>
               <img
                 className={style.image}
+                src={`http://localhost:8080/api/uploadImageProduct/${value.image}`}
                 alt="Hình Ảnh"
-                src={`/images/${value.image}`}
               ></img>
               <div className={style.content}>
-                <label className={style.shopName}>{value.shopName}</label>
-                <label className={style.createDate}>{value.createDate}</label>
+                <label className={style.shopName}>{value.shop_name}</label>
+                <label className={style.createDate}>{value.create_date}</label>
               </div>
             </div>
             <div className={style.address}>
               <div className={style.title}>Địa chỉ:</div>
               <div className={style.content}>
-                <label>Thành phố: {value.city}</label>
-                <label>Quận: {value.district}</label>
-                <label>Đường: {value.ward}</label>
-                <label>Số nhà: {value.address}</label>
+                <label>Thành phố: {value.addressShop?.city}</label>
+                <label>Quận: {value.addressShop?.district}</label>
+                <label>Đường: {value.addressShop?.ward}</label>
+                <label>Số nhà: {value.addressShop?.address}</label>
               </div>
             </div>
             <div className={style.status}>
               <span
                 className={style.statusShop}
-                style={{ backgroundColor: value.status ? "green" : "red" }}
+                style={{ backgroundColor: value.status === 2 ? "red" : "green" }}
               >
-                {value.status ? "Đang hoạt động" : "Dừng hoạt động"}
+                {value.status === 0
+                  ? "Chờ Xác Nhận"
+                  : value.status === 1 ? "Đang hoạt động" : value.status === 2 ? "Cấm hoạt động" : null}
               </span>
+              <i className="bi bi-pencil-square" onClick={() => {
+                dispatch(getIdShop(value.id));
+                openModal();
+              }}
+
+              ></i>
             </div>
           </div>
         ))}
       </div>
-      <div className={`${style.buttonPage}`}>
-        <Nav.Link className={`btn`} onClick={() => handlePageChange(1)}>
-          <i className="bi bi-chevron-bar-left"></i>
-        </Nav.Link>
-        <Nav.Link
-          className={`btn`}
-          onClick={() => handlePageChange(currentPage - 1)}
-        >
-          <i className="bi bi-caret-left"></i>
-        </Nav.Link>
-        <Nav.Link
-          className={`btn`}
-          onClick={() => handlePageChange(currentPage + 1)}
-        >
-          <i className="bi bi-caret-right"></i>
-        </Nav.Link>
-        <Nav.Link
-          className={`btn`}
-          onClick={() =>
-            handlePageChange(Math.ceil(listShop.length / numberPage))
-          }
-        >
-          <i className="bi bi-chevron-bar-right"></i>
-        </Nav.Link>
-      </div>
+      {showModal && <ModelAccess status={showModal} toggleShow={closeModal} />}
     </React.Fragment>
   );
 }
