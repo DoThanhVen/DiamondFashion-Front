@@ -1,33 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "../../css/business/product.module.css";
 import ModelEdit from "./ModelEdit";
 import Nav from "react-bootstrap/Nav";
-
+import { Link } from "react-router-dom";
+import { callAPI } from "../../service/API";
+import {ThongBao} from "../../service/ThongBao";
 
 const numberPage = 10;
 //DANH SÁCH SẢN PHẨM
-const listProduct = [
-  {
-    idProduct: "product",
-    image: "instagram.jpg",
-    productName: "Áo Sơ Mi Nam Cực Quyến Rũ",
-    typeCategory: "Áo",
-    typeCategoryItem: "Áo Sơ Mi",
-    price: 123000,
-    createDate: "23/10/2023",
-    status: 1
-  },
-  {
-    idProduct: "product002",
-    image: "facebook.jpg",
-    productName: "Áo Thun Nam",
-    typeCategory: "Áo Thun",
-    typeCategoryItem: "Áo Thun",
-    price: 123000,
-    createDate: "23/10/2023",
-    status: 1
-  }
-];
+
 //CHUYỂN ĐỔI TIỀN TỆ
 function formatCurrency(price, promotion) {
   const formatter = new Intl.NumberFormat("vi-VN", {
@@ -38,20 +19,47 @@ function formatCurrency(price, promotion) {
   return formatter.format(price - price * (promotion / 100));
 }
 
-export default function ListProductActive() {
+export default function ListProduct() {
   //MODEL EDIT
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
+  const [datacategory, setcategorydata] = useState([]);
+  const [categoryItemData, setcategoryItem] = useState([]);
+  const [listProduct, setdataproduct] = useState([]);
+  const [valueCategory, setValueCategory] = useState("");
+  const [valueCategoryItem, setValueCategoryItem] = useState("");
+
+  //PAGE
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(listProduct.length / numberPage);
+  const handlePageChange = (page) => {
+    if (listProduct.length <= numberPage || page <= 0) {
+      setCurrentPage(1);
+    } else {
+      if (page > totalPages) {
+        setCurrentPage(totalPages);
+      } else {
+        setCurrentPage(page);
+      }
+    }
+  };
+
+  const listPage = listProduct.slice(
+    (currentPage - 1) * numberPage,
+    currentPage * numberPage
+  );
+
   function handleClickEditProduct(event) {
-    const tdElement = event.currentTarget.parentElement;
+    const rowElement = event.currentTarget.parentElement.parentElement;
 
-    const idProduct = tdElement.querySelector("td:last-child").textContent;
-    const productName = tdElement.querySelector("td:nth-child(3)").textContent;
-    const idCategory = "category1";
-    const idCategoryItem = "categoryItem1";
-    const price = tdElement.querySelector("td:nth-child(5)").textContent;
+    const columns = Array.from(rowElement.querySelectorAll("label"));
+    const id = columns[1].innerText;
 
-    setModalData({ idProduct, productName, price, idCategory, idCategoryItem });
+    setModalData({
+      id,
+      datacategory,
+      getdataProduct
+    });
 
     setIsModalOpen(true);
   }
@@ -59,10 +67,44 @@ export default function ListProductActive() {
     setIsModalOpen(false);
     setModalData({});
   };
+
+  const log = useRef(true);
+  useEffect(() => {
+    if (log.current) {
+      log.current = false;
+      getdataProduct();
+      getdataCategory();
+    }
+  }, []);
+
+  const getdataProduct = async () => {
+    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=1`;
+    const response = await callAPI(url, "GET");
+    if (response) {
+      setdataproduct(response);
+    }
+  };
+
+  const getdataCategory = async () => {
+    const reponse = await callAPI(`/api/category`, "GET");
+    if (reponse) {
+      setcategorydata(reponse);
+    }
+  };
+
+  const getdataCategoryItem = async (id) => {
+    const reponseItem = await callAPI(`/api/category/${id}`, "GET");
+    if (reponseItem) {
+      setcategoryItem(reponseItem.listCategory);
+    }
+  };
+
   //FORM SEARCH
   const [selectedOption, setSelectedOption] = React.useState("");
   const [valueOption, setValueOption] = React.useState("");
-  const handleChangeOption = event => {
+  const [textInput, setTextInput] = useState("");
+
+  const handleChangeOption = (event) => {
     const selectedOptionValue = event.target.value;
     let text = "";
     setValueOption(selectedOptionValue);
@@ -77,63 +119,42 @@ export default function ListProductActive() {
   };
 
   //LOẠI SẢN PHẨM
-  const categories = [
-    {
-      idCategory: "category1",
-      imageCategory: "tiktok.jpg",
-      type: "Áo"
-    }
-  ];
-
-  const [valueCategory, setValueCategory] = React.useState("");
-  const handleChangeCategory = event => {
+  const handleChangeCategory = (event) => {
     const selectedOptionValue = event.target.value;
     setValueCategory(selectedOptionValue);
-  };
-  //PHÂN LOẠI SẢN PHẨM
-  const categoryItem = [
-    {
-      idCategoryItem: "categoryItem1",
-      idCategory: "category1",
-      type: "Áo Thun"
+    if (selectedOptionValue !== "") {
+      getdataCategoryItem(event.target.value);
     }
-  ];
+    if(selectedOptionValue === ""){
+      setValueCategoryItem("")
+    }
+  };
 
-  const [valueCategoryItem, setValueCategoryItem] = React.useState("");
-  const handleChangeCategoryItem = event => {
+  const handleChangeCategoryItem = (event) => {
     const selectedOptionValue = event.target.value;
-    setValueCategoryItem(selectedOptionValue);
+    if (selectedOptionValue !== "") {
+      setValueCategoryItem(selectedOptionValue);
+    }
   };
   //INPUT NUMBER
   const [numberMinValue, setNumberMinValue] = useState(0);
   const [numberMaxValue, setNumberMaxValue] = useState(0);
 
-  const handleNumberMinChange = event => {
-    const newValue = event.target.value;
-    setNumberMinValue(newValue);
+  const handleDelete = async (id) => {
+    await callAPI(`/api/product/${id}`, "DELETE");
+    getdataProduct();
   };
-  const handleNumberMaxChange = event => {
-    const newValue = event.target.value;
-    setNumberMaxValue(newValue);
-  };
-    //PAGE
-    const listActive = listProduct.filter(product => product.status === 1);
-    const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = Math.ceil(listActive.length / numberPage);
-  
-    if (currentPage < 1) {
-      setCurrentPage(1);
-    } else if (currentPage > totalPages) {
-      setCurrentPage(totalPages);
+  //TÌM KIẾM
+  const handleFind = async () => {
+    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=1`;
+    console.log(url)
+    const response = await callAPI(url, "GET");
+    if (response) {
+      setdataproduct(response.data);
+      setCurrentPage(1)
     }
-    const startIndex = (currentPage - 1) * numberPage;
-    const endIndex = startIndex + numberPage;
-  
-    const listPage = listActive.slice(startIndex, endIndex);
-  
-    const handlePageChange = page => {
-      setCurrentPage(page);
-    };
+    ThongBao(response.message, response.status);
+  };
   return (
     <React.Fragment>
       <div className={`${style.action}`}>
@@ -143,45 +164,49 @@ export default function ListProductActive() {
             onChange={handleChangeOption}
             className={`${style.optionSelect}`}
           >
-            <option value="idProduct">Mã Sản Phẩm</option>
-            <option value="productName">Tên Sản Phẩm</option>
+            <option value="">Lựa chọn</option>
+            <option value="id">Mã Sản Phẩm</option>
+            <option value="product_name">Tên Sản Phẩm</option>
           </select>
           <input
             className={`${style.inputSearch}`}
             type="text"
             placeholder={`${selectedOption ? selectedOption : "Tìm kiếm"}...`}
+            onChange={(e) => setTextInput(e.target.value)}
           />
         </div>
         <div className={`${style.typeProduct}`}>
+          <label>Ngành hàng</label>
           <select
             value={valueCategory}
             onChange={handleChangeCategory}
             className={`${style.optionSelectType}`}
           >
             <option value="">Loại Sản Phẩm...</option>
-            {categories.map((value, index) =>
-              <option key={index} value={value.idCategory}>
-                {value.type}
-              </option>
-            )}
+            {datacategory.map((value, index) => {
+              return (
+                <option key={index} value={value.id}>
+                  {value.type_category}
+                </option>
+              );
+            })}
           </select>
-          {valueCategory !== ""
-            ? <select
-                value={valueCategoryItem}
-                onChange={handleChangeCategoryItem}
-                className={`${style.optionSelectType}`}
-              >
-                <option value="">Phân Loại Sản Phẩm...</option>
-                {categoryItem.map(
-                  (value, index) =>
-                    valueCategory === value.idCategory
-                      ? <option key={index} value={value.idCategoryItem}>
-                          {value.type}
-                        </option>
-                      : null
-                )}
-              </select>
-            : null}
+          {valueCategory !== "" ? (
+            <select
+              value={valueCategoryItem}
+              onChange={handleChangeCategoryItem}
+              className={`${style.optionSelectType}`}
+            >
+              <option value="">Phân Loại Sản Phẩm...</option>
+              {categoryItemData.map((value, index) => {
+                return (
+                  <option key={index} value={value.id}>
+                    {value.type_category_item}
+                  </option>
+                );
+              })}
+            </select>
+          ) : null}
         </div>
         <div className={`${style.storge}`}>
           <label>Kho Hàng</label>
@@ -189,17 +214,22 @@ export default function ListProductActive() {
             type="number"
             className={`${style.inputNumber} ms-3`}
             value={numberMinValue}
-            onChange={handleNumberMinChange}
+            onChange={(e) => setNumberMinValue(e.target.value)}
           />
           <span> - </span>
           <input
             type="number"
             className={`${style.inputNumber}`}
             value={numberMaxValue}
-            onChange={handleNumberMaxChange}
+            onChange={(e) => setNumberMaxValue(e.target.value)}
           />
         </div>
-        <button className={`${style.buttonSearch}`}>Tìm Kiếm</button>
+        <button
+          className={`${style.buttonSearch}`}
+          onClick={() => handleFind()}
+        >
+          Tìm Kiếm
+        </button>
       </div>
       <div className={`${style.listProduct}`}>
         <div className={style.table}>
@@ -214,26 +244,31 @@ export default function ListProductActive() {
             <label className={style.column}>Ngày tạo</label>
             <label className={style.column} />
           </div>
-          {listPage.map((value, index) =>
+          {listPage.map((value, index) => (
             <div key={index} className={style.tableBody}>
+              <label className={style.column}>{((currentPage - 1) * numberPage) + (index + 1)}</label>
+              <label className={style.column}>{value.id}</label>
               <label className={style.column}>
-                {currentPage * numberPage - numberPage + index + 1}
+                {value?.image_product.length > 0 ? (
+                  value?.image_product.map((value, index) => (
+                    <img
+                      key={index}
+                      className={style.image}
+                      src={`http://localhost:8080/api/uploadImageProduct/${value.url}`}
+                      alt="Hình Ảnh"
+                    ></img>
+                  ))
+                ) : (
+                  <img
+                    className={style.image}
+                    src={`/images/nullImage.png`}
+                    alt="Hình Ảnh"
+                  ></img>
+                )}
               </label>
+              <label className={style.column}>{value.product_name}</label>
               <label className={style.column}>
-                {value.idProduct}
-              </label>
-              <label className={style.column}>
-                <img
-                  className={style.image}
-                  src={`/images/${value.image}`}
-                  alt="Hình Ảnh"
-                />
-              </label>
-              <label className={style.column}>
-                {value.productName}
-              </label>
-              <label className={style.column}>
-                {value.typeCategoryItem}
+                {value.categoryItem_product.type_category_item}
               </label>
               <label className={style.column}>
                 {formatCurrency(value.price, 0)}
@@ -246,21 +281,25 @@ export default function ListProductActive() {
                       value.status === 0
                         ? "#34219E"
                         : value.status === 1
-                          ? "green"
-                          : value.status === 2 ? "red" : "#E74C3C"
+                        ? "green"
+                        : value.status === 2
+                        ? "red"
+                        : "#E74C3C"
                   }}
                   value={`${value.status}`}
                 >
                   {value.status === 0
                     ? "Chờ Phê Duyệt"
                     : value.status === 1
-                      ? "Đang Hoạt Động"
-                      : value.status === 2 ? "Cấm Hoạt Động" : "Lỗi"}
+                    ? "Đang Hoạt Động"
+                    : value.status === 2
+                    ? "Dừng Hoạt Động"
+                    : value.status === 3
+                    ? "Cấm hoạt động"
+                    : "Lỗi"}
                 </span>
               </label>
-              <label className={style.column}>
-                {value.createDate}
-              </label>
+              <label className={style.column}>{value.create_date}</label>
               <label className={style.column}>
                 <i
                   className={`bi bi-pencil-square ${style.buttonEdit}`}
@@ -268,34 +307,47 @@ export default function ListProductActive() {
                 />
               </label>
             </div>
-          )}
+          ))}
         </div>
         <div className={`${style.buttonPage}`}>
           <Nav.Link className={`btn`} onClick={() => handlePageChange(1)}>
             <i className="bi bi-chevron-bar-left" />
           </Nav.Link>
-          <Nav.Link
-            className={`btn`}
-            onClick={() => handlePageChange(currentPage - 1)}
-          >
-            <i className="bi bi-caret-left" />
+          {currentPage - 1 > 0 ? (
+            <Nav.Link
+              className={`btn`}
+              onClick={() => handlePageChange(currentPage - 1)}
+            >
+              {currentPage - 1}
+            </Nav.Link>
+          ) : null}
+
+          <Nav.Link className={`btn ${style.btnActivePage}`}>
+            {currentPage}
           </Nav.Link>
+          {currentPage + 1 <= totalPages ? (
+            <Nav.Link
+              className={`btn`}
+              onClick={() => handlePageChange(currentPage + 1)}
+            >
+              {currentPage + 1}
+            </Nav.Link>
+          ) : null}
           <Nav.Link
             className={`btn`}
-            onClick={() => handlePageChange(currentPage + 1)}
-          >
-            <i className="bi bi-caret-right" />
-          </Nav.Link>
-          <Nav.Link
-            className={`btn`}
-            onClick={() =>
-              handlePageChange(Math.ceil(listProduct.length / numberPage))}
+            onClick={() => handlePageChange(totalPages)}
           >
             <i className="bi bi-chevron-bar-right" />
           </Nav.Link>
         </div>
       </div>
-      {isModalOpen && <ModelEdit data={modalData} closeModal={closeModal} />}
+      {isModalOpen && (
+        <ModelEdit
+          onReload={getdataProduct}
+          data={modalData}
+          closeModal={closeModal}
+        />
+      )}
     </React.Fragment>
   );
 }

@@ -437,6 +437,10 @@
         display: flex;
         justify-content: center;
         margin-top: 20px;
+        .btnActivePage{
+            background-color: blue;
+            color:white
+        }
     }
 
     .buttonPage a {
@@ -444,4 +448,5 @@
         color: black;
         margin: 0 5px;
     }
+
 }

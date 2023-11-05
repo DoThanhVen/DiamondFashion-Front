@@ -5,10 +5,11 @@ import { BrowserRouter } from "react-router-dom";
 //REDUX
 import { Provider } from "react-redux";
 import { combineReducers, createStore } from "redux";
-import { dataLogin } from "./service/Reducers";
+import { dataLogin, isLogin } from "./service/Reducers";
 
 const allReducers = combineReducers({
-  dataLogin
+  dataLogin,
+  isLogin
 });
 
 const store = createStore(allReducers);

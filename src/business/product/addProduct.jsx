@@ -1,7 +1,7 @@
 import { callAPI } from "../../service/API";
 import style from "../../css/business/product.module.css";
 import React, { useEffect, useState } from "react";
-import ThongBao from "../../service/ThongBao";
+import { ThongBao } from "../../service/ThongBao";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
@@ -18,43 +18,40 @@ function AddProduct() {
   const [description, setdescription] = useState("");
   const [reload, setreload] = useState(false);
 
-  useEffect(
-    () => {
-      getdataCategory();
-    },
-    [reload]
-  );
+  useEffect(() => {
+    getdataCategory();
+  }, [reload]);
 
   const getdataCategory = async () => {
     const reponse = await callAPI(`/api/category`, "GET");
     setcategorydata(reponse);
   };
 
-  const getdataCategoryItem = async id => {
+  const getdataCategoryItem = async (id) => {
     const reponseItem = await callAPI(`/api/category/${id}`, "GET");
     setcategoryItem(reponseItem.listCategory);
   };
 
-  const handleChangeCategory = event => {
+  const handleChangeCategory = (event) => {
     const selectedOptionValue = event.target.value;
     setValueCategory(selectedOptionValue);
     getdataCategoryItem(event.target.value);
   };
 
-  const handleChangeCategoryItem = event => {
+  const handleChangeCategoryItem = (event) => {
     const selectedOptionValue = event.target.value;
     setValueCategoryItem(selectedOptionValue);
   };
 
-  const handleImageChange = e => {
+  const handleImageChange = (e) => {
     const files = e.target.files;
     const filesave = e.target.files[0];
     const listsave = [...imagesave];
     listsave.push(filesave);
     setimagesave(listsave);
     const selectedImagesArray = Array.from(files)
-      .filter(file => file.type.startsWith("image/"))
-      .map(file => URL.createObjectURL(file));
+      .filter((file) => file.type.startsWith("image/"))
+      .map((file) => URL.createObjectURL(file));
     if (selectedImagesArray.length > 9) {
       selectedImagesArray.splice(9);
     }
@@ -63,7 +60,7 @@ function AddProduct() {
     setSelectedImages(list);
   };
 
-  const handleDeleteImage = index => {
+  const handleDeleteImage = (index) => {
     const deletedImage = [...selectedImages];
     deletedImage.splice(index, 1);
     setSelectedImages(deletedImage);
@@ -106,14 +103,14 @@ function AddProduct() {
             <label> Hình ảnh tỷ lệ 1:1</label>
           </div>
           <div className={`${style.listImage}`}>
-            {selectedImages.slice(0, 9).map((image, index) =>
+            {selectedImages.slice(0, 9).map((image, index) => (
               <div className={`${style.selectedImages}`} key={index}>
                 <img src={image} alt={`Selected ${index}`} />
                 <label onClick={() => handleDeleteImage(index)}>
                   <i className="bx bx-trash" />
                 </label>
               </div>
-            )}
+            ))}
             <input
               id="selectedImage"
               type="file"
@@ -121,17 +118,15 @@ function AddProduct() {
               onChange={handleImageChange}
               style={{ display: "none" }}
             />
-            {selectedImages.length < 9
-              ? <label
-                  htmlFor="selectedImage"
-                  className={`${style.labelSelected}`}
-                >
-                  <i className="bx bx-image-add" />
-                  <span>
-                    Thêm hình ảnh ({selectedImages.length}/9)
-                  </span>
-                </label>
-              : null}
+            {selectedImages.length < 9 ? (
+              <label
+                htmlFor="selectedImage"
+                className={`${style.labelSelected}`}
+              >
+                <i className="bx bx-image-add" />
+                <span>Thêm hình ảnh ({selectedImages.length}/9)</span>
+              </label>
+            ) : null}
           </div>
         </div>
       </div>
@@ -140,7 +135,7 @@ function AddProduct() {
         <input
           type="text"
           placeholder="Tên sản phẩm..."
-          onChange={e => {
+          onChange={(e) => {
             setname(e.target.value);
           }}
         />
@@ -150,7 +145,7 @@ function AddProduct() {
         <input
           type="text"
           placeholder="Giá sản phẩm..."
-          onChange={e => {
+          onChange={(e) => {
             setprice(e.target.value);
           }}
         />
@@ -171,29 +166,29 @@ function AddProduct() {
             );
           })}
         </select>
-        {valueCategory !== ""
-          ? <select
-              value={valueCategoryItem}
-              onChange={handleChangeCategoryItem}
-              className={`${style.optionSelectType}`}
-            >
-              <option value="">Phân Loại Sản Phẩm...</option>
-              {categoryItemData.map((value, index) => {
-                return (
-                  <option key={index} value={value.id}>
-                    {value.type_category_item}
-                  </option>
-                );
-              })}
-            </select>
-          : null}
+        {valueCategory !== "" ? (
+          <select
+            value={valueCategoryItem}
+            onChange={handleChangeCategoryItem}
+            className={`${style.optionSelectType}`}
+          >
+            <option value="">Phân Loại Sản Phẩm...</option>
+            {categoryItemData.map((value, index) => {
+              return (
+                <option key={index} value={value.id}>
+                  {value.type_category_item}
+                </option>
+              );
+            })}
+          </select>
+        ) : null}
       </div>
       <div className={`${style.quantity}`}>
         <label>Số lượng</label>
         <input
           type="number"
           placeholder="Số lượng..."
-          onChange={e => {
+          onChange={(e) => {
             setQuantityValue(e.target.value);
           }}
         />
