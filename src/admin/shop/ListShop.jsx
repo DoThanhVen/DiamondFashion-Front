@@ -54,17 +54,15 @@ function ListShop() {
               <span
                 className={style.statusShop}
                 style={{ backgroundColor: value.status === 2 ? "red" : "green" }}
+                onClick={() => {
+                  dispatch(getIdShop(value.id));
+                  openModal();
+                }}
               >
                 {value.status === 0
                   ? "Chờ Xác Nhận"
                   : value.status === 1 ? "Đang hoạt động" : value.status === 2 ? "Cấm hoạt động" : null}
               </span>
-              <i className="bi bi-pencil-square" onClick={() => {
-                dispatch(getIdShop(value.id));
-                openModal();
-              }}
-
-              ></i>
             </div>
           </div>
         ))}

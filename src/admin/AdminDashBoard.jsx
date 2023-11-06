@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Home from "./Home";
 import Account from "./account/Account";
 import Shop from "./shop/Shop";
+import ShopDetail from "./shop/Shopdetail.jsx";
 import Bill from "./bill/Bill";
 import Category from "./category/Category";
 import ProductAdmin from "./product/ProductAdmin";
@@ -47,7 +48,7 @@ function AdminDashboard() {
       icon: "bi bi-shop",
       mapping: "/admin/shops",
       active: isActiveShop,
-      activeDetail: null
+      activeDetail: isActiveShopDetail
     },
     {
       id: "3",
@@ -130,7 +131,8 @@ function AdminDashboard() {
         <div id={style.content}>
           {isActiveHome ? <Home /> : null}
           {isActiveAccount ? <Account /> : null}
-          {isActiveShop || isActiveShopDetail ? <Shop /> : null}
+          {isActiveShop? <Shop /> : null}
+          {isActiveShopDetail? <ShopDetail /> : null}
           {isActiveTypeProduct ? <Category /> : null}
           {isActiveListProduct ? <ProductAdmin /> : null}
           {isActiveStatistical ? <Statistical /> : null}

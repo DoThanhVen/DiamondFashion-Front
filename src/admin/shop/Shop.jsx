@@ -10,7 +10,7 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import ListShopWait from './ListShopWait'
+import ListShopWait from "./ListShopWait";
 import { useLocation } from "react-router";
 import ShopDetail from "./Shopdetail";
 import { useNavigate } from "react-router-dom";
@@ -26,18 +26,16 @@ function Shop() {
   const isActiveShopDetail = location.pathname === "/admin/shop/shopdetail";
   const navigate = useNavigate();
   useEffect(() => {
-    getdataShop()
+    getdataShop();
   }, [idShop]);
 
   const getdataShop = async () => {
     const reponse = await ShopService.getAllshop();
-    dispatch(getAllShop(reponse))
-
-  }
+    dispatch(getAllShop(reponse));
+  };
 
   return (
     <React.Fragment>
-
       <div className={`${style.card}`}>
         <Box sx={{ width: "100%", typography: "body1" }}>
           <TabContext value={value}>
@@ -52,9 +50,7 @@ function Shop() {
                   }}
                   label="Tất cả"
                   value="1"
-                  onClick={() => {
-                    navigate('/admin/shops')
-                  }} />
+                />
                 <Tab
                   sx={{
                     textTransform: "none",
@@ -64,16 +60,14 @@ function Shop() {
                   }}
                   label="Đang chờ duyệt"
                   value="2"
-                  onClick={() => {
-                    navigate('/admin/shops')
-                  }} />
+                />
               </TabList>
             </Box>
             <TabPanel value="1">
-              {isActiveShop ? <ListShop /> : null}
+              <ListShop />
             </TabPanel>
             <TabPanel value="2">
-              {isActiveShopDetail ? <ShopDetail /> : <ListShopWait />}
+              <ListShopWait />
             </TabPanel>
           </TabContext>
         </Box>

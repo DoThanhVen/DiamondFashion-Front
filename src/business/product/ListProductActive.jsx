@@ -32,7 +32,7 @@ export default function ListProduct() {
   //PAGE
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(listProduct.length / numberPage);
-  const handlePageChange = (page) => {
+  const handlePageChange = page => {
     if (listProduct.length <= numberPage || page <= 0) {
       setCurrentPage(1);
     } else {
@@ -78,12 +78,14 @@ export default function ListProduct() {
   }, []);
 
   const getdataProduct = async () => {
-    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=1`;
+    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=1&stocking=`;
     const response = await callAPI(url, "GET");
     if (response) {
       setdataproduct(response.data);
+      setCurrentPage(1);
     }
     ThongBao(response.message, response.status);
+    console.log(response.data);
   };
 
   const getdataCategory = async () => {
@@ -93,7 +95,7 @@ export default function ListProduct() {
     }
   };
 
-  const getdataCategoryItem = async (id) => {
+  const getdataCategoryItem = async id => {
     const reponseItem = await callAPI(`/api/category/${id}`, "GET");
     if (reponseItem) {
       setcategoryItem(reponseItem.listCategory);
@@ -105,7 +107,7 @@ export default function ListProduct() {
   const [valueOption, setValueOption] = React.useState("");
   const [textInput, setTextInput] = useState("");
 
-  const handleChangeOption = (event) => {
+  const handleChangeOption = event => {
     const selectedOptionValue = event.target.value;
     let text = "";
     setValueOption(selectedOptionValue);
@@ -120,7 +122,7 @@ export default function ListProduct() {
   };
 
   //LOẠI SẢN PHẨM
-  const handleChangeCategory = (event) => {
+  const handleChangeCategory = event => {
     const selectedOptionValue = event.target.value;
     setValueCategory(selectedOptionValue);
     if (selectedOptionValue !== "") {
@@ -131,7 +133,7 @@ export default function ListProduct() {
     }
   };
 
-  const handleChangeCategoryItem = (event) => {
+  const handleChangeCategoryItem = event => {
     const selectedOptionValue = event.target.value;
     if (selectedOptionValue !== "") {
       setValueCategoryItem(selectedOptionValue);
@@ -141,19 +143,20 @@ export default function ListProduct() {
   const [numberMinValue, setNumberMinValue] = useState(0);
   const [numberMaxValue, setNumberMaxValue] = useState(0);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async id => {
     await callAPI(`/api/product/${id}`, "DELETE");
     getdataProduct();
   };
   //TÌM KIẾM
   const handleFind = async () => {
-    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=1`;
+    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=1&stocking=`;
     const response = await callAPI(url, "GET");
     if (response) {
       setdataproduct(response.data);
       setCurrentPage(1);
     }
     ThongBao(response.message, response.status);
+    console.log(response.data);
   };
   return (
     <React.Fragment>
@@ -172,7 +175,7 @@ export default function ListProduct() {
             className={`${style.inputSearch}`}
             type="text"
             placeholder={`${selectedOption ? selectedOption : "Tìm kiếm"}...`}
-            onChange={(e) => setTextInput(e.target.value)}
+            onChange={e => setTextInput(e.target.value)}
           />
         </div>
         <div className={`${style.typeProduct}`}>
@@ -191,22 +194,22 @@ export default function ListProduct() {
               );
             })}
           </select>
-          {valueCategory !== "" ? (
-            <select
-              value={valueCategoryItem}
-              onChange={handleChangeCategoryItem}
-              className={`${style.optionSelectType}`}
-            >
-              <option value="">Phân Loại Sản Phẩm...</option>
-              {categoryItemData.map((value, index) => {
-                return (
-                  <option key={index} value={value.id}>
-                    {value.type_category_item}
-                  </option>
-                );
-              })}
-            </select>
-          ) : null}
+          {valueCategory !== ""
+            ? <select
+                value={valueCategoryItem}
+                onChange={handleChangeCategoryItem}
+                className={`${style.optionSelectType}`}
+              >
+                <option value="">Phân Loại Sản Phẩm...</option>
+                {categoryItemData.map((value, index) => {
+                  return (
+                    <option key={index} value={value.id}>
+                      {value.type_category_item}
+                    </option>
+                  );
+                })}
+              </select>
+            : null}
         </div>
         <div className={`${style.storge}`}>
           <label>Kho Hàng</label>
@@ -214,14 +217,14 @@ export default function ListProduct() {
             type="number"
             className={`${style.inputNumber} ms-3`}
             value={numberMinValue}
-            onChange={(e) => setNumberMinValue(e.target.value)}
+            onChange={e => setNumberMinValue(e.target.value)}
           />
           <span> - </span>
           <input
             type="number"
             className={`${style.inputNumber}`}
             value={numberMaxValue}
-            onChange={(e) => setNumberMaxValue(e.target.value)}
+            onChange={e => setNumberMaxValue(e.target.value)}
           />
         </div>
         <button
@@ -244,64 +247,64 @@ export default function ListProduct() {
             <label className={style.column}>Ngày tạo</label>
             <label className={style.column} />
           </div>
-          {listPage.map((value, index) => (
+          {listPage.map((value, index) =>
             <div key={index} className={style.tableBody}>
               <label className={style.column}>
-                {(currentPage - 1) * numberPage + (index + 1)}
+                {(currentPage - 1) * numberPage + index + 1}
               </label>
-              <label className={style.column}>{value.id}</label>
               <label className={style.column}>
-                {value?.image_product.length > 0 ? (
-                  value?.image_product.map((value, index) => (
-                    <img
-                      key={index}
+                {value[0]}
+              </label>
+              <label className={style.column}>
+                {Array.isArray(value[1])
+                  ? value[1].map((item, index) =>
+                      <img
+                        key={index}
+                        className={style.image}
+                        src={`http://localhost:8080/api/uploadImageProduct/${item}`}
+                        alt="Hình Ảnh"
+                      />
+                    )
+                  : <img
                       className={style.image}
-                      src={`http://localhost:8080/api/uploadImageProduct/${value.url}`}
+                      src={`/images/nullImage.png`}
                       alt="Hình Ảnh"
-                    ></img>
-                  ))
-                ) : (
-                  <img
-                    className={style.image}
-                    src={`/images/nullImage.png`}
-                    alt="Hình Ảnh"
-                  ></img>
-                )}
-              </label>
-              <label className={style.column}>{value.product_name}</label>
-              <label className={style.column}>
-                {value.categoryItem_product.type_category_item}
+                    />}
               </label>
               <label className={style.column}>
-                {formatCurrency(value.price, 0)}
+                {value[2]}
+              </label>
+              <label className={style.column}>
+                {value[3]}
+              </label>
+              <label className={style.column}>
+                {formatCurrency(value[4], 0)}
               </label>
               <label className={style.column}>
                 <span
                   className={style.status}
                   style={{
                     backgroundColor:
-                      value.status === 0
+                      value[6] === 0
                         ? "#34219E"
-                        : value.status === 1
-                        ? "green"
-                        : value.status === 2
-                        ? "red"
-                        : "#E74C3C"
+                        : value[6] === 1
+                          ? "green"
+                          : value[6] === 2 ? "red" : "#E74C3C"
                   }}
-                  value={`${value.status}`}
+                  value={`${value[6]}`}
                 >
-                  {value.status === 0
+                  {value[6] === 0
                     ? "Chờ Phê Duyệt"
-                    : value.status === 1
-                    ? "Đang Hoạt Động"
-                    : value.status === 2
-                    ? "Dừng Hoạt Động"
-                    : value.status === 3
-                    ? "Cấm hoạt động"
-                    : "Lỗi"}
+                    : value[6] === 1
+                      ? "Đang Hoạt Động"
+                      : value[6] === 2
+                        ? "Dừng Hoạt Động"
+                        : value[6] === 3 ? "Cấm hoạt động" : "Lỗi"}
                 </span>
               </label>
-              <label className={style.column}>{value.create_date}</label>
+              <label className={style.column}>
+                {value[5]}
+              </label>
               <label className={style.column}>
                 <i
                   className={`bi bi-pencil-square ${style.buttonEdit}`}
@@ -309,32 +312,32 @@ export default function ListProduct() {
                 />
               </label>
             </div>
-          ))}
+          )}
         </div>
         <div className={`${style.buttonPage}`}>
           <Nav.Link className={`btn`} onClick={() => handlePageChange(1)}>
             <i className="bi bi-chevron-bar-left" />
           </Nav.Link>
-          {currentPage - 1 > 0 ? (
-            <Nav.Link
-              className={`btn`}
-              onClick={() => handlePageChange(currentPage - 1)}
-            >
-              {currentPage - 1}
-            </Nav.Link>
-          ) : null}
+          {currentPage - 1 > 0
+            ? <Nav.Link
+                className={`btn`}
+                onClick={() => handlePageChange(currentPage - 1)}
+              >
+                {currentPage - 1}
+              </Nav.Link>
+            : null}
 
           <Nav.Link className={`btn ${style.btnActivePage}`}>
             {currentPage}
           </Nav.Link>
-          {currentPage + 1 <= totalPages ? (
-            <Nav.Link
-              className={`btn`}
-              onClick={() => handlePageChange(currentPage + 1)}
-            >
-              {currentPage + 1}
-            </Nav.Link>
-          ) : null}
+          {currentPage + 1 <= totalPages
+            ? <Nav.Link
+                className={`btn`}
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                {currentPage + 1}
+              </Nav.Link>
+            : null}
           <Nav.Link
             className={`btn`}
             onClick={() => handlePageChange(totalPages)}
@@ -343,13 +346,12 @@ export default function ListProduct() {
           </Nav.Link>
         </div>
       </div>
-      {isModalOpen && (
+      {isModalOpen &&
         <ModelEdit
           onReload={getdataProduct}
           data={modalData}
           closeModal={closeModal}
-        />
-      )}
+        />}
     </React.Fragment>
   );
 }
