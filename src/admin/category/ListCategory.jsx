@@ -2,19 +2,19 @@ import React, { useEffect, useRef, useState } from "react";
 import style from "../../css/admin/category/listcategory.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getIdcategoryItemUpdate, getIdcategoryUpdate } from "../../service/Actions";
+import { getIdcategoryItemUpdate, getIdcategoryUpdate, reloadPage } from "../../service/Actions";
 
 function ListCategory() {
   const [listCategory, setlistcategory] = useState([])
   const dispatch = useDispatch();
   const data = useSelector((state) => state.allDataCategory);
-
+  const reload = useSelector((state) => state.getreloadPage);
+  console.log('reload',reload)
   useEffect(() => {
     if (Array.isArray(data)) {
       setlistcategory(data);
-      console.log('ca',data)
     }
-  }, [data]);
+  }, [data,reload]);
   return (
     <React.Fragment>
       <div className={style.listCategory}>

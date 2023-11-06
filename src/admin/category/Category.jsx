@@ -8,7 +8,7 @@ function Category() {
   const dispatch = useDispatch();
   // const idCategory = useSelector((state) => state.idCategoryUpdate);
   // const idCategoryItem = useSelector((state) => state.idCategoryItemUpdate);
-  const reload = useSelector((state) => state.reloadPage);
+  const reload = useSelector((state) => state.getreloadPage);
   useEffect(() => {
     getdataCategory()
   }, [reload]);

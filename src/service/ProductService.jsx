@@ -14,7 +14,7 @@ class ProductService {
                 id: valueCategoryItem
             }
         })
-        if (reponse) {
+        if (reponse&&quantityValue!==0) {
             await callAPI(`/api/product/createStorage/${reponse.data.id}`, 'POST', {
                 quantity: quantityValue,
                 create_date:new Date()

@@ -10,7 +10,7 @@ function AddProduct() {
   const [categoryItemData, setcategoryItem] = useState([]);
   const [valueCategory, setValueCategory] = useState("");
   const [valueCategoryItem, setValueCategoryItem] = useState("");
-  const [quantityValue, setQuantityValue] = useState("");
+  const [quantityValue, setQuantityValue] = useState(0);
   const [selectedImages, setSelectedImages] = useState([]);
   const [imagesave, setimagesave] = useState([]);
   const [name, setname] = useState("");
