@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import style from "../../css/admin/account/editaccount.module.css";
 import Nav from "react-bootstrap/Nav";
-
+import DataAddress from "../../service/AddressVietNam.json";
 
 function EditAccount() {
-     //SELECT IMAGE
+  //SELECT IMAGE
   const [selectedImage, setSelectedImage] = useState(null);
+  const listDataAddress = DataAddress;
 
+  const [city, setCity] = useState("");
+  const [district, setDistrict] = useState("");
+  const [ward, setWard] = useState("");
+  console.log(city + " " + district + " " + ward);
+  
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
@@ -74,16 +80,34 @@ function EditAccount() {
               type="text"
               placeholder="Số điện thoại"
             ></input>
-            <input
+            <select
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
               className={style.input}
-              type="text"
-              placeholder="Thành phố"
-            ></input>
-            <input
+            >
+              <option value="">Tỉnh/Thành Phố</option>
+              {listDataAddress.map((valueCity, index) => (
+                <option key={valueCity.codename} value={valueCity.codename}>
+                  {valueCity.name}
+                </option>
+              ))}
+            </select>
+            <select
+              value={district}
+              onChange={(e) => setDistrict(e.target.value)}
               className={style.input}
-              type="text"
-              placeholder="Phường"
-            ></input>
+            >
+              <option value="">Quận/Huyện</option>
+              {listDataAddress.map((valueCity, index) =>
+                valueCity.codename === city
+                  ? valueCity.districts.map((valueDistrict, index) => (
+                      <option key={valueDistrict.codename} value={valueDistrict.codename}>
+                        {valueDistrict.name}
+                      </option>
+                    ))
+                  : null
+              )}
+            </select>
             <div className={style.gender}>
               <label className={style.label}>Giới tính</label>
               <div className={style.form}>
@@ -151,11 +175,29 @@ function EditAccount() {
               type="text"
               placeholder="IDCard"
             ></input>
-            <input
+            <select
+              value={district}
+              onChange={(e) => setWard(e.target.value)}
               className={style.input}
-              type="text"
-              placeholder="Đường"
-            ></input>
+            >
+              <option value="">Phường/Xã</option>
+              {listDataAddress.map((valueCity, index) =>
+                valueCity.codename === city
+                  ? valueCity.districts.map((valueDistrict, index) =>
+                      valueDistrict.codename === district
+                        ? valueDistrict.wards.map((valueWard, index) => (
+                            <option
+                              key={valueWard.codename}
+                              value={valueWard.codename}
+                            >
+                              {valueWard.name}
+                            </option>
+                          ))
+                        : null
+                    )
+                  : null
+              )}
+            </select>
             <input
               className={style.input}
               type="text"
