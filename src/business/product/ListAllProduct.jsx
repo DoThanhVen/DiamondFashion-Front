@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import style from "../../css/business/product.module.css";
-import ModelEdit from "./ModelEdit";
+import ModelEdit from "./updateProduct";
 import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
 import { callAPI } from "../../service/API";

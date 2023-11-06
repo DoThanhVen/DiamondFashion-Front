@@ -47,10 +47,10 @@ export const idShop = (state = 0, action) => {
       return state;
   }
 };
-export const reloadPage = (state = 0, action) => {
+export const getreloadPage = (state = 0, action) => {
   switch (action.type) {
     case "RELOAD_PAGE":
-      return state + action.payload;
+      return action.payload;
     default:
       return state;
   }

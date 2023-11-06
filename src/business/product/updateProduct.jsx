@@ -3,7 +3,6 @@ import style from "../../css/business/product.module.css";
 import { callAPI } from "../../service/API";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import ProductService from "../../service/ProductService";
 
 export default function ModelEdit({ onReload, data, closeModal }) {
   const [product, setproduct] = useState({});
@@ -12,24 +11,23 @@ export default function ModelEdit({ onReload, data, closeModal }) {
   const [valueCategoryItem, setValueCategoryItem] = useState()
   const [categoryItemData, setcategoryItem] = useState([]);
   const [imagesave, setimagesave] = useState([]);
+  const [productnew, setproductnew] = useState({});
   const [description, setdescription] = useState('')
-  const [reget, setreget] = useState(false)
-  const [name, setname] = useState('')
-  const [price, setprice] = useState('')
 
   useEffect(() => {
     getdataproductbyid()
   }
-    , [reget]);
+    , []);
 
   const getdataproductbyid = async () => {
-    const reponse = await ProductService.getProductbyId(data.id)
+    const reponse = await callAPI(`/api/product/${data.id}`, "GET")
     setproduct(reponse)
-    setname(reponse.product_name)
-    setprice(reponse.price)
     setValueCategoryItem(reponse.categoryItem_product.id)
   }
 
+  function onChangeinput(e) {
+    setproductnew({ ...product, [e.target.name]: e.target.value })
+  }
 
   //SELECT IMAGE
   const handleImageChange = (e) => {
@@ -76,13 +74,38 @@ export default function ModelEdit({ onReload, data, closeModal }) {
     setValueCategoryItem(selectedOptionValue);
   };
 
-  const handleSubmit =async () => {
-    const reponse=await ProductService.updateProduct(product.id, name, price, description, 0, valueCategoryItem, selectedImages, imagesave);
-    if(reponse.status==='SUCCESS'){
-      alert('Update succesfully')
+  const handleSubmit = async () => {
+
+    const reponse = await callAPI(`/api/product/${product.id}`, "PUT", {
+      product_name: productnew.product_name,
+      price: productnew.price,
+      description: description,
+      status: 0,
+      categoryItem_product: {
+        id: valueCategoryItem
+      }
+    })
+    if (reponse) {
+      try {
+        const formData = new FormData();
+        imagesave.forEach((image, index) => {
+          formData.append(`images`, image);
+        });
+        formData.append('idProduct', reponse.data.id);
+        const config = {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        };
+        await callAPI(`/api/uploadImageProduct`, 'POST', formData
+          , config);
+      } catch (error) {
+        console.error('Error for', error);
+      }
     }
-    setreget(true) 
     closeModal()
+    onReload()
+
   }
 
   return (
@@ -140,11 +163,11 @@ export default function ModelEdit({ onReload, data, closeModal }) {
           </div>
           <div className={`${style.productName}`}>
             <label>Tên sản phẩm</label>
-            <input type="text" defaultValue={product.product_name} onChange={(e) => { setname(e.target.value) }} name="product_name"></input>
+            <input type="text" defaultValue={product.product_name} onChange={onChangeinput} name="product_name"></input>
           </div>
           <div className={`${style.productName}`}>
             <label>Giá sản phẩm</label>
-            <input type="text" defaultValue={product.price} onChange={(e) => { setprice(e.target.value) }} name="price"></input>
+            <input type="text" value={product.price} onChange={onChangeinput} name="price"></input>
           </div>
           <div className={`${style.category}`}>
             <label>Ngành hàng</label>
@@ -152,6 +175,7 @@ export default function ModelEdit({ onReload, data, closeModal }) {
               value={valueCategory}
               onChange={handleChangeCategory}
               className={`${style.optionSelectType}`}
+
             >
               <option value="">Loại Sản Phẩm...</option>
               {data.datacategory.map((value, index) => {
