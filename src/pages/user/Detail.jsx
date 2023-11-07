@@ -1,98 +1,117 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import "../css/user/detail.css";
 import MainNavbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { products, image } from "./data";
+import { products } from "./data";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-
-import ReactDOM from "react-dom";
+import { useParams, Link } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 
+function localStateReducer(state, action) {
+  switch (action.type) {
+    case "SET_PRODUCT":
+      return { ...state, product: action.payload };
+    case "SET_SHOP_NAME":
+      return { ...state, shopName: action.payload };
+    case "SET_SHOP_ADDRESS":
+      return { ...state, shopAddress: action.payload };
+    case "SET_CITY":
+      return { ...state, city: action.payload };
+    case "SET_COUNT":
+      return { ...state, count: action.payload };
+    case "SET_SHOW_ALL_COMMENTS":
+      return { ...state, showAllComments: action.payload };
+    default:
+      return state;
+  }
+}
+
 function ProductPage() {
-  // Sử dụng useState để quản lý giá trị số
-  const [count, setCount] = useState(
-    parseInt(localStorage.getItem("count")) || 14
-  );
+  const { productId } = useParams();
+  const [localState, dispatch] = useReducer(localStateReducer, {
+    product: null,
+    shopName: null,
+    shopAddress: null,
+    city: "",
+    count: parseInt(localStorage.getItem("count")) || 14,
+    showAllComments: false,
+  });
 
-  //Comment
-  const [showAllComments, setShowAllComments] = useState(false);
+  const { product, shopName, shopAddress, city, count, showAllComments } =
+    localState;
 
-  // Hàm tăng giá trị số
   const increaseCount = () => {
-    setCount(count + 1);
+    dispatch({ type: "SET_COUNT", payload: count + 1 });
   };
 
-  // Hàm giảm giá trị số
   const decreaseCount = () => {
     if (count > 1) {
-      setCount(count - 1);
+      dispatch({ type: "SET_COUNT", payload: count - 1 });
     }
   };
-  //Lưu giá trị của count vào local khi count thay đổi
 
-  //Hàm xử lý khi nhấp chọn vào button Xem thêm
   const handleShowMoreClick = () => {
-    setShowAllComments(true);
+    dispatch({ type: "SET_SHOW_ALL_COMMENTS", payload: true });
   };
 
-  const { productId, category } = useParams();
-  const [product, setProduct] = useState(null);
-  const [image, setImage] = useState(null);
-  const [shopName, setShopName] = useState(null);
-  const [addressShop, setaddressShop] = useState(null);
-
   useEffect(() => {
+    // Save the count to local storage when it changes
     localStorage.setItem("count", count.toString());
   }, [count]);
 
   useEffect(() => {
-    // Fetch product details from the API based on productId
+    // Fetch product details
     axios
       .get(`http://localhost:8080/api/product/${productId}`)
       .then((response) => {
-        setProduct(response.data);
+        dispatch({ type: "SET_PRODUCT", payload: response.data });
       })
       .catch((error) => {
         console.error("Error loading product details:", error);
       });
-  }, [productId]);
-  
-  console.log("product:", product);
-  
-  useEffect(() => {
+
+    // Fetch shop and address
     axios
-      .get('http://localhost:8080/api/shop')
+      .get(`http://localhost:8080/api/product/${productId}/shop`)
       .then((response) => {
         const shopData = response.data;
-        // Find the shop with the same product ID
-        const foundShop = shopData.find((shop) =>
-          shop.products.some((product) => product.id === parseInt(productId))
-        );
-        if (foundShop) {
-          setShopName(foundShop.shop_name);
-          setImage(foundShop.image);
-          setaddressShop(foundShop.addressShop);
-        } else {
-          setShopName('Shop not found');
-        }
+        console.log(response.data);
+        dispatch({ type: "SET_SHOP_NAME", payload: shopData.shop_name });
+        dispatch({ type: "SET_CITY", payload: shopData.addressShop.city });
       })
       .catch((error) => {
-        console.error('Error loading shop data:', error);
+        console.error("Error loading shop data:", error);
       });
+
+    // axios
+    //   .get(`http://localhost:8080/api/product/${productId}/shop_address`)
+    //   .then((response) => {
+    //     dispatch({ type: "SET_SHOP_ADDRESS", payload: response.data });
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error loading shop address:", error);
+    //   });
+
+    // Fetch shop addresses
+    // axios
+    //   .get("http://localhost:8080/api/shop_address")
+    //   .then((response) => {
+    //     const shopData = response.data[0];
+    //     const shopCity = shopData.city;
+    //     dispatch({ type: "SET_CITY", payload: shopCity });
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error loading shop addresses:", error);
+    //   });
   }, [productId]);
 
-
-  
-  
   return (
     <>
       <nav>
         <MainNavbar />
       </nav>
       <div className="detail" style={{ backgroundColor: "#f5f5fa" }}>
-    
         <section className="">
           <div
             className="container bg-white mt-4"
@@ -100,17 +119,28 @@ function ProductPage() {
           >
             <div className="row p-4">
               <aside className="col-lg-6">
-                {product&&
+                {product &&
                 product.image_product &&
                 product.image_product.length > 0 ? (
                   <Carousel>
-  {product.image_product.map((image, index) => (
-    <div key={index} style={{ width: '100%', height: '700px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <img src={image.url} alt={`Image ${index}`} style={{ maxWidth: '100%', maxHeight: '100%' }}/>
-    </div>
-  ))}
-</Carousel>
-
+                    {product.image_product.map((image, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          width: "100%",
+                          height: "700px",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img
+                          src={"/images/" + image.url}
+                          alt={`Image ${index}`}
+                        />
+                      </div>
+                    ))}
+                  </Carousel>
                 ) : (
                   <p>No images available.</p>
                 )}
@@ -122,7 +152,7 @@ function ProductPage() {
                     <h4 className="title text-dark">
                       {product.product_name}
                       {/* <h2>{shopName}</h2> */}
-                      
+
                       {/* Continue displaying other product details */}
                     </h4>
                   ) : (
@@ -151,9 +181,7 @@ function ProductPage() {
                     </div> */}
                       <div className="d-flex ">
                         <h2 className="text-danger">
-                          {product
-                            ? `${product.price} ₫`
-                            : "Loading..."}
+                          {product ? `${product.price} ₫` : "Loading..."}
                         </h2>
 
                         {/* <div className="sale ms-4 bg-danger text-light mb-2 p-1">
@@ -259,15 +287,16 @@ function ProductPage() {
                 style={{ width: "50px", height: "50px", borderRadius: "50%" }}
               />
               <div className="shop-name ms-4 ">
-               
-                {product && shopName !== null ? (
-                  <div>
-                     <b>{shopName}</b> <br />
- <span>{addressShop}</span>
-                  </div>
-                ) : (
-                  <p>Loading...</p>
-                )}
+                <Link to={`/shops/${productId}/shop`}>
+                  {product && shopName !== null ? (
+                    <div>
+                      <b>{shopName}</b> <br />
+                      {city}
+                    </div>
+                  ) : (
+                    <p>Loading...</p>
+                  )}
+                </Link>
               </div>
             </div>
           </div>
@@ -291,11 +320,7 @@ function ProductPage() {
                       role="tabpanel"
                       aria-labelledby="ex1-tab-1"
                     >
-                      <p>
-                        {product
-                          ? `${product.description}`
-                          : "Loading"}
-                      </p>
+                      <p>{product ? `${product.description}` : "Loading"}</p>
 
                       <b>
                         <span className="title">THÔNG TIN BỔ SUNG</span>
@@ -804,19 +829,6 @@ function ProductPage() {
                               </p>
                             </div>
                           </>
-                        )}
-
-                        {/* Nút Xem Thêm */}
-                        {!showAllComments && (
-                          <div className="mt-4 mb-4 text-center">
-                            <button
-                              className="btn btn-outline-dark"
-                              style={{ padding: "10px 20px" }}
-                              onClick={() => setShowAllComments(true)}
-                            >
-                              <b>XEM THÊM</b>
-                            </button>
-                          </div>
                         )}
                       </div>
                     </div>

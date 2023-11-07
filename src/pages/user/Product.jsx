@@ -1,9 +1,4 @@
-import React, { useState, useEffect } from "react";
-import MainNavbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import "../css/user/product.css";
-import "../css/user/home.css";
-import "../css/user/slider.css";
+import React, { useState, useEffect, useReducer } from "react";
 import { useLocation, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
@@ -12,46 +7,109 @@ import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import ListGroup from "react-bootstrap/ListGroup";
 
+import MainNavbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import "../css/user/product.css";
+import "../css/user/home.css";
+import "../css/user/slider.css";
+
 function valuetext(value) {
   return `${value}°C`;
 }
 
+function productReducer(state, action) {
+  switch (action.type) {
+    case "SET_VALUE":
+      return {
+        ...state,
+        value1: action.value1,
+        valueMin: action.valueMin,
+        valueMax: action.valueMax,
+      };
+    case "SET_CATEGORY_ITEM":
+      return { ...state, categoryItem: action.categoryItem };
+    case "SET_PRODUCTS":
+      return { ...state, products: action.products };
+    case "SET_SELECTED_CATEGORY":
+      return { ...state, selectedCategory: action.selectedCategory };
+    case "SET_DATE_SORTING":
+      return { ...state, dateSorting: action.dateSorting };
+    case "SET_PRICE_SORTING":
+      return { ...state, priceSorting: action.priceSorting };
+    case "SET_RATING_FILTER":
+      return { ...state, ratingFilter: action.ratingFilter };
+
+    default:
+      return state;
+  }
+}
+
 function Product() {
-  const [value1, setValue1] = React.useState([0, 1000000]);
-  const [valueMin, setValueMin] = useState(0);
-  const [valueMax, setValueMax] = useState(1000000);
+  const [localState, dispatch] = useReducer(productReducer, {
+    value1: [0, 1000000],
+    valueMin: 0,
+    valueMax: 1000000,
+    categoryItem: [],
+    products: [],
+    selectedCategory: null,
+    dateSorting: "ascending",
+    priceSorting: "ascending",
+    ratingFilter: "5",
+  });
+  const {
+    value1,
+    valueMin,
+    valueMax,
+    categoryItem,
+    products,
+    selectedCategory,
+    dateSorting,
+    priceSorting,
+    ratingFilter,
+  } = localState;
+
+  // Event Handlers
   const handleChange1 = (event, newValue) => {
-    setValue1(newValue);
-    setValueMin(newValue[0]);
-    setValueMax(newValue[1]);
+    dispatch({
+      type: "SET_VALUE",
+      value1: newValue,
+      valueMin: newValue[0],
+      valueMax: newValue[1],
+    });
   };
 
-  // Call API
-  const [categoryItem, setCategoryItem] = useState([]);
-  const [products, setProducts] = useState([]);
-  const { id } = useParams();
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
-  //Price Sort
-  const [dateSorting, setDateSorting] = useState("ascending");
-  const [priceSorting, setPriceSorting] = useState("ascending");
-  const [ratingFilter, setRatingFilter] = useState("5"); // Default to 5 stars
   const handleDateSortingChange = (e) => {
-    setDateSorting(e.target.value);
+    dispatch({ type: "SET_DATE_SORTING", dateSorting: e.target.value });
   };
 
   const handlePriceSortingChange = (e) => {
-    setPriceSorting(e.target.value);
+    dispatch({ type: "SET_PRICE_SORTING", priceSorting: e.target.value });
   };
 
   const handleRatingFilterChange = (e) => {
-    setRatingFilter(e.target.value);
+    dispatch({ type: "SET_RATING_FILTER", ratingFilter: e.target.value });
   };
+
+  // Data Fetching
+  const { id } = useParams();
   useEffect(() => {
     axios
       .get(`http://localhost:8080/api/category/${id}`)
       .then((response) => {
-        setCategoryItem(response.data.listCategory);
+        // Loại bỏ các mục danh sách gấp đôi trong listCategory
+        const uniqueCategoryList = response.data.listCategory.filter(
+          (category, index, self) =>
+            index ===
+            self.findIndex(
+              (c) => c.type_category_item === category.type_category_item
+            )
+        );
+        response.data.listCategory = uniqueCategoryList;
+
+        dispatch({
+          type: "SET_CATEGORY_ITEM",
+          categoryItem: response.data.listCategory,
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -63,20 +121,30 @@ function Product() {
     axios
       .get(`http://localhost:8080/api/product`)
       .then((response) => {
-        setProducts(response.data);
+        dispatch({ type: "SET_PRODUCTS", products: response.data });
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  //FILTER LIST PRODUCT
+
+  // Filtering Products
   const listFilter = [];
-  categoryItem.map((value) => {
-    products.map((product) => {
+  categoryItem.forEach((value) => {
+    products.forEach((product) => {
       if (value.id === product.categoryItem_product.id) {
         listFilter.push(product);
       }
     });
+  });
+
+  const filteredProducts = listFilter.filter((product) => {
+    return (
+      (!selectedCategory ||
+        product.categoryItem_product.id === selectedCategory.id) &&
+      product.price >= valueMin &&
+      product.price <= valueMax
+    );
   });
 
   return (
@@ -122,17 +190,37 @@ function Product() {
                       <i className="fa fa-bars"></i>
                       <span>Danh mục sản phẩm</span>
                     </div>
-                    {Array.isArray(categoryItem)
-                      ? categoryItem.map((item) => (
-                          <ListGroup variant="flush" key={item.id}>
-                            <ListGroup.Item
-                              onClick={() => setSelectedCategory(item)}
-                            >
-                              {item.type_category_item}
-                            </ListGroup.Item>
-                          </ListGroup>
-                        ))
-                      : null}
+                    <ListGroup variant="flush">
+                      <ListGroup.Item
+                        onClick={() => {
+                          // Xử lý khi người dùng chọn "Tất cả sản phẩm"
+                          dispatch({
+                            type: "SET_SELECTED_CATEGORY",
+                            selectedCategory: null, // Đặt selectedCategory thành null để hiển thị tất cả sản phẩm
+                          });
+                        }}
+                      >
+                        Tất cả sản phẩm
+                      </ListGroup.Item>
+                      {Array.isArray(categoryItem) &&
+                        categoryItem.map((item) => (
+                          <ListGroup.Item
+                            key={item.id}
+                            onClick={() => {
+                              // Xử lý khi người dùng chọn một danh mục khác
+                              dispatch({
+                                type: "SET_SELECTED_CATEGORY",
+                                selectedCategory: item,
+                              });
+                            }}
+                            className={
+                              item === selectedCategory ? "active" : ""
+                            }
+                          >
+                            {item.type_category_item}
+                          </ListGroup.Item>
+                        ))}
+                    </ListGroup>
                   </div>
                   <div className="col-lg-9 col-md-7">
                     {/* Hiển thị danh sách sản phẩm */}
@@ -346,7 +434,7 @@ function Product() {
                           </nav>
 
                           <div className="row">
-                            {listFilter.map((product, index) =>
+                            {filteredProducts.map((product, index) =>
                               product.price >= valueMin &&
                               product.price <= valueMax ? (
                                 <div
@@ -358,7 +446,7 @@ function Product() {
                                       (image, index) => (
                                         <img
                                           key={index}
-                                          src={image.url}
+                                          src={"/images/" + image.url}
                                           alt={`Image ${index}`}
                                         />
                                       )
@@ -377,9 +465,9 @@ function Product() {
                                   </div>
                                   <div className="tag bg-red">sale</div>
                                   <div className="title pt-4 pb-1">
-                                  <Link to={`/product/${product.id}`}>
-        {product.product_name}
-      </Link>
+                                    <Link to={`/product/${product.id}`}>
+                                      {product.product_name}
+                                    </Link>
                                   </div>
                                   <div className="d-flex align-content-center justify-content-center">
                                     <span className="fas fa-star"></span>

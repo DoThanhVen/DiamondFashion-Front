@@ -1,63 +1,144 @@
-import React, { useState, useEffect } from "react";
-import MainNavbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import "../css/user/product.css";
-import "../css/user/home.css";
-import "../css/user/slider.css";
-import { useLocation, useParams, Link } from "react-router-dom";
+import React, { useState, useEffect, useReducer } from "react";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
-import ListGroup from 'react-bootstrap/ListGroup';
+import ListGroup from "react-bootstrap/ListGroup";
+
+import MainNavbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import "../css/user/product.css";
+import "../css/user/home.css";
+import "../css/user/slider.css";
 
 function valuetext(value) {
   return `${value}°C`;
 }
 
-export default function LikeProduct() {
+function productReducer(state, action) {
+  switch (action.type) {
+    case "SET_FILTER_OPTIONS":
+      return {
+        ...state,
+        filterOptions: {
+          ...state.filterOptions,
+          ...action.filterOptions,
+        },
+      };
+    case "SET_PRODUCTS":
+      return { ...state, products: action.products };
+    case "SET_RATING_FILTER":
+      return {
+        ...state,
+        filterOptions: {
+          ...state.filterOptions,
+          ratingFilter: action.ratingFilter,
+        },
+      };
+    case "SET_PRICE_SORTING":
+      return {
+        ...state,
+        filterOptions: {
+          ...state.filterOptions,
+          priceSorting: action.priceSorting,
+        },
+      };
+    default:
+      return state;
+  }
+}
 
-  const [value1, setValue1] = React.useState([20, 37]);
-  const [valueMin, setValueMin] = useState(null);
-  const [valueMax, setValueMax] = useState(null);
-  const handleChange1 = (event, newValue) => {
-    setValue1(newValue);
-    setValueMin(newValue[0]);
-    setValueMax(newValue[1]);
-    console.log("MIN: " + valueMin + " MAX: " + valueMax);
-  };
+function LikeProduct() {
+  const [localState, dispatch] = useReducer(productReducer, {
+    filterOptions: {
+      value1: [0, 1000000],
+      valueMin: 0,
+      valueMax: 1000000,
+      dateSorting: "ascending",
+      priceSorting: "ascending",
+      ratingFilter: "5",
+    },
+    products: [],
+  });
 
-  const [dateSorting, setDateSorting] = useState('ascending');
-  const [priceSorting, setPriceSorting] = useState('ascending');
-  const [ratingFilter, setRatingFilter] = useState('5'); // Default to 5 stars
+  const { filterOptions, products } = localState;
 
+  const { priceSorting } = localState;
 
-  const handleDateSortingChange = (e) => {
-    setDateSorting(e.target.value);
+  const { ratingFilter } = localState;
+
+  const handleRatingFilterChange = (e) => {
+    dispatch({ type: "SET_RATING_FILTER", ratingFilter: e.target.value });
   };
 
   const handlePriceSortingChange = (e) => {
-    setPriceSorting(e.target.value);
+    dispatch({ type: "SET_PRICE_SORTING", priceSorting: e.target.value });
+  };
+  const handleChangeFilter = (newFilterOptions) => {
+    dispatch({ type: "SET_FILTER_OPTIONS", filterOptions: newFilterOptions });
   };
 
-  const handleRatingFilterChange = (e) => {
-    setRatingFilter(e.target.value);
+  const [sortedProducts, setSortedProducts] = useState([]);
+
+  const { id } = useParams();
+
+  const getListProduct = () => {
+    axios
+      .get(`http://localhost:8080/api/product`)
+      .then((response) => {
+        dispatch({ type: "SET_PRODUCTS", products: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
+  useEffect(() => {
+    fetchData();
+  }, [filterOptions, id]);
+
+  const fetchData = () => {
+    axios
+      .get(`http://localhost:8080/api/likeProducts?accountId=5`)
+      .then((response) => {
+        dispatch({ type: "SET_PRODUCTS", products: response.data });
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  useEffect(() => {
+    const filteredProducts = products.filter((product) => {
+      const price = product.p[0].price;
+      return price >= filterOptions.valueMin && price <= filterOptions.valueMax;
+    });
+
+    const productsCopy = [...filteredProducts];
+    if (filterOptions.priceSorting === "ascending") {
+      productsCopy.sort((a, b) => a.p[0].price - b.p[0].price);
+    } else if (filterOptions.priceSorting === "descending") {
+      productsCopy.sort((a, b) => b.p[0].price - a.p[0].price);
+    }
+    setSortedProducts(productsCopy);
+  }, [filterOptions, products]);
 
   return (
-    <div>
+    <>
       <nav>
         <MainNavbar />
       </nav>
+
       <div className="product">
         <section
           className="breadcrumb-section container"
           style={{
             backgroundImage: "url('/images/product_banner.jpg')",
             backgroundSize: "cover",
-            width: '100%'
+            width: "100%",
           }}
         >
           <Container>
@@ -80,60 +161,36 @@ export default function LikeProduct() {
           <div className="container">
             <div className="row">
               <div className="col-lg-3 col-md-5">
-                <div className="sidebar" style={{ position: 'sticky', top: '20px' }}>
-                  <div className="hero__categories">
-
-
-                  </div>
-                  <div className="col-lg-9 col-md-7">
-                    {/* Hiển thị danh sách sản phẩm */}
-
-                  </div>
+                <div
+                  className="sidebar mt-4"
+                  style={{ position: "sticky", top: "20px" }}
+                >
                   <div className="sidebar__item mt-4">
-                    <h5>GIÁ</h5>
+                    <h4>Giá</h4>
                     <div className="price-range-wrap pb-4">
                       <Box sx={{ width: 300 }}>
                         <Slider
                           getAriaLabel={() => "Temperature range"}
-                          value={value1}
-                          onChange={handleChange1}
+                          value={filterOptions.value1}
+                          onChange={(_, newValue) => {
+                            handleChangeFilter({
+                              ...filterOptions,
+                              value1: newValue,
+                              valueMin: newValue[0],
+                              valueMax: newValue[1],
+                            });
+                          }}
                           valueLabelDisplay="auto"
                           getAriaValueText={valuetext}
                           min={0}
-                          max={200000} // Đặt giá trị max là 1000
+                          max={1000000}
                         />
                         <Typography variant="body2">
                           <span style={{ color: "#FF0000" }}>Value:</span>
-                          {value1[0]} - {value1[1]}
+                          {filterOptions.value1[0]} - {filterOptions.value1[1]}
                         </Typography>
                       </Box>
                     </div>
-                    <div className="sidebar__item sidebar__item__color--option">
-                      <h5>Ngày</h5>
-                      <div className="form-check">
-                        <input
-                          type="radio"
-                          id="ascendingDate"
-                          name="dateSorting"
-                          value="ascending"
-                          checked={dateSorting === 'ascending'}
-                          onChange={handleDateSortingChange}
-                        />
-                        <label htmlFor="ascendingDate">Sắp xếp theo tăng dần</label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          type="radio"
-                          id="descendingDate"
-                          name="dateSorting"
-                          value="descending"
-                          checked={dateSorting === 'descending'}
-                          onChange={handleDateSortingChange}
-                        />
-                        <label htmlFor="descendingDate">Sắp xếp theo giảm dần</label>
-                      </div>
-                    </div>
-
                     <div className="sidebar__item sidebar__item__color--option">
                       <h5>Sắp xếp giá</h5>
                       <div className="form-check">
@@ -142,10 +199,12 @@ export default function LikeProduct() {
                           id="ascendingPrice"
                           name="priceSorting"
                           value="ascending"
-                          checked={priceSorting === 'ascending'}
+                          checked={priceSorting === "ascending"}
                           onChange={handlePriceSortingChange}
                         />
-                        <label htmlFor="ascendingPrice">Sắp xếp theo tăng dần</label>
+                        <label htmlFor="ascendingPrice">
+                          Sắp xếp theo tăng dần
+                        </label>
                       </div>
                       <div className="form-check">
                         <input
@@ -153,10 +212,12 @@ export default function LikeProduct() {
                           id="descendingPrice"
                           name="priceSorting"
                           value="descending"
-                          checked={priceSorting === 'descending'}
+                          checked={priceSorting === "descending"}
                           onChange={handlePriceSortingChange}
                         />
-                        <label htmlFor="descendingPrice">Sắp xếp theo giảm dần</label>
+                        <label htmlFor="descendingPrice">
+                          Sắp xếp theo giảm dần
+                        </label>
                       </div>
                     </div>
 
@@ -168,7 +229,7 @@ export default function LikeProduct() {
                           id="fiveStarRating"
                           name="ratingFilter"
                           value="5"
-                          checked={ratingFilter === '5'}
+                          checked={ratingFilter === "5"}
                           onChange={handleRatingFilterChange}
                         />
                         <label htmlFor="fiveStarRating">5 sao</label>
@@ -179,7 +240,7 @@ export default function LikeProduct() {
                           id="fourStarRating"
                           name="ratingFilter"
                           value="4"
-                          checked={ratingFilter === '4'}
+                          checked={ratingFilter === "4"}
                           onChange={handleRatingFilterChange}
                         />
                         <label htmlFor="fourStarRating">4 sao</label>
@@ -190,7 +251,7 @@ export default function LikeProduct() {
                           id="threeStarRating"
                           name="ratingFilter"
                           value="3"
-                          checked={ratingFilter === '3'}
+                          checked={ratingFilter === "3"}
                           onChange={handleRatingFilterChange}
                         />
                         <label htmlFor="threeStarRating">3 sao</label>
@@ -201,7 +262,7 @@ export default function LikeProduct() {
                           id="twoStarRating"
                           name="ratingFilter"
                           value="2"
-                          checked={ratingFilter === '2'}
+                          checked={ratingFilter === "2"}
                           onChange={handleRatingFilterChange}
                         />
                         <label htmlFor="twoStarRating">2 sao</label>
@@ -212,14 +273,50 @@ export default function LikeProduct() {
                           id="oneStarRating"
                           name="ratingFilter"
                           value="1"
-                          checked={ratingFilter === '1'}
+                          checked={ratingFilter === "1"}
                           onChange={handleRatingFilterChange}
                         />
                         <label htmlFor="oneStarRating">1 sao</label>
                       </div>
                     </div>
                   </div>
-
+                  <div className="sidebar__item mt-4">
+                    <div className="latest-product__text">
+                      <h4>Sản phẩm mới nhất</h4>
+                      <div className="latest-product__slider owl-carousel">
+                        <div className="latest-prdouct__slider__item">
+                          <a href="#" className="latest-product__item">
+                            <div className="latest-product__item__pic">
+                              <img
+                                src="/images/best-saler-4.jpg"
+                                alt=""
+                                style={{ width: "150px" }}
+                              />
+                            </div>
+                            <div className="latest-product__item__text">
+                              <h6>Crab Pool Security</h6>
+                              <span>$30.00</span>
+                            </div>
+                          </a>
+                        </div>
+                        <div className="latest-prdouct__slider__item">
+                          <a href="#" className="latest-product__item">
+                            <div className="latest-product__item__pic">
+                              <img
+                                src="/images/best-saler-4.jpg"
+                                alt=""
+                                style={{ width: "150px" }}
+                              />
+                            </div>
+                            <div className="latest-product__item__text">
+                              <h6>Crab Pool Security</h6>
+                              <span>$30.00</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="col-lg-9 col-md-7">
@@ -235,7 +332,7 @@ export default function LikeProduct() {
                                 href="/#"
                               >
                                 <span className="border-red pe-2">
-                                  DANH SÁCH SẢN PHẨM BẠN YÊU THÍCH
+                                  DANH SÁCH SẢN PHẨM YÊU THÍCH CỦA BẠN
                                 </span>
                               </a>
                               <button
@@ -255,14 +352,21 @@ export default function LikeProduct() {
                               ></div>
                             </div>
                           </nav>
-
-                          <div className="row">
-                            <div className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
+                          {sortedProducts.map((product, index) => (
+                            <div
+                              key={index}
+                              className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3"
+                            >
                               <div className="product">
-                                <img
-                                  src="https://images.pexels.com/photos/54203/pexels-photo-54203.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                                  alt=""
-                                />
+                                {product.p[0].image_urls.map(
+                                  (image, imageIndex) => (
+                                    <img
+                                      key={imageIndex}
+                                      src={"/images/" + image.url}
+                                      alt={`Image ${imageIndex}`}
+                                    />
+                                  )
+                                )}
                                 <ul className="d-flex align-items-center justify-content-center list-unstyled icons">
                                   <li className="icon">
                                     <span className="fas fa-expand-arrows-alt"></span>
@@ -277,7 +381,9 @@ export default function LikeProduct() {
                               </div>
                               <div className="tag bg-red">sale</div>
                               <div className="title pt-4 pb-1">
-                                Winter Sweater
+                                <Link to={`/product/${product.id_product}`}>
+                                  {product.p[0].product_name}
+                                </Link>
                               </div>
                               <div className="d-flex align-content-center justify-content-center">
                                 <span className="fas fa-star"></span>
@@ -286,232 +392,15 @@ export default function LikeProduct() {
                                 <span className="fas fa-star"></span>
                                 <span className="fas fa-star"></span>
                               </div>
-                              <div className="price">$ 60.0</div>
+                              <div className="price">{product.p[0].price}</div>
                             </div>
-                            <div className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
-                              <div className="product">
-                                <img
-                                  src="https://images.pexels.com/photos/6764040/pexels-photo-6764040.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                                  alt=""
-                                />
-                                <ul className="d-flex align-items-center justify-content-center list-unstyled icons">
-                                  <li className="icon">
-                                    <span className="fas fa-expand-arrows-alt"></span>
-                                  </li>
-                                  <li className="icon mx-3">
-                                    <span className="far fa-heart"></span>
-                                  </li>
-                                  <li className="icon">
-                                    <span className="fas fa-shopping-bag"></span>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="tag bg-black">out of stock</div>
-                              <div className="title pt-4 pb-1">
-                                Denim Dresses
-                              </div>
-                              <div className="d-flex align-content-center justify-content-center">
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                              </div>
-                              <div className="price">$ 55.0</div>
-                            </div>
-                            <div className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
-                              <div className="product">
-                                <img
-                                  src="https://images.pexels.com/photos/914668/pexels-photo-914668.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                                  alt=""
-                                />
-                                <ul className="d-flex align-items-center justify-content-center list-unstyled icons">
-                                  <li className="icon">
-                                    <span className="fas fa-expand-arrows-alt"></span>
-                                  </li>
-                                  <li className="icon mx-3">
-                                    <span className="far fa-heart"></span>
-                                  </li>
-                                  <li className="icon">
-                                    <span className="fas fa-shopping-bag"></span>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="tag bg-green">new</div>
-                              <div className="title pt-4 pb-1">
-                                Empire Waist Dresses
-                              </div>
-                              <div className="d-flex align-content-center justify-content-center">
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                              </div>
-                              <div className="price">$ 70.0</div>
-                            </div>
-                            <div className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
-                              <div className="product">
-                                <img
-                                  src="https://images.pexels.com/photos/6311392/pexels-photo-6311392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                                  alt=""
-                                />
-                                <ul className="d-flex align-items-center justify-content-center list-unstyled icons">
-                                  <li className="icon">
-                                    <span className="fas fa-expand-arrows-alt"></span>
-                                  </li>
-                                  <li className="icon mx-3">
-                                    <span className="far fa-heart"></span>
-                                  </li>
-                                  <li className="icon">
-                                    <span className="fas fa-shopping-bag"></span>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="title pt-4 pb-1">
-                                Pinafore Dresses
-                              </div>
-                              <div className="d-flex align-content-center justify-content-center">
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                              </div>
-                              <div className="price">$ 60.0</div>
-                            </div>
-                          </div>
-                          <div className="row">
-                            <div className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
-                              <div className="product">
-                                <img
-                                  src="https://images.pexels.com/photos/54203/pexels-photo-54203.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                                  alt=""
-                                />
-                                <ul className="d-flex align-items-center justify-content-center list-unstyled icons">
-                                  <li className="icon">
-                                    <span className="fas fa-expand-arrows-alt"></span>
-                                  </li>
-                                  <li className="icon mx-3">
-                                    <span className="far fa-heart"></span>
-                                  </li>
-                                  <li className="icon">
-                                    <span className="fas fa-shopping-bag"></span>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="tag bg-red">sale</div>
-                              <div className="title pt-4 pb-1">
-                                Winter Sweater
-                              </div>
-                              <div className="d-flex align-content-center justify-content-center">
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                              </div>
-                              <div className="price">$ 60.0</div>
-                            </div>
-                            <div className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
-                              <div className="product">
-                                <img
-                                  src="https://images.pexels.com/photos/6764040/pexels-photo-6764040.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                                  alt=""
-                                />
-                                <ul className="d-flex align-items-center justify-content-center list-unstyled icons">
-                                  <li className="icon">
-                                    <span className="fas fa-expand-arrows-alt"></span>
-                                  </li>
-                                  <li className="icon mx-3">
-                                    <span className="far fa-heart"></span>
-                                  </li>
-                                  <li className="icon">
-                                    <span className="fas fa-shopping-bag"></span>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="tag bg-black">out of stock</div>
-                              <div className="title pt-4 pb-1">
-                                Denim Dresses
-                              </div>
-                              <div className="d-flex align-content-center justify-content-center">
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                              </div>
-                              <div className="price">$ 55.0</div>
-                            </div>
-                            <div className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
-                              <div className="product">
-                                <img
-                                  src="https://images.pexels.com/photos/914668/pexels-photo-914668.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                                  alt=""
-                                />
-                                <ul className="d-flex align-items-center justify-content-center list-unstyled icons">
-                                  <li className="icon">
-                                    <span className="fas fa-expand-arrows-alt"></span>
-                                  </li>
-                                  <li className="icon mx-3">
-                                    <span className="far fa-heart"></span>
-                                  </li>
-                                  <li className="icon">
-                                    <span className="fas fa-shopping-bag"></span>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="title pt-4 pb-1">
-                                Empire Waist Dresses
-                              </div>
-                              <div className="d-flex align-content-center justify-content-center">
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                              </div>
-                              <div className="price">$ 70.0</div>
-                            </div>
-                            <div className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
-                              <div className="product">
-                                <img
-                                  src="https://images.pexels.com/photos/6311392/pexels-photo-6311392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                                  alt=""
-                                />
-                                <ul className="d-flex align-items-center justify-content-center list-unstyled icons">
-                                  <li className="icon">
-                                    <span className="fas fa-expand-arrows-alt"></span>
-                                  </li>
-                                  <li className="icon mx-3">
-                                    <span className="far fa-heart"></span>
-                                  </li>
-                                  <li className="icon">
-                                    <span className="fas fa-shopping-bag"></span>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div className="tag bg-green">new</div>
-                              <div className="title pt-4 pb-1">
-                                Pinafore Dresses
-                              </div>
-                              <div className="d-flex align-content-center justify-content-center">
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                                <span className="fas fa-star"></span>
-                              </div>
-                              <div className="price">$ 60.0</div>
-                            </div>
-                          </div>
+                          ))}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="product__pagination pb-4">
+                <div className="product__pagination">
                   <a href="#">1</a>
                   <a href="#">2</a>
                   <a href="#">3</a>
@@ -527,7 +416,7 @@ export default function LikeProduct() {
           <Footer />
         </div>
       </div>
-
-    </div>
-  )
+    </>
+  );
 }
+export default LikeProduct;

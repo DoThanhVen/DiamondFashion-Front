@@ -1,15 +1,46 @@
-import React from "react";
+import React, { useRef } from "react";
+import emailjs from "@emailjs/browser";
 import "../css/user/contact.css";
 import MainNavbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
-
 function ContactInfo() {
+  const form = useRef();
 
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_nc9zmfr",
+        "template_rbvp4kb",
+        form.current,
+        "P6iZRWlAwj-Yj6GoE"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
 
   return (
     <div>
       <MainNavbar />
+
+      <form ref={form} onSubmit={sendEmail}>
+        <label>Name</label>
+        <input type="text" name="user_name" />
+        <label>Email</label>
+        <input type="email" name="user_email" />
+        <label>Message</label>
+        <textarea name="message" />
+        <input type="submit" value="Send" />
+      </form>
+
       <section className="ftco-section">
         <div className="container">
           <div className="row justify-content-center"></div>
@@ -125,7 +156,8 @@ function ContactInfo() {
                       </div>
                       <div className="text">
                         <p>
-                          <span>Địa chỉ:</span> Tòa nhà QTSC 9 (Tòa T) - Tô Ký, Phường Tân Chánh Hiệp, Quận 12, TP.Hồ Chí Minh
+                          <span>Địa chỉ:</span> Tòa nhà QTSC 9 (Tòa T) - Tô Ký,
+                          Phường Tân Chánh Hiệp, Quận 12, TP.Hồ Chí Minh
                         </p>
                       </div>
                     </div>
@@ -158,7 +190,7 @@ function ContactInfo() {
                         <p>
                           <span>Email:</span>{" "}
                           <a href="mailto:diamondshop@gmail.com">
-                          diamondshop@gmail.com
+                            diamondshop@gmail.com
                           </a>
                         </p>
                       </div>

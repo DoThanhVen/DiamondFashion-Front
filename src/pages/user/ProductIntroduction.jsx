@@ -11,15 +11,14 @@ export default function ProductIntroduction() {
   });
 
   useEffect(() => {
-    // Mở modal tự động sau 500 milliseconds (0.5 giây) khi trang web được tải
-
-    const timer = setTimeout(() => {
+    // Open the modal automatically after 500 milliseconds (0.5 seconds) when the web page is loaded
+    const openModalTimer = setTimeout(() => {
       setShowModal(true);
-    }, 500); // Modal sẽ mở sau 0.5 giây
+    }, 500); // Modal will open after 0.5 seconds
 
     // Update the countdown every second
-
     const endDate = new Date("2023-12-25 23:59:59");
+
     const calculateTime = () => {
       const currentDate = new Date();
       const timeRemaining = endDate - currentDate;
@@ -40,87 +39,71 @@ export default function ProductIntroduction() {
         seconds,
       });
     };
-    const timerSale = setInterval(calculateTime, 1000);
+
+    const countdownTimer = setInterval(calculateTime, 1000);
+
     return () => {
-      clearTimeout(timer); // Hủy bỏ timer nếu component unmount
-      clearInterval(timer); // Clean up timer on unmount
+      clearTimeout(openModalTimer); // Clear the open modal timer if the component unmounts
+      clearInterval(countdownTimer); // Clean up the countdown timer on unmount
     };
+
     calculateTime(); // Initial calculation
   }, []);
 
   const handleClose = () => {
-    // Đóng modal khi người dùng nhấn nút Đóng hoặc bấm nút ngoài modal
+    // Close the modal when the user clicks the Close button or clicks outside the modal
     setShowModal(false);
   };
   return (
     <div className="Introduction">
-    <Modal
-      show={showModal}
-      onHide={handleClose}
-      backdrop="static"
-      keyboard={false}
-    >
-      <Modal.Header closeButton>
-        <Modal.Title>Modal Title</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="newsletter">
-          <form action="#">
-            <img
-              src="/images/sale_christmas.gif"
-              style={{ width: "260px" }}
-              alt=""
-            ></img>
-            <div className="newsletter-header">
-              {/* <h3 className="newsletter-title">Subscribe Newsletter.</h3>
+      <Modal
+        show={showModal}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Modal Title</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="newsletter">
+            <form action="#">
+              <img
+                src="/images/sale_christmas.gif"
+                style={{ width: "260px" }}
+                alt=""
+              ></img>
+              <div className="newsletter-header">
+                {" "}
+                <div className="countdown-box mt-2">
+                  <p className="countdown-desc">
+                    Nhanh lên! Ưu đãi kết thúc sau:
+                  </p>
 
-                <p className="newsletter-desc">
-                  Subscribe the <b>Anon</b> to get latest products and discount update.
-                </p> */}
+                  <div className="countdown">
+                    <div className="countdown-content">
+                      <p className="display-number">{countdown.days} Days</p>
+                    </div>
 
-              <div className="countdown-box mt-2">
-                <p className="countdown-desc">
-                  Nhanh lên! Ưu đãi kết thúc sau:
-                </p>
+                    <div className="countdown-content">
+                      <p className="display-number">{countdown.hours} Hours</p>
+                    </div>
 
-                <div className="countdown">
-                  <div className="countdown-content">
-                    <p className="display-number">{countdown.days} Days</p>
-                  </div>
+                    <div className="countdown-content">
+                      <p className="display-number">{countdown.minutes} Min</p>
+                    </div>
 
-                  <div className="countdown-content">
-                    <p className="display-number">{countdown.hours} Hours</p>
-                  </div>
-
-                  <div className="countdown-content">
-                    <p className="display-number">{countdown.minutes} Min</p>
-                  </div>
-
-                  <div className="countdown-content">
-                    <p className="display-number">{countdown.seconds} Sec</p>
+                    <div className="countdown-content">
+                      <p className="display-number">{countdown.seconds} Sec</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* <input
-              type="email"
-              name="email"
-              className="email-field"
-              placeholder="Email Address"
-              required
-            /> */}
-
-            {/* <button type="submit" className="btn-newsletter">
-              Bắt đầu mua
-            </button> */}
-          </form>
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        {/* Đặt nút hoặc nội dung footer của modal ở đây */}
-      </Modal.Footer>
-    </Modal>
-  </div>
-  )
+            </form>
+          </div>
+        </Modal.Body>
+        <Modal.Footer></Modal.Footer>
+      </Modal>
+    </div>
+  );
 }

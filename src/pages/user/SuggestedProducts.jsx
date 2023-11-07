@@ -6,14 +6,16 @@ import "../css/user/responsive.css";
 
 const SidebarM = () => {
   const [categories, setCategories] = useState([]);
-  
+
   useEffect(() => {
-    // Gọi API 
-    axios.get('http://localhost:8080/api/category')
-      .then(response => {
+    // Gọi API
+    axios
+      .get("http://localhost:8080/api/category")
+      .then((response) => {
         setCategories(response.data);
+        console.log(response.data)
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }, []);
@@ -31,16 +33,21 @@ const SidebarM = () => {
               >
                 <i className="fa fa-bars"></i> Danh mục
               </button>
-              {categories.map(category => (
+              {categories.map((category) => (
                 <li key={category.id} className="list-group-item">
-                  <Link to={`/category/${category.id}`}>{category.type_category}</Link>
+                  <Link to={`/category/${category.id}`}>
+                    {category.type_category}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
         </div>
         <div className="sidebar-widget hot-deals outer-bottom-xs bg-white mt-4">
-          <h5 className="section-title"> <strong>Ưu đãi lớn</strong> </h5>
+          <h5 className="section-title">
+            {" "}
+            <strong>Ưu đãi lớn</strong>{" "}
+          </h5>
           <div className="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-ss">
             <div className="item">
               <div className="products">
@@ -255,7 +262,10 @@ const SidebarM = () => {
           </div>
         </div>
         <div className="sidebar-widget product-tag bg-white mt-4">
-          <h5 className="section-title"> <strong>Tags</strong> </h5>
+          <h5 className="section-title">
+            {" "}
+            <strong>Tags</strong>{" "}
+          </h5>
           <div className="sidebar-widget-body outer-top-xs">
             <div className="tag-list">
               <a className="item" title="Phone" href="category.html">
@@ -289,7 +299,10 @@ const SidebarM = () => {
           </div>
         </div>
         <div className="sidebar-widget outer-bottom-small bg-white mt-4">
-          <h5> <strong className="section-title">Ưu đãi đặc biệt</strong> </h5>
+          <h5>
+            {" "}
+            <strong className="section-title">Ưu đãi đặc biệt</strong>{" "}
+          </h5>
           <div className="sidebar-widget-body outer-top-xs">
             <div className="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
               <div className="item">
@@ -551,7 +564,7 @@ const SidebarM = () => {
             </div>
           </div>
         </div>
-        <div className="sidebar-widget newsletter outer-bottom-small bg-white mt-4">
+        {/* <div className="sidebar-widget newsletter outer-bottom-small bg-white mt-4">
           <h3 className="section-title">Newsletters</h3>
           <div className="sidebar-widget-body outer-top-xs">
             <p>Sign Up for Our Newsletter!</p>
@@ -570,7 +583,7 @@ const SidebarM = () => {
               <button className="btn btn-primary">Subscribe</button>
             </form>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

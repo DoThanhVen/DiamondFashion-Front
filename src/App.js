@@ -24,6 +24,7 @@ import NewPass from "./pages/account/NewPass";
 import ContactInfo from "./pages/user/ContactInfo";
 import Policy from "./pages/user/Policy";
 import LikeProduct from "./pages/user/LikeProduct";
+import Shop from "./pages/user/Shop";
 
 // import AdminDashBoard from "./componentadmin/AdminDashBoard";
 import { Route, Routes } from "react-router-dom";
@@ -53,6 +54,9 @@ function App() {
       <Route path="/contact" element={<ContactInfo/>} />
       <Route path="/policy" element={<Policy/>} />
       <Route path="/likeProduct" element={<LikeProduct/>} />
+      <Route path="/shops/:productId/shop" element={<Shop />} />
+
+
 
     </Routes>
   );

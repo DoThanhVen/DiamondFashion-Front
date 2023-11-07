@@ -1,5 +1,9 @@
-/* CSS */
-/* .selected {
-  background-color: green;
-  color: white; 
-} */
+.thumbs.animated .thumb{
+  width: 100px !important;
+  height: 100px;
+}
+.thumbs.animated .thumb img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
