@@ -60,7 +60,7 @@ function LikeProduct() {
       priceSorting: "ascending",
       ratingFilter: "5",
     },
-    products: [],
+    products: [], // Initialize as an empty array
   });
 
   const { filterOptions, products } = localState;
@@ -101,7 +101,7 @@ function LikeProduct() {
 
   const fetchData = () => {
     axios
-      .get(`http://localhost:8080/api/likeProducts?accountId=5`)
+      .get(`http://localhost:8080/api/likeProducts?accountId=6`)
       .then((response) => {
         dispatch({ type: "SET_PRODUCTS", products: response.data });
         console.log(response.data);
@@ -112,19 +112,41 @@ function LikeProduct() {
   };
 
   useEffect(() => {
-    const filteredProducts = products.filter((product) => {
+    const filteredProducts = localState.products.filter((product) => {
       const price = product.p[0].price;
-      return price >= filterOptions.valueMin && price <= filterOptions.valueMax;
+      return (
+        price >= localState.filterOptions.valueMin &&
+        price <= localState.filterOptions.valueMax
+      );
     });
 
     const productsCopy = [...filteredProducts];
-    if (filterOptions.priceSorting === "ascending") {
+    if (localState.filterOptions.priceSorting === "ascending") {
       productsCopy.sort((a, b) => a.p[0].price - b.p[0].price);
-    } else if (filterOptions.priceSorting === "descending") {
+    } else if (localState.filterOptions.priceSorting === "descending") {
       productsCopy.sort((a, b) => b.p[0].price - a.p[0].price);
     }
     setSortedProducts(productsCopy);
-  }, [filterOptions, products]);
+  }, [localState.filterOptions, localState.products]);
+
+  const handleUnlikeProduct = (productId) => {
+    axios
+      .delete(
+        `http://localhost:8080/api/unlike_Products?accountId=6&productId=${productId}`
+      )
+      .then((response) => {
+        if (response.data === "Sản phẩm đã được unlike.") {
+          // Cập nhật danh sách sản phẩm yêu thích sau khi xóa thành công
+          const updatedProducts = sortedProducts.filter(
+            (product) => product.id_product !== productId
+          );
+          setSortedProducts(updatedProducts);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <>
@@ -321,15 +343,17 @@ function LikeProduct() {
                               className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3"
                             >
                               <div className="product">
-                                {product.p[0].image_urls.map(
-                                  (image, imageIndex) => (
-                                    <img
-                                      key={imageIndex}
-                                      src={"/images/" + image.url}
-                                      alt={`Image ${imageIndex}`}
-                                    />
-                                  )
-                                )}
+                                {product.p[0].image_urls &&
+                                  product.p[0].image_urls.map(
+                                    (image, imageIndex) => (
+                                      <img
+                                        key={imageIndex}
+                                        src={"/images/" + image.url}
+                                        alt={`Image ${imageIndex}`}
+                                      />
+                                    )
+                                  )}
+
                                 <ul className="d-flex align-items-center justify-content-center list-unstyled icons">
                                   <li className="icon">
                                     <span className="fas fa-expand-arrows-alt"></span>
@@ -356,6 +380,13 @@ function LikeProduct() {
                                 <span className="fas fa-star"></span>
                               </div>
                               <div className="price">{product.p[0].price}</div>
+                              <button
+                                onClick={() =>
+                                  handleUnlikeProduct(product.id_product)
+                                }
+                              >
+                                Xóa
+                              </button>
                             </div>
                           ))}
                         </div>
