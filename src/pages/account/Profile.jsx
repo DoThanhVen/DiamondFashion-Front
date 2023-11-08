@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import MainNavbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import '../account/profile.css';
@@ -22,6 +22,9 @@ function Profile_User() {
   const [ward, setWard] = useState("");
   const [address, setAddress] = useState("");
   const [id_card, setId_card] = useState("");
+  const [gender, setGender] = useState(0);
+
+  const [profile, setProfile] = useState([]);
 
   const [selectedImage, setSelectedImage] = useState(null);
   const fileInputRef = useRef(null);
@@ -31,31 +34,22 @@ function Profile_User() {
   };
 
   const domain = process.env.REACT_APP_API || "http://localhost:8080";
+
+  useEffect(() => {
+    axios
+      .get(domain + "/api/account/profile")
+      .then(response => { setProfile(response.data) })
+      .catch(err => console.log(err))
+  })
+
   const handleUpdateProfile = async (e) => {
     e.preventDefault()
     axios
-      .post(domain + "/api/account/updateprofile", { username, password, fullname, id_card, phone, email, city, district, ward, address })
+      .post(domain + "/api/account/updateprofile", { username, password, fullname, id_card, phone, gender, email, city, district, ward, address })
       .then(response => {
         console.log(response);
         if (response.data.success) {
           alert(response.data.message);
-        } else {
-          alert(response.data.message);
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  const getdataInfo = async (e) => {
-    e.preventDefault()
-    axios
-      .post(domain + "/api/account/profile", { username })
-      .then(response => {
-        console.log(response);
-        if (response.data.success) {
-          alert(response.data.fullname);
         } else {
           alert(response.data.message);
         }
@@ -171,7 +165,7 @@ function Profile_User() {
                 </div>
               </div>
             </div>
-            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12" onReload={getdataInfo}>
+            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
               <div class="card-profile h-100">
                 <div class="card-body">
                   <div class="row gutters">
@@ -201,15 +195,21 @@ function Profile_User() {
                         <label for="email">Giới tính:</label>
                         <div className='d-flex'>
                           <div className="form-check">
-                            <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios1" checked />
-                            <label className="form-check-label" for="gridRadios1">
+                            <input className="form-check-input" type="radio" name="gridRadios" value={0} onChange={e => setGender(e.target.value)} id="gridRadios" checked />
+                            <label className="form-check-label" for="gridRadios">
                               Nam
                             </label>
                           </div>
                           <div className="form-check " style={{ marginLeft: '40px' }}>
-                            <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios2" />
-                            <label className="form-check-label" for="gridRadios2">
+                            <input className="form-check-input" type="radio" name="gridRadios" value={1} onChange={e => setGender(e.target.value)} id="gridRadios1" />
+                            <label className="form-check-label" for="gridRadios1">
                               Nữ
+                            </label>
+                          </div>
+                          <div className="form-check " style={{ marginLeft: '40px' }}>
+                            <input className="form-check-input" type="radio" name="gridRadios" value={2} onChange={e => setGender(e.target.value)} id="gridRadios2" />
+                            <label className="form-check-label" for="gridRadios2">
+                              Khác
                             </label>
                           </div>
                         </div>

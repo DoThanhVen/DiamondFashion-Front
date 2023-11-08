@@ -9,27 +9,32 @@ function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
+  const [checkbox, setCheckbox] = useState(false);
   const navigate = useNavigate();
   const domain = process.env.REACT_APP_API || "http://localhost:8080";
   const handleRegis = async (e) => {
-    if (password == repassword) {
-      e.preventDefault()
-      axios
-        .post(domain + "/api/account/register", { username, password })
-        .then(response => {
-          console.log(response);
-          if (response.data.success) {
-            alert(response.data.message)
-            navigate("/login")
-          } else {
-            alert(response.data.message);
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    } else {
-      alert("MẬT KHẨU NHẬP LẠI KHÔNG KHỚP!");
+    if (checkbox == false) {
+      alert("VUI LÒNG ĐỒNG Ý VỚI CÁC ĐIỀU KHOẢN TRƯỚC KHI ĐĂNG KÝ TÀI KHOẢN!");
+     } else {
+      if (password == repassword) {
+        e.preventDefault()
+        axios
+          .post(domain + "/api/account/register", { username, password })
+          .then(response => {
+            console.log(response);
+            if (response.data.success) {
+              alert(response.data.message);
+              navigate("/login")
+            } else {
+              alert(response.data.message);
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        alert("MẬT KHẨU NHẬP LẠI KHÔNG KHỚP!");
+      }
     }
   };
   return (
@@ -74,7 +79,7 @@ function Register() {
                           </div>
                           <div className="col-12">
                             <div className="form-check">
-                              <input className="form-check-input" type="checkbox" id="checkBox" />
+                              <input className="form-check-input" type="checkbox" id="checkBox" value={true} onChange={e => setCheckbox(e.target.value)} />
                               <label className="form-check-label" for="gridCheck">
                                 Đã đọc và đồng ý với các <a href='/policy'>chính sách và điều khoản</a>
                               </label>

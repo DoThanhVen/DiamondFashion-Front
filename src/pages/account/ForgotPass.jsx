@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import axios from "axios";
 import { useNavigate } from 'react-router';
+import { Pattern } from '@mui/icons-material';
 
 function ForgotPass() {
     const [email, SetEmail] = useState("");
     const navigate = useNavigate();
+    const regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+
     const domain = process.env.REACT_APP_API || "http://localhost:8080";
     const handleForgot = async (e) => {
         e.preventDefault()
@@ -45,7 +49,7 @@ function ForgotPass() {
                                     </div>
                                 </div>
                                 <div className="card-footer">
-                                    <button className="btn btn-success px-4" type="submit"  onClick={handleForgot}>Gửi mã</button>
+                                    <button className="btn btn-success px-4" type="submit" onClick={handleForgot}>Gửi mã</button>
                                 </div>
                             </form>
                         </div>
