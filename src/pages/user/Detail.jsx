@@ -75,10 +75,10 @@ function ProductPage() {
     axios
       .get(`http://localhost:8080/api/product/${productId}/shop`)
       .then((response) => {
-        const shopData = response.data;
-        console.log(response.data);
-        dispatch({ type: "SET_SHOP_NAME", payload: shopData.shop_name });
-        dispatch({ type: "SET_CITY", payload: shopData.addressShop.city });
+        const shopData = response.data.data;
+        console.log(response.data.data);
+        dispatch({ type: "SET_SHOP_NAME", payload: shopData[1] });
+        dispatch({ type: "SET_CITY", payload: shopData[2].city });
       })
       .catch((error) => {
         console.error("Error loading shop data:", error);

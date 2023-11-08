@@ -280,43 +280,6 @@ function LikeProduct() {
                       </div>
                     </div>
                   </div>
-                  <div className="sidebar__item mt-4">
-                    <div className="latest-product__text">
-                      <h4>Sản phẩm mới nhất</h4>
-                      <div className="latest-product__slider owl-carousel">
-                        <div className="latest-prdouct__slider__item">
-                          <a href="#" className="latest-product__item">
-                            <div className="latest-product__item__pic">
-                              <img
-                                src="/images/best-saler-4.jpg"
-                                alt=""
-                                style={{ width: "150px" }}
-                              />
-                            </div>
-                            <div className="latest-product__item__text">
-                              <h6>Crab Pool Security</h6>
-                              <span>$30.00</span>
-                            </div>
-                          </a>
-                        </div>
-                        <div className="latest-prdouct__slider__item">
-                          <a href="#" className="latest-product__item">
-                            <div className="latest-product__item__pic">
-                              <img
-                                src="/images/best-saler-4.jpg"
-                                alt=""
-                                style={{ width: "150px" }}
-                              />
-                            </div>
-                            <div className="latest-product__item__text">
-                              <h6>Crab Pool Security</h6>
-                              <span>$30.00</span>
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
               <div className="col-lg-9 col-md-7">
@@ -400,7 +363,7 @@ function LikeProduct() {
                     </div>
                   </div>
                 </div>
-                <div className="product__pagination">
+                <div className="product__pagination pb-4">
                   <a href="#">1</a>
                   <a href="#">2</a>
                   <a href="#">3</a>
