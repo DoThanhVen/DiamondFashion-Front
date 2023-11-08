@@ -16,7 +16,7 @@ function ForgotPass() {
                     alert(response.data.message);
                     navigate("/login")
                 } else {
-                    alert("KHÔNG TỒN TẠI TÀI KHOẢN CÓ EMAIL ", {email});
+                    alert(response.data.message);
                 }
             })
             .catch(error => {

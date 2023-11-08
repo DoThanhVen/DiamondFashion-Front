@@ -19,17 +19,17 @@ function Register() {
         .then(response => {
           console.log(response);
           if (response.data.success) {
-            alert("Đăng ký tài khoản thành công!")
+            alert(response.data.message)
             navigate("/login")
           } else {
-            alert("Đăng ký thất bại!");
+            alert(response.data.message);
           }
         })
         .catch(error => {
           console.log(error);
         });
     } else {
-      alert("Mật khẩu không khớp với mật khẩu nhập lại!");
+      alert("MẬT KHẨU NHẬP LẠI KHÔNG KHỚP!");
     }
   };
   return (

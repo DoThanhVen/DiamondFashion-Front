@@ -6,13 +6,14 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
-
 function Profile_User() {
 
   const login = useSelector(state => state.dataLogin);
 
   const username = login.username;
+  const [prepassword, setPrepassword] = useState("");
   const [password, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
   const [fullname, setFullname] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -21,7 +22,6 @@ function Profile_User() {
   const [ward, setWard] = useState("");
   const [address, setAddress] = useState("");
   const [id_card, setId_card] = useState("");
-
 
   const [selectedImage, setSelectedImage] = useState(null);
   const fileInputRef = useRef(null);
@@ -34,7 +34,7 @@ function Profile_User() {
   const handleUpdateProfile = async (e) => {
     e.preventDefault()
     axios
-      .post(domain + "/api/account/updateprofile", {username, password, fullname, id_card, phone, email, city, district, ward, address })
+      .post(domain + "/api/account/updateprofile", { username, password, fullname, id_card, phone, email, city, district, ward, address })
       .then(response => {
         console.log(response);
         if (response.data.success) {
@@ -46,6 +46,53 @@ function Profile_User() {
       .catch(error => {
         console.log(error);
       });
+  }
+
+  const getdataInfo = async (e) => {
+    e.preventDefault()
+    axios
+      .post(domain + "/api/account/profile", { username })
+      .then(response => {
+        console.log(response);
+        if (response.data.success) {
+          alert(response.data.fullname);
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  const handleChangePass = async (e) => {
+    e.preventDefault()
+    if (prepassword == "1") {
+      if (password == repassword) {
+        if (password == prepassword) {
+          alert("MẬT KHẨU MỚI KHÔNG ĐƯỢC TRÙNG VỚI MẬT KHẨU CŨ!")
+        } else {
+          axios
+            .post(domain + "/api/account/changepass", { username, password })
+            .then(response => {
+              console.log(response);
+              if (response.data.success) {
+                alert(response.data.message);
+              } else {
+                alert(response.data.message);
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      }
+      else {
+        alert("MẬT KHẨU NHẬP LẠI KHÔNG KHỚP!");
+      }
+    } else {
+      alert("BẠN NHẬP SAI MẬT KHẨU HIỆN TẠI!");
+    }
   }
 
   const handleFileChange = (event) => {
@@ -101,20 +148,20 @@ function Profile_User() {
                             <div class="modal-body">
                               <div className="col-12">
                                 <label for="inputpass1" className="form-label">Mật khẩu cũ:</label>
-                                <input type="password" className="form-control" id="prepassword" />
+                                <input type="password" className="form-control" onChange={e => setPrepassword(e.target.value)} id="prepassword" />
                               </div>
                               <div className="col-12">
                                 <label for="inputpass2" className="form-label">Mật khẩu:</label>
-                                <input type="password" className="form-control" id="password" />
+                                <input type="password" className="form-control" onChange={e => setPassword(e.target.value)} id="password" />
                               </div>
                               <div className="col-12">
                                 <label for="inputpass3" className="form-label">Nhập lại mật khẩu:</label>
-                                <input type="password" className="form-control" id="repassword" />
+                                <input type="password" className="form-control" onChange={e => setRepassword(e.target.value)} id="repassword" />
                               </div>
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
-                              <button type="button" class="btn btn-primary">Lưu thay đổi</button>
+                              <button type="button" class="btn btn-primary" onClick={handleChangePass}>Lưu thay đổi</button>
                             </div>
                           </div>
                         </div>
@@ -124,7 +171,7 @@ function Profile_User() {
                 </div>
               </div>
             </div>
-            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12" onReload={getdataInfo}>
               <div class="card-profile h-100">
                 <div class="card-body">
                   <div class="row gutters">
@@ -140,7 +187,7 @@ function Profile_User() {
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
                         <label for="phone">Số điện thoại:</label>
-                        <input type="text" class="form-control" id="phone" onChange={e => setPhone(e.target.value)}/>
+                        <input type="text" class="form-control" id="phone" onChange={e => setPhone(e.target.value)} />
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -154,13 +201,13 @@ function Profile_User() {
                         <label for="email">Giới tính:</label>
                         <div className='d-flex'>
                           <div className="form-check">
-                            <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="true" checked />
+                            <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios1" checked />
                             <label className="form-check-label" for="gridRadios1">
                               Nam
                             </label>
                           </div>
                           <div className="form-check " style={{ marginLeft: '40px' }}>
-                            <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="false" />
+                            <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios2" />
                             <label className="form-check-label" for="gridRadios2">
                               Nữ
                             </label>
@@ -176,20 +223,20 @@ function Profile_User() {
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
                         <label for="ciTy">Thành phố:</label>
-                        <input type="name" class="form-control" id="ciTy" onChange={e => setCity(e.target.value)}/>
+                        <input type="name" class="form-control" id="ciTy" onChange={e => setCity(e.target.value)} />
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
                         <label for="Street">Quận/Huyện</label>
-                        <input type="name" class="form-control" id="district" onChange={e => setDistrict(e.target.value)}/>
+                        <input type="name" class="form-control" id="district" onChange={e => setDistrict(e.target.value)} />
                       </div>
                     </div>
 
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
                         <label for="ward">Phường/Xã</label>
-                        <input type="text" class="form-control" id="ward" onChange={e => setWard(e.target.value)}/>
+                        <input type="text" class="form-control" id="ward" onChange={e => setWard(e.target.value)} />
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
