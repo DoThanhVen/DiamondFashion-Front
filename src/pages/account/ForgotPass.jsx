@@ -6,9 +6,6 @@ import { Pattern } from '@mui/icons-material';
 function ForgotPass() {
     const [email, SetEmail] = useState("");
     const navigate = useNavigate();
-    const regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
-        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-
     const domain = process.env.REACT_APP_API || "http://localhost:8080";
     const handleForgot = async (e) => {
         e.preventDefault()
