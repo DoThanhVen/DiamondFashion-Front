@@ -10,7 +10,7 @@ function Profile_User() {
 
   const login = useSelector(state => state.dataLogin);
 
-  const username = login.username;
+  const username = "account1";
   const [prepassword, setPrepassword] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
@@ -45,7 +45,7 @@ function Profile_User() {
   const handleUpdateProfile = async (e) => {
     e.preventDefault()
     axios
-      .post(domain + "/api/account/updateprofile", { username, password, fullname, id_card, phone, gender, email, city, district, ward, address })
+      .post(domain + "/api/account/updateprofile/" + username, { fullname, id_card, phone, gender, email, city, district, ward, address })
       .then(response => {
         console.log(response);
         if (response.data.success) {
@@ -123,7 +123,7 @@ function Profile_User() {
                           onChange={handleFileChange}
                         />
                       </div>
-                      <h5 class="user-name">{login.username}</h5>
+                      <h5 class="user-name">{username}</h5>
                       <h6 class="user-date">Ngày tạo: 20/10/2023</h6>
                     </div>
                     <div class="about">
@@ -216,47 +216,17 @@ function Profile_User() {
                       </div>
                     </div>
                   </div>
-                  <div class="row gutters">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                      <h6 class="mt-3 mb-2 text-primary">Địa chỉ</h6>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                      <div class="form-group">
-                        <label for="ciTy">Thành phố:</label>
-                        <input type="name" class="form-control" id="ciTy" onChange={e => setCity(e.target.value)} />
-                      </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                      <div class="form-group">
-                        <label for="Street">Quận/Huyện</label>
-                        <input type="name" class="form-control" id="district" onChange={e => setDistrict(e.target.value)} />
-                      </div>
-                    </div>
-
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                      <div class="form-group">
-                        <label for="ward">Phường/Xã</label>
-                        <input type="text" class="form-control" id="ward" onChange={e => setWard(e.target.value)} />
-                      </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                      <div class="form-group">
-                        <label for="address">Địa chỉ chi tiết (Số nhà):</label>
-                        <input type="text" class="form-control" id="address" onChange={e => setAddress(e.target.value)} />
-                      </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                      <div class="form-group">
-                        <label for="address">Căn cước công dân:</label>
-                        <input type="text" class="form-control" id="id_card" onChange={e => setId_card(e.target.value)} />
-                      </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label for="address">Căn cước công dân:</label>
+                      <input type="text" class="form-control" id="id_card" onChange={e => setId_card(e.target.value)} />
                     </div>
                   </div>
-                  <div class="row gutters mt-4">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                      <div class="text-right">
-                        <button type="button" id="submit" name="submit" class="btn btn-primary" onClick={handleUpdateProfile}>Cập nhật</button>
-                      </div>
+                </div>
+                <div class="row gutters mt-4">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="text-right">
+                      <button type="button" id="submit" name="submit" class="btn btn-primary" onClick={handleUpdateProfile}>Cập nhật</button>
                     </div>
                   </div>
                 </div>

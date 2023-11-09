@@ -23,7 +23,7 @@ function Login() {
 
   const domain = process.env.REACT_APP_API || "http://localhost:8080";
   const handleLogin = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     axios
       .post(domain + "/api/account/login", { username, password })
       .then(response => {
