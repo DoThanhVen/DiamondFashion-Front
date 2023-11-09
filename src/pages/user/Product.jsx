@@ -147,6 +147,20 @@ function Product() {
     );
   });
 
+  const handleLikeProduct = (productId) => {
+    axios
+      .post(
+        `http://localhost:8080/api/like_Products?accountId=6&productId=${productId}`
+      )
+      .then((response) => {
+        if (response.data === "Sản phẩm đã được like.") {
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <>
       <nav>
@@ -477,6 +491,13 @@ function Product() {
                                     <span className="fas fa-star"></span>
                                   </div>
                                   <div className="price">{product.price}</div>
+                                  <button
+                                    onClick={() =>
+                                      handleLikeProduct(product.id)
+                                    }
+                                  >
+                                    Thích
+                                  </button>
                                 </div>
                               ) : null
                             )}
