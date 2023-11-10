@@ -3,8 +3,8 @@ import style from "../../css/admin/category/editcategory.module.css";
 import CategoryService from "../../service/CategoryService";
 import { useDispatch, useSelector } from "react-redux";
 import { getIdcategoryItemUpdate, getIdcategoryUpdate, reloadPage } from "../../service/Actions";
-import { getreloadPage } from "../../service/Reducers";
-
+import { ThongBao } from "../../service/ThongBao";
+import { useNavigate } from "react-router";
 
 function EditCategory() {
   const dispatch = useDispatch();
@@ -17,6 +17,8 @@ function EditCategory() {
   const [image, setimage] = useState(null)
   const [listCategory, setListcategory] = useState([])
   const [reload, setreload] = useState(0)
+  const [imageload,setimageload]=useState('')
+  const navigate = useNavigate();
   //GET DATA REDUX
   const data = useSelector((state) => state.allDataCategory);
   const idCategory = useSelector((state) => state.idCategoryUpdate);
@@ -25,7 +27,6 @@ function EditCategory() {
 
   useEffect(() => {
     if (Array.isArray(data)) {
-      console.log(data)
       setListcategory(data);
       if (listCategory !== null && idCategory !== 0 && idCategoryItem === 0) {
         getCategoryId();
@@ -36,7 +37,7 @@ function EditCategory() {
         getCategoryItemId();
       }
     }
-  }, [reload, data,idCategory,idCategoryItem]);
+  }, [reload, data, idCategory, idCategoryItem, listCategory]);
 
 
   const handleImageChange = (e) => {
@@ -55,88 +56,133 @@ function EditCategory() {
     }
   };
 
+  const getCategoryId = async () => {
+    try {
+      const data = await CategoryService.getAllCategoryById(idCategory);
+      setcategory(data);
+      dispatch(getIdcategoryUpdate(data.id));
+      setTypeCate(data.type_category)
+      setimageload(data.image)
+    } catch (error) {
+      ThongBao("Có lỗi xảy ra. Thử lại", "error");
+    }
+  };
+
+
   //Category
   const handleAddCategory = async () => {
-    if (type_category === '' || image === null && idCategory === 0) {
-      alert('Please fill in all value')
+    if (type_category === '' || image === null) {
+      ThongBao("Vui lòng điền đầy đủ dữ liệu.", "error");
     } else {
-      const reponse = await CategoryService.addCategory(type_category, image);
-      dispatch(reloadPage(reloadold + 1));
+      try {
+        const response = await CategoryService.addCategory(type_category, image);
+        if (response.status === 'success') {
+          ThongBao(response.message, response.status);
+          dispatch(getIdcategoryUpdate(response.data.id));
+          dispatch(reloadPage(reloadold + 1));
+          setSelectedImage(null);
+        }
+      } catch (error) {
+        ThongBao("Có lỗi xảy ra. Thử lại", "error");
+      }
     }
   }
 
-  const getCategoryId = async () => {
-      const data = await CategoryService.getAllCategoryById(idCategory);
-      console.log('data', data)
-      if (data.id !== 0) {
-        setcategory(data)
-      }
-  }
 
   const handleUpdateCategory = async () => {
-    const result = await CategoryService.updateCategory(category.id, type_category, image);
-    if (result.status === 'SUCCESS') {
-      alert('Update successfully');
-      dispatch(reloadPage(reloadold + 1));
+    try {
+      const result = await CategoryService.updateCategory(category.id, type_category, image);
+      if (result.status === 'success') {
+        ThongBao(result.message, result.status);
+        dispatch(reloadPage(reloadold + 1));
+      }
+    } catch (error) {
+      ThongBao("Có lỗi xảy ra. Thử lại", "error");
     }
   }
 
   const handleDeleteCategory = async () => {
-    const reponse = await CategoryService.deleteCategory(idCategory)
-    if (reponse.status === "SUCCESS") {
-      alert('Delete successfully')
-      dispatch(getIdcategoryUpdate(0));
-      setcategory({});
-      dispatch(reloadPage(reloadold + 1));
-    } else {
-      alert('Delete error')
+    try {
+      const reponse = await CategoryService.deleteCategory(idCategory)
+      if (reponse.status === "success") {
+        ThongBao(reponse.message, reponse.status);
+        dispatch(getIdcategoryUpdate(0));
+        setcategory({});
+        dispatch(reloadPage(reloadold + 1));
+      } else {
+        ThongBao(reponse.message, reponse.status);
+      }
+    } catch (error) {
+      ThongBao("Có lỗi xảy ra. Thử lại", "error");
     }
   }
 
   //CategoryItem
   const handleAddCategoryItem = async () => {
-    if (valueCategory === '' || type_categoryItem === '' && idCategoryItem === 0) {
-      alert('Please fill in all value')
+    if (valueCategory === '' || type_categoryItem === '') {
+      ThongBao("Vui lòng điền đầy đủ dữ liệu.", "error");
     } else {
-      const reponse = await CategoryService.addCategoryItem(valueCategory, type_categoryItem)
-      dispatch(reloadPage(reloadold + 1));
+      try {
+        const reponse = await CategoryService.addCategoryItem(valueCategory, type_categoryItem)
+        if (reponse.status === 'success') {
+          ThongBao(reponse.message, reponse.status);
+          dispatch(reloadPage(reloadold + 1));
+          dispatch(getIdcategoryItemUpdate(reponse.data.id));
+        }
+      } catch (error) {
+        ThongBao("Có lỗi xảy ra. Thử lại", "error");
+      }
     }
   }
 
   const getCategoryItemId = async () => {
-    if (idCategoryItem !== 0) {
-      const data = await CategoryService.getAllCategoryItemById(idCategoryItem);
-      const matchingCategory = listCategory.find((category) =>
-        category.listCategory.some((listItem) => listItem.id === data.id)
-      )
-      if (matchingCategory) {
-        setValueCategory(matchingCategory.id);
-        setcategoryItem(data);
-      } else {
-        setreload(reload + 1)
+    try {
+      if (idCategoryItem !== 0) {
+        const data = await CategoryService.getAllCategoryItemById(idCategoryItem);
+        const matchingCategory = listCategory.find((category) =>
+          category.listCategory.some((listItem) => listItem.id === data.id)
+        )
+        if (matchingCategory) {
+          setValueCategory(matchingCategory.id);
+          setcategoryItem(data);
+        } else {
+          setreload(reload + 1)
+        }
       }
+    } catch (error) {
+      ThongBao("Có lỗi xảy ra. Thử lại", "error");
     }
+
   }
 
   const handleUpdateCategoryItem = async () => {
-    const result = await CategoryService.updateCategoryItem(categoryItem.id, valueCategory, type_categoryItem);
-    console.log('re',result)
-    if (result.status==='SUCCESS') {
-      alert('Update successfully');
-      dispatch(reloadPage(reloadold + 1));
+    try {
+      const result = await CategoryService.updateCategoryItem(categoryItem.id, valueCategory, type_categoryItem);
+      if (result.status === 'success') {
+        ThongBao(result.message, result.status);
+        dispatch(reloadPage(reloadold + 1));
+      }
+    } catch (error) {
+      ThongBao("Có lỗi xảy ra. Thử lại", "error");
     }
+
   }
 
 
   const handleDeleteCategoryItem = async () => {
+    try {
       const reponse = await CategoryService.deleteCategoryItem(idCategoryItem)
-      if (reponse.status === "SUCCESS") {
-        alert('Delete successfully')
+      if (reponse.status === "success") {
+        ThongBao(reponse.message, reponse.status);
         dispatch(getIdcategoryItemUpdate(0));
         dispatch(reloadPage(reloadold + 1));
       } else {
-        alert('Delete error')
+        ThongBao(reponse.message, reponse.status);
       }
+    } catch (error) {
+      ThongBao("Có lỗi xảy ra. Thử lại", "error");
+    }
+
   }
 
   return (
@@ -164,10 +210,10 @@ function EditCategory() {
                     src={selectedImage}
                     alt="Hình Ảnh"
                   />
-                ) : category !== null ? (
+                ) : imageload !== '' ? (
                   <img
                     className={style.image}
-                    src={`http://localhost:8080/api/uploadImageProduct/${category.image}`}
+                    src={`http://localhost:8080/api/uploadImageProduct/${imageload}`}
                     alt="Hình Ảnh"
                   />
                 ) : null
@@ -178,7 +224,7 @@ function EditCategory() {
                   style={{ display: "none" }}
                   id="inputImage"
                   accept="image/*"
-                  defaultValue={category.image}
+                  defaultValue={imageload}
                   onChange={handleImageChange}
                 />
                 <label htmlFor="inputImage" className={style.button}>
@@ -194,7 +240,7 @@ function EditCategory() {
               type="text"
               id="idInputcategory"
               placeholder="Tên loại..."
-              defaultValue={category.type_category}
+              value={type_category}
               onChange={(e) => { setTypeCate(e.target.value) }}
             ></input>
             <div className={style.formButton}>
@@ -223,7 +269,7 @@ function EditCategory() {
             >
               <option value="">Lựa chọn</option>
               {listCategory.map((value, index) => (
-                <option value={value.id}>{value.type_category}</option>
+                <option key={index} value={value.id}>{value.type_category}</option>
               ))}
             </select>
             <input

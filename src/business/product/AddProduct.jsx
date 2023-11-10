@@ -21,7 +21,9 @@ function AddProduct() {
     const [price, setprice] = useState('')
     const [description, setdescription] = useState('')
     const reloadold = useSelector((state) => state.getreloadPage);
-
+    const MAX_NAME_LENGTH = 300; // Example maximum name length
+    const MAX_DESCRIPTION_LENGTH = 1000; // Example maximum description length
+    
     useEffect(() => {
         getdataCategory()
     }, []);
@@ -72,10 +74,40 @@ function AddProduct() {
     };
 
     const handleSubmitAdd = async () => {
-        const response =await ProductService.addProduct(name, price, description, 0, valueCategoryItem, quantityValue, selectedImages, imagesave);
-        dispatch(reloadPage(reloadold + 1))
-        ThongBao(response.message, response.status);
-    }
+        if (!name || !price || !description || !valueCategoryItem || !selectedImages) {
+            ThongBao("Vui lòng điền đầy đủ dữ liệu.", "error");
+            return;
+        }
+    
+        if (name.length > MAX_NAME_LENGTH) {
+            ThongBao(`Tên sản phẩm không được vượt quá ${MAX_NAME_LENGTH} ký tự.`, "error");
+            return;
+        }
+    
+        if (isNaN(price) || price <= 0) {
+            ThongBao("Giá phải là số và lớn hơn 0.", "error");
+            return;
+        }
+    
+        if (isNaN(quantityValue) && quantityValue <= 0) {
+            ThongBao("Số lượng phải là số và lớn hơn 0.", "error");
+            return;
+        }
+    
+        if (description.length > MAX_DESCRIPTION_LENGTH) {
+            ThongBao(`Mô tả sản phẩm không được vượt quá ${MAX_DESCRIPTION_LENGTH} ký tự.`, "error");
+            return;
+        }
+    
+        const response = await ProductService.addProduct(name, price, description, 0, valueCategoryItem, quantityValue, selectedImages, imagesave);
+        if (response.status === 'success') {
+            dispatch(reloadPage(reloadold + 1));
+            ThongBao(response.message, response.status);
+        } else {
+            ThongBao(response.message, response.status);
+        }
+    };
+    
 
     return (
         <React.Fragment>
@@ -120,7 +152,7 @@ function AddProduct() {
             </div>
             <div className={`${style.price}`}>
                 <label>Giá sản phẩm</label>
-                <input type="text" placeholder="Giá sản phẩm..." onChange={(e) => { setprice(e.target.value) }}></input>
+                <input type="number" placeholder="Giá sản phẩm..." onChange={(e) => { setprice(e.target.value) }}></input>
             </div>
             <div className={`${style.category}`}>
                 <label>Ngành hàng</label>

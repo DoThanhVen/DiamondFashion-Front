@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { callAPI } from "../../service/API";
 import { ThongBao, Toastify } from "../../service/ThongBao";
 import { useSelector } from "react-redux";
-
+import moment from 'moment';
 const numberPage = 10;
 //DANH SÁCH SẢN PHẨM
 
@@ -19,6 +19,10 @@ function formatCurrency(price, promotion) {
   });
   return formatter.format(price - price * (promotion / 100));
 }
+function formatDate(date){
+  return moment(date).format("DD-MM-YYYY HH:mm:ss");
+}
+
 
 export default function ListProduct() {
   const reload = useSelector((state) => state.getreloadPage);
@@ -77,7 +81,7 @@ export default function ListProduct() {
   }, [reload]);
 
   const getdataProduct = async () => {
-    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=&stocking=`;
+    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=&stocking=&shop=1`;
     const response = await callAPI(url, "GET");
     if (response) {
       setdataproduct(response.data);
@@ -146,7 +150,7 @@ export default function ListProduct() {
   };
   //TÌM KIẾM
   const handleFind = async () => {
-    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=&stocking=`;
+    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=&stocking=&shop=1`;
     const response = await callAPI(url, "GET");
     if (response) {
       setdataproduct(response.data);
@@ -300,7 +304,7 @@ export default function ListProduct() {
                 </span>
               </label>
               <label className={style.column}>
-                {value[5]}
+                {formatDate(value[5])}
               </label>
               <label className={style.column}>
                 <i

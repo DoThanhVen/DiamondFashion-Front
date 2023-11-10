@@ -78,6 +78,11 @@ class ProductService {
         return reponse;
     }
 
+    getAllProductWithStorage = async () => {
+        const reponse = await callAPI(`${url}/getAllProductWithStorage`, "GET");
+        return reponse;
+    }
+
     getProductbyId = async (id) => {
         const reponse = await callAPI(`${url}/${id}`, "GET")
         return reponse;

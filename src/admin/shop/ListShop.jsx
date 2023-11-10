@@ -3,6 +3,10 @@ import style from "../../css/admin/shop/listshop.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getIdShop } from "../../service/Actions";
 import ModelAccess from "./ModelAccess";
+import moment from 'moment';
+function formatDate(date){
+  return moment(date).format("DD-MM-YYYY HH:mm:ss");
+}
 function ListShop() {
   const [listShop, setListShop] = useState([])
   const dispatch = useDispatch();
@@ -22,6 +26,7 @@ function ListShop() {
     }
 
   }, [data]);
+
   return (
     <React.Fragment>
       <div className={style.filter}>
@@ -38,7 +43,7 @@ function ListShop() {
               ></img>
               <div className={style.content}>
                 <label className={style.shopName}>{value.shop_name}</label>
-                <label className={style.createDate}>{value.create_date}</label>
+                <label className={style.createDate}>{formatDate(value.create_date)}</label>
               </div>
             </div>
             <div className={style.address}>

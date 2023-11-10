@@ -9,7 +9,7 @@ function ListCategory() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.allDataCategory);
   const reload = useSelector((state) => state.getreloadPage);
-  console.log('reload',reload)
+
   useEffect(() => {
     if (Array.isArray(data)) {
       setlistcategory(data);
@@ -34,7 +34,7 @@ function ListCategory() {
             <label className={style.column}></label>
           </div>
           {listCategory.map((value, index) => (
-            <div key={index} className={style.tableBody}>
+            <div key={value.id} className={style.tableBody}>
               <label className={style.column}>
                 {index}
               </label>
@@ -71,6 +71,7 @@ function ListCategory() {
               <label className={style.column}>
                 <i className="bi bi-pencil-square" onClick={() => {
                   dispatch(getIdcategoryUpdate(value.id));
+                  console.log('id',value.id)
                 }}></i>
               </label>
             </div>
