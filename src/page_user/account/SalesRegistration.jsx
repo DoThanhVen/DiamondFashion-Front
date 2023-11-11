@@ -1,10 +1,9 @@
 import React, { useState, useRef } from "react";
-import '../account/profile.css';
+import "../css/user/profile.css";
 import MainNavbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 
 export default function SalesRegistration() {
-
   const [selectedImage, setSelectedImage] = useState(null);
   const fileInputRef = useRef(null);
 
@@ -20,10 +19,9 @@ export default function SalesRegistration() {
     }
   };
 
-
   return (
     <div>
-       <nav>
+      <nav>
         <MainNavbar />
       </nav>
       <div class="container mt-4">
@@ -33,9 +31,12 @@ export default function SalesRegistration() {
               <div class="card-body">
                 <div class="account-settings">
                   <div class="user-profile">
-                    <div className="user-avatar" style={{cursor: 'pointer'}}>
+                    <div className="user-avatar" style={{ cursor: "pointer" }}>
                       <img
-                        src={selectedImage || "https://bootdey.com/img/Content/avatar/avatar7.png"}
+                        src={
+                          selectedImage ||
+                          "https://bootdey.com/img/Content/avatar/avatar7.png"
+                        }
                         alt="user"
                         onClick={handleImageClick}
                       />
@@ -100,7 +101,14 @@ export default function SalesRegistration() {
                 <div class="row gutters mt-4">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="text-right">
-                      <button type="button" id="submit" name="submit" class="btn btn-success" >Đăng ký</button>
+                      <button
+                        type="button"
+                        id="submit"
+                        name="submit"
+                        class="btn btn-success"
+                      >
+                        Đăng ký
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -113,5 +121,5 @@ export default function SalesRegistration() {
         <Footer />
       </div>
     </div>
-  )
+  );
 }

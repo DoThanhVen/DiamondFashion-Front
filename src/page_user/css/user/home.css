@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
- 
+
   font-family: "Roboto", serif;
 }
 
@@ -40,9 +40,7 @@ section .content {
 }
 
 .titile a {
-  margin-right: 20px;
-  color: #ffa741;
-  font-weight: bold;
+  /* color: black; */
 }
 
 .titile a:hover {
@@ -307,6 +305,7 @@ section .content {
 }
 
 @media (max-width: 768px) {
+
   /* Điều chỉnh bố cục cho màn hình nhỏ hơn hoặc bằng 768px ở đây */
   section {
     flex-direction: column;
@@ -321,6 +320,7 @@ section .content {
 }
 
 @media (min-width: 769px) {
+
   /* Điều chỉnh bố cục cho màn hình lớn hơn 768px ở đây */
   section {
     flex-direction: row;
@@ -1144,55 +1144,57 @@ section .content {
 
 /* HOT */
 .product-offer {
-	position: relative;
-	overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .product-offer img {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	transition: 0.5s;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.5s;
 }
 
 .product-offer:hover img {
-	transform: scale(1.2) rotate(5deg);
+  transform: scale(1.2) rotate(5deg);
 }
 
 .product-offer .offer-text {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background: rgba(61, 70, 77, 0.5);
-	z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(61, 70, 77, 0.5);
+  z-index: 1;
 }
+
 .img-fluid {
-	max-width: 100%;
-	height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
-.container-fluid{
-width: 100%;
-padding-right: 15px;
-padding-left: 15px;
-margin-right: auto;
-margin-left: auto;
+.container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
+
 .container-fluid, .navbar .container-sm, .navbar .container-md, .navbar .container-lg, .navbar .container-xl {
-display: flex;
-flex-wrap: wrap;
-align-items: center;
-justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.gird-item{
+.gird-item {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1200,67 +1202,66 @@ justify-content: space-between;
   border-radius: 4px;
   transition: transform 0.3s ease-in-out;
   color: white;
- 
- background-size: cover;
- background-position: center;
- background-repeat: no-repeat;
- }
- .ejercico a {
-   opacity: 0;
-   gird-text-decoration:none;
-   cursor: none;
- }
- .gird-item:hover .ejercico a {
-   color: white;
- 
-   opacity: 1;
-   
- }
- .gird-item:hover {
-   filter: opacity(0.9);
-   transform: scale(1.04);
- }
- 
- /*-------------Gird style----------*/
- 
- .gird-container{
-   display: grid;
-   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    /*1fr Columnas que puedes colocar */
-    grid-auto-rows: minmax(250px, auto);
-    gap:15px; /*Separación automática*/
-    padding: 10px;
-    grid-auto-flow: dense; /*Para que no hayan espacios en blanco glaeria*/
- }
- 
- .gird-text{
-     position: absolute;
-     color: white;
-     z-index: 3;
-     gird-text-align: center;
-     margin-top: 20%;
-     
-     margin-left: 35px;
- }
- @media(min-width: 600px){
- .wide {
-   grid-column: span 2;
- }
- 
- .tall {
-   grid-row: span 2;
- }
- }
 
- @media screen and (min-width: 1024px){
-  
-  
- }
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
- @media screen and (min-width:767px) and (max-width:1023px){
-   
- }
+.ejercico a {
+  opacity: 0;
+  gird-text-decoration: none;
+  cursor: none;
+}
 
- @media screen and (max-width: 767px) {
-   
- }
+.gird-item:hover .ejercico a {
+  color: white;
+
+  opacity: 1;
+
+}
+
+.gird-item:hover {
+  filter: opacity(0.9);
+  transform: scale(1.04);
+}
+
+/*-------------Gird style----------*/
+
+.gird-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  /*1fr Columnas que puedes colocar */
+  grid-auto-rows: minmax(250px, auto);
+  gap: 15px;
+  /*Separación automática*/
+  padding: 10px;
+  grid-auto-flow: dense;
+  /*Para que no hayan espacios en blanco glaeria*/
+}
+
+.gird-text {
+  position: absolute;
+  color: white;
+  z-index: 3;
+  gird-text-align: center;
+  margin-top: 20%;
+
+  margin-left: 35px;
+}
+
+@media(min-width: 600px) {
+  .wide {
+    grid-column: span 2;
+  }
+
+  .tall {
+    grid-row: span 2;
+  }
+}
+
+@media screen and (min-width: 1024px) {}
+
+@media screen and (min-width:767px) and (max-width:1023px) {}
+
+@media screen and (max-width: 767px) {}

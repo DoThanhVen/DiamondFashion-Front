@@ -1,33 +1,34 @@
 import React from "react";
-import Home from "./pages/user/Home";
-import Login from "./pages/account/Login";
-import Cart from "./pages/user/Cart";
-import Product from "./pages/user/Product";
-import Detail from "./pages/user/Detail"
-import NewProducts from "./pages/user/NewProducts";
+import Home from "./page_user/user/Home";
+import Login from "./page_user/account/Login";
+import Cart from "./page_user/user/Cart";
+import Product from "./page_user/user/Product";
+import Detail from "./page_user/user/Detail"
+import NewProducts from "./page_user/user/NewProducts";
 
-import OrderDetail from "./pages/user/OrderDetail"
-import Checkout from "./pages/user/Checkout"
-import Profile from "./pages/account/Profile"
-import Order from "./pages/user/Order"
+import OrderDetail from "./page_user/user/OrderDetail"
+import Checkout from "./page_user/user/Checkout"
+import Profile from "./page_user/account/Profile"
+import Order from "./page_user/user/Order"
 
-import SuggestedProducts from "./pages/user/SuggestedProducts";
-import RecommendedProducts from "./pages/user/RecommendedProducts";
+import SuggestedProducts from "./page_user/user/SuggestedProducts";
+import RecommendedProducts from "./page_user/user/RecommendedProducts";
 
 
-import Otp from "./pages/account/Otp";
-import Register from "./pages/account/Register";
-import SalesRegistration from "./pages/account/SalesRegistration";
-import ForgotPass from "./pages/account/ForgotPass";
-import NewPass from "./pages/account/NewPass";
+import Otp from "./page_user/account/Otp";
+import Register from "./page_user/account/Register";
+import SalesRegistration from "./page_user/account/SalesRegistration";
+import ForgotPass from "./page_user/account/ForgotPass";
+import NewPass from "./page_user/account/NewPass";
+import ContactInfo from "./page_user/user/ContactInfo";
+import Policy from "./page_user/user/Policy";
+import LikeProduct from "./page_user/user/LikeProduct";
+import Shop from "./page_user/user/Shop";
 
-import ContactInfo from "./pages/user/ContactInfo";
-import Policy from "./pages/user/Policy";
-import LikeProduct from "./pages/user/LikeProduct";
-import Shop from "./pages/user/Shop";
+import NotFoundPage from "./page_user/user/NotFoundPage";
 
 // import AdminDashBoard from "./componentadmin/AdminDashBoard";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 function App() {
   return (
@@ -56,9 +57,11 @@ function App() {
       <Route path="/likeProduct" element={<LikeProduct/>} />
       <Route path="/shops/:productId/shop" element={<Shop />} />
 
-
-
-    </Routes>
+      <Route path="*" element={<Navigate to="/not-found" />} />
+      
+      {/* Route for displaying the not found page */}
+      <Route path="/not-found" element={<NotFoundPage />} />
+       </Routes>
   );
 }
 

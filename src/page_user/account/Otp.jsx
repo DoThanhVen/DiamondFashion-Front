@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "../account/otp.css";
+import "../css/user/otp.css";
 import { Accordion, Card, Button } from "react-bootstrap";
 
 export default function Otp() {
@@ -20,12 +20,11 @@ export default function Otp() {
   };
 
   const handleKeyDown = (e, index) => {
-    if(inputRefs[index].current.value === ""){
+    if (inputRefs[index].current.value === "") {
       if (e.key === "Backspace") {
-        if(index > 0){
+        if (index > 0) {
           inputRefs[index - 1].current.focus();
-        }
-        else if (index === 0) {
+        } else if (index === 0) {
           inputRefs[index].current.value = "";
         }
       }

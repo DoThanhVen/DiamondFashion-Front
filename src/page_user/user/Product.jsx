@@ -6,6 +6,9 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import ListGroup from "react-bootstrap/ListGroup";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
 
 import MainNavbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -67,6 +70,7 @@ function Product() {
     priceSorting,
     ratingFilter,
   } = localState;
+  const [sortedProducts, setSortedProducts] = useState([]);
 
   // Event Handlers
   const handleChange1 = (event, newValue) => {
@@ -138,28 +142,40 @@ function Product() {
     });
   });
 
-  const filteredProducts = listFilter.filter((product) => {
-    return (
-      (!selectedCategory ||
-        product.categoryItem_product.id === selectedCategory.id) &&
-      product.price >= valueMin &&
-      product.price <= valueMax
-    );
-  });
+  useEffect(() => {
+    const filteredProducts = listFilter.filter((product) => {
+      return (
+        (!selectedCategory ||
+          product.categoryItem_product.id === selectedCategory.id) &&
+        product.price >= valueMin &&
+        product.price <= valueMax
+      );
+    });
 
-  const handleLikeProduct = (productId) => {
-    axios
-      .post(
-        `http://localhost:8080/api/like_Products?accountId=6&productId=${productId}`
-      )
-      .then((response) => {
-        if (response.data === "Sản phẩm đã được like.") {
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+    const productsCopy = [...filteredProducts];
+
+    if (priceSorting === "ascending") {
+      productsCopy.sort((a, b) => a.price - b.price);
+    } else if (priceSorting === "descending") {
+      productsCopy.sort((a, b) => b.price - a.price);
+    }
+
+    setSortedProducts(productsCopy);
+  }, [selectedCategory, valueMin, valueMax, priceSorting, listFilter]);
+
+  // const handleLikeProduct = (productId) => {
+  //   axios
+  //     .post(
+  //       `http://localhost:8080/api/like_Products?accountId=6&productId=${productId}`
+  //     )
+  //     .then((response) => {
+  //       if (response.data === "Sản phẩm đã được like.") {
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
 
   return (
     <>
@@ -267,7 +283,7 @@ function Product() {
                     )}
                   </ul> */}
                   <div className="sidebar__item mt-4">
-                    <h4>Giá</h4>
+                    <h5>Giá</h5>
                     <div className="price-range-wrap pb-4">
                       <Box sx={{ width: 300 }}>
                         <Slider
@@ -287,91 +303,59 @@ function Product() {
                     </div>
                     <div className="sidebar__item sidebar__item__color--option">
                       <h5>Sắp xếp giá</h5>
-                      <div className="form-check">
-                        <input
-                          type="radio"
-                          id="ascendingPrice"
-                          name="priceSorting"
+                      <RadioGroup
+                        aria-label="priceSorting"
+                        name="priceSorting"
+                        value={priceSorting}
+                        onChange={handlePriceSortingChange}
+                      >
+                        <FormControlLabel
                           value="ascending"
-                          checked={priceSorting === "ascending"}
-                          onChange={handlePriceSortingChange}
+                          control={<Radio />}
+                          label="Sắp xếp theo tăng dần"
                         />
-                        <label htmlFor="ascendingPrice">
-                          Sắp xếp theo tăng dần
-                        </label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          type="radio"
-                          id="descendingPrice"
-                          name="priceSorting"
+                        <FormControlLabel
                           value="descending"
-                          checked={priceSorting === "descending"}
-                          onChange={handlePriceSortingChange}
+                          control={<Radio />}
+                          label="Sắp xếp theo giảm dần"
                         />
-                        <label htmlFor="descendingPrice">
-                          Sắp xếp theo giảm dần
-                        </label>
-                      </div>
+                      </RadioGroup>
                     </div>
 
                     <div className="sidebar__item sidebar__item__color--option">
                       <h5>Đánh giá</h5>
-                      <div className="form-check">
-                        <input
-                          type="radio"
-                          id="fiveStarRating"
-                          name="ratingFilter"
+                      <RadioGroup
+                        aria-label="ratingFilter"
+                        name="ratingFilter"
+                        value={ratingFilter}
+                        onChange={handleRatingFilterChange}
+                      >
+                        <FormControlLabel
                           value="5"
-                          checked={ratingFilter === "5"}
-                          onChange={handleRatingFilterChange}
+                          control={<Radio />}
+                          label="5 sao"
                         />
-                        <label htmlFor="fiveStarRating">5 sao</label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          type="radio"
-                          id="fourStarRating"
-                          name="ratingFilter"
+                        <FormControlLabel
                           value="4"
-                          checked={ratingFilter === "4"}
-                          onChange={handleRatingFilterChange}
+                          control={<Radio />}
+                          label="4 sao"
                         />
-                        <label htmlFor="fourStarRating">4 sao</label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          type="radio"
-                          id="threeStarRating"
-                          name="ratingFilter"
+                        <FormControlLabel
                           value="3"
-                          checked={ratingFilter === "3"}
-                          onChange={handleRatingFilterChange}
+                          control={<Radio />}
+                          label="3 sao"
                         />
-                        <label htmlFor="threeStarRating">3 sao</label>
-                      </div>
-                      <div className="form-check">
-                        <input
-                          type="radio"
-                          id="twoStarRating"
-                          name="ratingFilter"
+                        <FormControlLabel
                           value="2"
-                          checked={ratingFilter === "2"}
-                          onChange={handleRatingFilterChange}
+                          control={<Radio />}
+                          label="2 sao"
                         />
-                        <label htmlFor="twoStarRating">2 sao</label>
-                      </div>
-                      <div className="form-check pb-4">
-                        <input
-                          type="radio"
-                          id="oneStarRating"
-                          name="ratingFilter"
+                        <FormControlLabel
                           value="1"
-                          checked={ratingFilter === "1"}
-                          onChange={handleRatingFilterChange}
+                          control={<Radio />}
+                          label="1 sao"
                         />
-                        <label htmlFor="oneStarRating">1 sao</label>
-                      </div>
+                      </RadioGroup>
                     </div>
                   </div>
                   <div className="sidebar__item mt-4">
@@ -448,7 +432,7 @@ function Product() {
                           </nav>
 
                           <div className="row">
-                            {filteredProducts.map((product, index) =>
+                            {sortedProducts.map((product, index) =>
                               product.price >= valueMin &&
                               product.price <= valueMax ? (
                                 <div
@@ -491,13 +475,13 @@ function Product() {
                                     <span className="fas fa-star"></span>
                                   </div>
                                   <div className="price">{product.price}</div>
-                                  <button
+                                  {/* <button
                                     onClick={() =>
                                       handleLikeProduct(product.id)
                                     }
                                   >
                                     Thích
-                                  </button>
+                                  </button> */}
                                 </div>
                               ) : null
                             )}

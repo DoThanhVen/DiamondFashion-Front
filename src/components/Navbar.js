@@ -7,7 +7,8 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import './nav.css';
 import { Link } from 'react-router-dom';
-import "../pages/css/user/responsive.css";
+import "../page_user/css/user/responsive.css";
+
 
 const MainNavbar = () => {
   return (
@@ -75,9 +76,9 @@ const MainNavbar = () => {
                 </Form>
                 <Navbar expand="lg">
                   <div className="">
-                    <Link className="d-block d-sm-block d-md-none d-lg-none" to="/">
+                    {/* <Link className="d-block d-sm-block d-md-none d-lg-none" to="/">
                       <img src="/images/Diamond.png" alt="Logo" style={{ width: '60px' }} />
-                    </Link>
+                    </Link> */}
                     <Navbar.Toggle style={{ marginTop: '2px' }} aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav " >
                       <Nav className="me-auto  mb-lg-0 container " style={{ paddingTop: '5px' }}>

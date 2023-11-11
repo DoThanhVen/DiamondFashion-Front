@@ -1,10 +1,9 @@
 import React, { useState, useRef } from "react";
 import MainNavbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import '../account/profile.css';
+import "../css/user/profile.css";
 
 function Profile_User() {
-
   const [selectedImage, setSelectedImage] = useState(null);
   const fileInputRef = useRef(null);
 
@@ -32,9 +31,12 @@ function Profile_User() {
               <div class="card-body">
                 <div class="account-settings">
                   <div class="user-profile">
-                    <div className="user-avatar" style={{cursor: 'pointer'}}>
+                    <div className="user-avatar" style={{ cursor: "pointer" }}>
                       <img
-                        src={selectedImage || "https://bootdey.com/img/Content/avatar/avatar7.png"}
+                        src={
+                          selectedImage ||
+                          "https://bootdey.com/img/Content/avatar/avatar7.png"
+                        }
                         alt="user"
                         onClick={handleImageClick}
                       />
@@ -50,35 +52,78 @@ function Profile_User() {
                     <h6 class="user-date">Ngày tạo: 20/10/2023</h6>
                   </div>
                   <div class="about">
-
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button
+                      type="button"
+                      class="btn btn-success"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    >
                       Đổi mật khẩu
                     </button>
 
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div
+                      class="modal fade"
+                      id="exampleModal"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Đổi mật khẩu</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">
+                              Đổi mật khẩu
+                            </h1>
+                            <button
+                              type="button"
+                              class="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
                           </div>
                           <div class="modal-body">
                             <div className="col-12">
-                              <label for="inputpass1" className="form-label">Mật khẩu cũ:</label>
-                              <input type="password" className="form-control" id="inputpass1" />
+                              <label for="inputpass1" className="form-label">
+                                Mật khẩu cũ:
+                              </label>
+                              <input
+                                type="password"
+                                className="form-control"
+                                id="inputpass1"
+                              />
                             </div>
                             <div className="col-12">
-                              <label for="inputpass2" className="form-label">Mật khẩu:</label>
-                              <input type="password" className="form-control" id="inputpass2" />
+                              <label for="inputpass2" className="form-label">
+                                Mật khẩu:
+                              </label>
+                              <input
+                                type="password"
+                                className="form-control"
+                                id="inputpass2"
+                              />
                             </div>
                             <div className="col-12">
-                              <label for="inputpass3" className="form-label">Nhập lại mật khẩu:</label>
-                              <input type="password" className="form-control" id="inputpass3" />
+                              <label for="inputpass3" className="form-label">
+                                Nhập lại mật khẩu:
+                              </label>
+                              <input
+                                type="password"
+                                className="form-control"
+                                id="inputpass3"
+                              />
                             </div>
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
-                            <button type="button" class="btn btn-primary">Lưu thay đổi</button>
+                            <button
+                              type="button"
+                              class="btn btn-secondary"
+                              data-bs-dismiss="modal"
+                            >
+                              Thoát
+                            </button>
+                            <button type="button" class="btn btn-primary">
+                              Lưu thay đổi
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -122,15 +167,31 @@ function Profile_User() {
                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                       <label for="email">Giới tính:</label>
-                      <div className='d-flex'>
+                      <div className="d-flex">
                         <div className="form-check">
-                          <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked />
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="gridRadios"
+                            id="gridRadios1"
+                            value="option1"
+                            checked
+                          />
                           <label className="form-check-label" for="gridRadios1">
                             Nam
                           </label>
                         </div>
-                        <div className="form-check " style={{ marginLeft: '40px' }}>
-                          <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2" />
+                        <div
+                          className="form-check "
+                          style={{ marginLeft: "40px" }}
+                        >
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="gridRadios"
+                            id="gridRadios2"
+                            value="option2"
+                          />
                           <label className="form-check-label" for="gridRadios2">
                             Nữ
                           </label>
@@ -172,7 +233,14 @@ function Profile_User() {
                 <div class="row gutters mt-4">
                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="text-right">
-                      <button type="button" id="submit" name="submit" class="btn btn-primary" >Cập nhật</button>
+                      <button
+                        type="button"
+                        id="submit"
+                        name="submit"
+                        class="btn btn-primary"
+                      >
+                        Cập nhật
+                      </button>
                     </div>
                   </div>
                 </div>

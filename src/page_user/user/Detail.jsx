@@ -83,28 +83,21 @@ function ProductPage() {
       .catch((error) => {
         console.error("Error loading shop data:", error);
       });
-
-    // axios
-    //   .get(`http://localhost:8080/api/product/${productId}/shop_address`)
-    //   .then((response) => {
-    //     dispatch({ type: "SET_SHOP_ADDRESS", payload: response.data });
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error loading shop address:", error);
-    //   });
-
-    // Fetch shop addresses
-    // axios
-    //   .get("http://localhost:8080/api/shop_address")
-    //   .then((response) => {
-    //     const shopData = response.data[0];
-    //     const shopCity = shopData.city;
-    //     dispatch({ type: "SET_CITY", payload: shopCity });
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error loading shop addresses:", error);
-    //   });
   }, [productId]);
+
+  const handleLikeProduct = (productId) => {
+    axios
+      .post(
+        `http://localhost:8080/api/like_Products?accountId=6&productId=${productId}`
+      )
+      .then((response) => {
+        if (response.data === "Sản phẩm đã được like.") {
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <>
@@ -240,37 +233,39 @@ function ProductPage() {
                   </div>
                   <div className="row mb-4">
                     <div className="col-md-4 col-6">
-                      {/* <label className="mb-2">Size</label>
-                      <select className="form-select border border-secondary" style={{ height: '35px' }}>
-                        <option>Small</option>
-                        <option>Medium</option>
-                        <option>Large</option>
-                      </select> */}
+                      <button
+                        onClick={() => handleLikeProduct(product.id)}
+                        style={{
+                          padding: "8px 16px",
+                          borderRadius: "8px",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Thích
+                      </button>
                     </div>
                   </div>
-                  <a
-                    href="#"
-                    className="btn  shadow-0 "
-                    style={{
-                      backgroundColor: " rgb(252,162,53)",
-                      padding: "10px 50px",
-                    }}
-                  >
-                    <i className="bi bi-bag-plus mx-2"></i>
-                    <strong>Mua ngay</strong>
-                  </a>
-                  <a
-                    href="#"
-                    className="btn  shadow-0 mx-4 text-white
-                  "
-                    style={{
-                      backgroundColor: " rgb(48,83,73)",
-                      padding: "10px 50px",
-                    }}
-                  >
-                    <i className="bi bi-basket3-fill"></i>
-                    <strong> Thêm vào giỏ hàng</strong>
-                  </a>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <button
+                      className="btn shadow-0 "
+                      style={{
+                        padding: "10px 50px",
+                        fontSize: "16px",
+                        backgroundColor: "#ffc801",
+                        color: "#fff",
+                      }}
+                    >
+                      <i className="bi bi-bag-plus mx-2"></i>
+                      <span style={{}}>Mua ngay</span>
+                    </button>
+                    <button
+                      className="btn btn-success shadow-0 mx-4"
+                      style={{ padding: "10px 50px", fontSize: "16px" }}
+                    >
+                      <i className="bi bi-basket3-fill"></i>
+                      <span style={{}}>Thêm vào giỏ hàng</span>
+                    </button>
+                  </div>
                 </div>
               </main>
             </div>
