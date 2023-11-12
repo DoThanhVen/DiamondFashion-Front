@@ -30,16 +30,16 @@ function Register() {
   };
 
   const handleRegis = async (e) => {
-    if (username == "" || password == "" || email == "" || code == "") {
+    if (username === "" || password === "" || email === "" || code === "") {
       alert("VUI LÒNG NHẬP ĐẦY ĐỦ THÔNG TIN!");
       e.preventDefault();
     } else {
-      if (checkbox == false) {
+      if (checkbox === false) {
         e.preventDefault();
         alert("VUI LÒNG ĐỒNG Ý VỚI CÁC ĐIỀU KHOẢN TRƯỚC KHI ĐĂNG KÝ TÀI KHOẢN!");
       } else {
-        if (password == repassword) {
-          if (code == valiCode) {
+        if (password === repassword) {
+          if (code === valiCode) {
             e.preventDefault();
             axios
               .post(domain + "/api/account/register/" + email, { username, password })

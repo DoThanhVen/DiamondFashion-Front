@@ -8,7 +8,7 @@ function ForgotPass() {
     const navigate = useNavigate();
     const domain = process.env.REACT_APP_API || "http://localhost:8080";
     const handleForgot = async (e) => {
-        if (email == "") {
+        if (email === "") {
             alert("VUI LÒNG NHẬP ĐỊA CHỈ EMAIL CỦA BẠN");
         } else {
             e.preventDefault()

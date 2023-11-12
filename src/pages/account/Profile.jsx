@@ -40,7 +40,7 @@ function Profile_User() {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault()
-    if (fullname == "" || phone == "" || email == "" || id_card == "") {
+    if (fullname === "" || phone === "" || email === "" || id_card === "") {
       alert("VUI LÒNG NHẬP ĐẦY ĐỦ THÔNG TIN!")
     } else {
       axios
@@ -61,12 +61,12 @@ function Profile_User() {
 
   const handleChangePass = async (e) => {
     e.preventDefault()
-    if (prepassword == "") {
+    if (prepassword === "") {
       alert("VUI LÒNG NHẬP MẬT KHẨU CŨ CỦA BẠN!");
     }
-    else if (prepassword == "1") {
-      if (password == repassword) {
-        if (password == prepassword) {
+    else if (prepassword === "1") {
+      if (password === repassword) {
+        if (password === prepassword) {
           alert("MẬT KHẨU MỚI KHÔNG ĐƯỢC TRÙNG VỚI MẬT KHẨU CŨ!")
         } else {
           axios

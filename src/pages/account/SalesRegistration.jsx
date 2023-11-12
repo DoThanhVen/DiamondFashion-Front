@@ -23,16 +23,16 @@ export default function SalesRegistration() {
 
   const domain = process.env.REACT_APP_API || "http://localhost:8080";
   const handleSaleRegis = async (e) => {
-    if (shop_name == "") {
+    if (shop_name === "") {
       alert("VUI LÒNG NHẬP TÊN SHOP CỦA BẠN!");
-    } else if(city == "") {
+    } else if(city === "") {
       alert("VUI LÒNG CHỌN THÀNH PHỐ!");
-    } else if(district == "") {
+    } else if(district === "") {
       alert("VUI LÒNG CHỌN THÀNH QUẬN/HUYỆN!");
-    } else if(ward == "") {
+    } else if(ward === "") {
       alert("VUI LÒNG CHỌN THÀNH XÃ/PHƯỜNG!");
     }
-    else if (address == "") {
+    else if (address === "") {
       alert("VUI LÒNG NHẬP ĐỊA CHỈ CHI TIẾT CỦA BẠN!");
     }
     else {
