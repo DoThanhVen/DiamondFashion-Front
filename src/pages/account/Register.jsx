@@ -31,7 +31,7 @@ function Register() {
 
   const handleRegis = async (e) => {
     if (username == "" || password == "" || email == "" || code == "") {
-      alert("VUI LÒNG NHẬP ĐẦY ĐỦ THÔNG TIN");
+      alert("VUI LÒNG NHẬP ĐẦY ĐỦ THÔNG TIN!");
       e.preventDefault();
     } else {
       if (checkbox == false) {
@@ -58,7 +58,7 @@ function Register() {
           }
           else {
             e.preventDefault();
-            alert("Mã xác nhận không chính xác");
+            alert("MÃ XÁC NHẬN KHÔNG CHÍNH XÁC!");
           }
         } else {
           e.preventDefault();

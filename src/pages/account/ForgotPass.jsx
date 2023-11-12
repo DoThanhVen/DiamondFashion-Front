@@ -8,21 +8,25 @@ function ForgotPass() {
     const navigate = useNavigate();
     const domain = process.env.REACT_APP_API || "http://localhost:8080";
     const handleForgot = async (e) => {
-        e.preventDefault()
-        axios
-            .post(domain + "/api/account/forgot", { email })
-            .then(response => {
-                console.log(response);
-                if (response.data.success) {
-                    alert(response.data.message);
-                    navigate("/login")
-                } else {
-                    alert(response.data.message);
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        if (email == "") {
+            alert("VUI LÒNG NHẬP ĐỊA CHỈ EMAIL CỦA BẠN");
+        } else {
+            e.preventDefault()
+            axios
+                .post(domain + "/api/account/forgot", { email })
+                .then(response => {
+                    console.log(response);
+                    if (response.data.success) {
+                        alert(response.data.message);
+                        navigate("/login")
+                    } else {
+                        alert(response.data.message);
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
     };
 
     return (

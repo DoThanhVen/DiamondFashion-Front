@@ -17,10 +17,6 @@ function Profile_User() {
   const [fullname, setFullname] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [city, setCity] = useState("");
-  const [district, setDistrict] = useState("");
-  const [ward, setWard] = useState("");
-  const [address, setAddress] = useState("");
   const [id_card, setId_card] = useState("");
   const [gender, setGender] = useState(0);
 
@@ -44,24 +40,31 @@ function Profile_User() {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault()
-    axios
-      .post(domain + "/api/account/updateprofile/" + username, { fullname, id_card, phone, gender, email, city, district, ward, address })
-      .then(response => {
-        console.log(response);
-        if (response.data.success) {
-          alert(response.data.message);
-        } else {
-          alert(response.data.message);
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    if (fullname == "" || phone == "" || email == "" || id_card == "") {
+      alert("VUI LÒNG NHẬP ĐẦY ĐỦ THÔNG TIN!")
+    } else {
+      axios
+        .post(domain + "/api/account/updateprofile/" + username, { fullname, id_card, phone, gender, email })
+        .then(response => {
+          console.log(response);
+          if (response.data.success) {
+            alert(response.data.message);
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   }
 
   const handleChangePass = async (e) => {
     e.preventDefault()
-    if (prepassword == "1") {
+    if (prepassword == "") {
+      alert("VUI LÒNG NHẬP MẬT KHẨU CŨ CỦA BẠN!");
+    }
+    else if (prepassword == "1") {
       if (password == repassword) {
         if (password == prepassword) {
           alert("MẬT KHẨU MỚI KHÔNG ĐƯỢC TRÙNG VỚI MẬT KHẨU CŨ!")

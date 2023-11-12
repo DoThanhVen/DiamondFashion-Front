@@ -3,12 +3,13 @@ import '../account/profile.css';
 import MainNavbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 export default function SalesRegistration() {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const fileInputRef = useRef(null);
-
+  const navigate = useNavigate();
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
@@ -22,16 +23,31 @@ export default function SalesRegistration() {
 
   const domain = process.env.REACT_APP_API || "http://localhost:8080";
   const handleSaleRegis = async (e) => {
-    e.preventDefault();
-    axios
-      .post(domain + "/api/account/saleregis/" + username + "/" + shop_name, { city, district, ward, address })
-      .then(response => {
-        console.log(response);
-        alert(response.data.message);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    if (shop_name == "") {
+      alert("VUI LÒNG NHẬP TÊN SHOP CỦA BẠN!");
+    } else if(city == "") {
+      alert("VUI LÒNG CHỌN THÀNH PHỐ!");
+    } else if(district == "") {
+      alert("VUI LÒNG CHỌN THÀNH QUẬN/HUYỆN!");
+    } else if(ward == "") {
+      alert("VUI LÒNG CHỌN THÀNH XÃ/PHƯỜNG!");
+    }
+    else if (address == "") {
+      alert("VUI LÒNG NHẬP ĐỊA CHỈ CHI TIẾT CỦA BẠN!");
+    }
+    else {
+      e.preventDefault();
+      axios
+        .post(domain + "/api/account/saleregis/" + username + "/" + shop_name, { city, district, ward, address })
+        .then(response => {
+          console.log(response);
+          alert(response.data.message);
+          navigate("/")
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   };
 
   const handleFileChange = (event) => {
@@ -97,7 +113,8 @@ export default function SalesRegistration() {
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
                         <label for="ciTy">Thành phố, tỉnh:</label>
-                        <select class="form-control" onChange={e => setShop_name(e.target.value)}>
+                        <select class="form-control" onChange={e => setCity(e.target.value)}>
+                          <option value="Ho Chi Minh">--Chọn thành phố--</option>
                           <option value="Ho Chi Minh">Ho Chi Minh</option>
                           <option value="Ha Noi">Ha Noi</option>
                           <option value="Da Nang">Da Nang</option>
@@ -109,6 +126,7 @@ export default function SalesRegistration() {
                       <div class="form-group">
                         <label for="Street">Quận, huyện:</label>
                         <select class="form-control" onChange={e => setDistrict(e.target.value)}>
+                          <option value="Ho Chi Minh">--Chọn quận/huyện--</option>
                           <option value="Quan 1">Quan 1</option>
                           <option value="Quan 2">Quan 2</option>
                           <option value="Quan 3">Quan 3</option>
@@ -121,6 +139,7 @@ export default function SalesRegistration() {
                       <div class="form-group">
                         <label for="ward">Phường, xã:</label>
                         <select class="form-control" onChange={e => setWard(e.target.value)}>
+                          <option value="Ho Chi Minh">--Chọn xã/phường--</option>
                           <option value="Phuong 1">Phuong 1</option>
                           <option value="Phuong 2">Phuong 2</option>
                           <option value="Xa 1">Xa 1</option>
