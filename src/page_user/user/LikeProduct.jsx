@@ -163,135 +163,134 @@ function LikeProduct() {
       <nav>
         <MainNavbar />
       </nav>
-      {sortedProducts.length > 0 ? (
-        <div className="product">
-          <section
-            className="breadcrumb-section container"
-            style={{
-              backgroundImage: "url('/images/product_banner.jpg')",
-              backgroundSize: "cover",
-              width: "100%",
-            }}
-          >
-            <Container>
-              <Row>
-                <Col lg={12} className="text-center">
-                  <div className="breadcrumb__text">
-                    <h2>Diamond Shop</h2>
-                    <p>
-                      Khám phá một thế giới biến đổi với các sản phẩm của chúng
-                      tôi. Cho dù bạn đang tìm cách nâng cấp phong cách của
-                      mình, duy trì kết nối hay làm cho ngôi nhà của bạn thông
-                      minh hơn, chúng tôi có mọi thứ bạn cần để thay đổi cuộc
-                      sống của bạn
-                    </p>
-                  </div>
-                </Col>
-              </Row>
-            </Container>
-          </section>
-          <section className="product spad">
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-3 col-md-5">
-                  <div
-                    className="sidebar mt-4"
-                    style={{ position: "sticky", top: "20px" }}
-                  >
-                    <div className="sidebar__item mt-4">
-                      <h5>Giá</h5>
-                      <div className="price-range-wrap pb-4">
-                        <Box sx={{ width: 300 }}>
-                          <Slider
-                            getAriaLabel={() => "Temperature range"}
-                            value={filterOptions.value1}
-                            onChange={(_, newValue) => {
-                              handleChangeFilter({
-                                ...filterOptions,
-                                value1: newValue,
-                                valueMin: newValue[0],
-                                valueMax: newValue[1],
-                              });
-                            }}
-                            valueLabelDisplay="auto"
-                            getAriaValueText={valuetext}
-                            min={0}
-                            max={1000000}
+
+      <div className="product">
+        <section
+          className="breadcrumb-section container"
+          style={{
+            backgroundImage: "url('/images/product_banner.jpg')",
+            backgroundSize: "cover",
+            width: "100%",
+          }}
+        >
+          <Container>
+            <Row>
+              <Col lg={12} className="text-center">
+                <div className="breadcrumb__text">
+                  <h2>Diamond Shop</h2>
+                  <p>
+                    Khám phá một thế giới biến đổi với các sản phẩm của chúng
+                    tôi. Cho dù bạn đang tìm cách nâng cấp phong cách của mình,
+                    duy trì kết nối hay làm cho ngôi nhà của bạn thông minh hơn,
+                    chúng tôi có mọi thứ bạn cần để thay đổi cuộc sống của bạn
+                  </p>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </section>
+        <section className="product spad">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 col-md-5">
+                <div
+                  className="sidebar mt-4"
+                  style={{ position: "sticky", top: "20px" }}
+                >
+                  <div className="sidebar__item mt-4">
+                    <h5>Giá</h5>
+                    <div className="price-range-wrap pb-4">
+                      <Box sx={{ width: 300 }}>
+                        <Slider
+                          getAriaLabel={() => "Temperature range"}
+                          value={filterOptions.value1}
+                          onChange={(_, newValue) => {
+                            handleChangeFilter({
+                              ...filterOptions,
+                              value1: newValue,
+                              valueMin: newValue[0],
+                              valueMax: newValue[1],
+                            });
+                          }}
+                          valueLabelDisplay="auto"
+                          getAriaValueText={valuetext}
+                          min={0}
+                          max={1000000}
+                        />
+                        <Typography variant="body2">
+                          <span style={{ color: "#FF0000" }}>Value:</span>
+                          {filterOptions.value1[0]} - {filterOptions.value1[1]}
+                        </Typography>
+                      </Box>
+                    </div>
+
+                    <div className="sidebar__item sidebar__item__color--option">
+                      <h5>Sắp xếp giá</h5>
+                      <FormControl component="fieldset">
+                        <RadioGroup
+                          aria-label="priceSorting"
+                          name="priceSorting"
+                          value={priceSorting}
+                          onChange={handlePriceSortingChange}
+                        >
+                          <FormControlLabel
+                            value="ascending"
+                            control={<Radio />}
+                            label="Sắp xếp theo tăng dần"
                           />
-                          <Typography variant="body2">
-                            <span style={{ color: "#FF0000" }}>Value:</span>
-                            {filterOptions.value1[0]} -{" "}
-                            {filterOptions.value1[1]}
-                          </Typography>
-                        </Box>
-                      </div>
+                          <FormControlLabel
+                            value="descending"
+                            control={<Radio />}
+                            label="Sắp xếp theo giảm dần"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </div>
 
-                      <div className="sidebar__item sidebar__item__color--option">
-                        <h5>Sắp xếp giá</h5>
-                        <FormControl component="fieldset">
-                          <RadioGroup
-                            aria-label="priceSorting"
-                            name="priceSorting"
-                            value={priceSorting}
-                            onChange={handlePriceSortingChange}
-                          >
-                            <FormControlLabel
-                              value="ascending"
-                              control={<Radio />}
-                              label="Sắp xếp theo tăng dần"
-                            />
-                            <FormControlLabel
-                              value="descending"
-                              control={<Radio />}
-                              label="Sắp xếp theo giảm dần"
-                            />
-                          </RadioGroup>
-                        </FormControl>
-                      </div>
-
-                      <div className="sidebar__item sidebar__item__color--option">
-                        <h5>Đánh giá</h5>
-                        <FormControl component="fieldset">
-                          <RadioGroup
-                            aria-label="ratingFilter"
-                            name="ratingFilter"
-                            value={ratingFilter}
-                            onChange={handleRatingFilterChange}
-                          >
-                            <FormControlLabel
-                              value="5"
-                              control={<Radio />}
-                              label="5 sao"
-                            />
-                            <FormControlLabel
-                              value="4"
-                              control={<Radio />}
-                              label="4 sao"
-                            />
-                            <FormControlLabel
-                              value="3"
-                              control={<Radio />}
-                              label="3 sao"
-                            />
-                            <FormControlLabel
-                              value="2"
-                              control={<Radio />}
-                              label="2 sao"
-                            />
-                            <FormControlLabel
-                              value="1"
-                              control={<Radio />}
-                              label="1 sao"
-                            />
-                          </RadioGroup>
-                        </FormControl>
-                      </div>
+                    <div className="sidebar__item sidebar__item__color--option">
+                      <h5>Đánh giá</h5>
+                      <FormControl component="fieldset">
+                        <RadioGroup
+                          aria-label="ratingFilter"
+                          name="ratingFilter"
+                          value={ratingFilter}
+                          onChange={handleRatingFilterChange}
+                        >
+                          <FormControlLabel
+                            value="5"
+                            control={<Radio />}
+                            label="5 sao"
+                          />
+                          <FormControlLabel
+                            value="4"
+                            control={<Radio />}
+                            label="4 sao"
+                          />
+                          <FormControlLabel
+                            value="3"
+                            control={<Radio />}
+                            label="3 sao"
+                          />
+                          <FormControlLabel
+                            value="2"
+                            control={<Radio />}
+                            label="2 sao"
+                          />
+                          <FormControlLabel
+                            value="1"
+                            control={<Radio />}
+                            label="1 sao"
+                          />
+                        </RadioGroup>
+                      </FormControl>
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-9 col-md-7">
-                  <div className="product__discount">
-                    <div>
+              </div>
+              <div className="col-lg-9 col-md-7">
+                <div className="product__discount">
+                  <div>
+                    {sortedProducts.length > 0 ? (
                       <div className=" ">
                         <nav className="navbar navbar-expand-md navbar-light bg-white">
                           <div className=" p-0">
@@ -388,56 +387,40 @@ function LikeProduct() {
                             ))}
                           </div>
                         </div>
+                        <div className="product__pagination pb-4">
+                          <a href="#">1</a>
+                          <a href="#">2</a>
+                          <a href="#">3</a>
+                          <a href="#">
+                            <i className="fa fa-long-arrow-right"></i>
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="product__pagination pb-4">
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">
-                      <i className="fa fa-long-arrow-right"></i>
-                    </a>
+                    ) : (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          minHeight: "80vh",
+                        }}
+                      >
+                        <img
+                          src="/images/likepage.jpg"
+                          alt="likepage"
+                          style={{ width: "500px", marginBottom: "20px" }}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-        </div>
-      ) : (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: "80vh",
-          }}
-        >
-          <img
-            src="/images/likepage.jpg"
-            alt="likepage"
-            style={{ width: "500px", marginBottom: "20px" }}
-          />
-          <span>Bạn chưa thích sản phẩm nào</span>
-          <Link to="/">
-            <button
-              style={{
-                marginTop: "20px",
-                padding: "10px 20px",
-                fontSize: "16px",
-                cursor: "pointer",
-                backgroundColor: "#ffc801",
-                color: "#fff",
-                border: "none",
-                borderRadius: "5px",
-              }}
-            >
-              Back to Home
-            </button>
-          </Link>
-        </div>
-      )}
+          </div>
+        </section>
+      </div>
+
       <div id="footer">
         <Footer />
       </div>

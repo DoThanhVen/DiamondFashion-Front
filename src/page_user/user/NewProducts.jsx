@@ -78,7 +78,7 @@ function NewProducts() {
                 </li>
               </ul> */}
             </div>
-            <div className="tag bg-green">new</div>
+            <div className="tag bg-green mt-2">new</div>
             <Link to={`/product/${product[0]}`}>
               <div className="title pt-4 pb-1">{product[2]}</div>
             </Link>

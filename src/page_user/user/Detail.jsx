@@ -7,6 +7,9 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import Box from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
+import Typography from "@mui/material/Typography";
 
 function localStateReducer(state, action) {
   switch (action.type) {
@@ -99,11 +102,60 @@ function ProductPage() {
       });
   };
 
+  const [description, setDescription] = useState("");
+  const [value, setValue] = React.useState(2);
+  const [reviews, setReviews] = useState([]);
+  const [avg, setAvg] = useState(0);
+
+  const handleRatingChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const handlePostRating = () => {
+    // Call API to save rating to the database
+    axios
+      .post("http://localhost:8080/api/ratings/add", {
+        productId: parseInt(productId),
+        accountId: 6,
+        start: value,
+        description: description,
+      })
+
+      .then((response) => {
+        console.log(response.data);
+        // Handle success if needed
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle error if needed
+      });
+  };
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/ratings/${productId}`)
+      .then((response) => {
+        setReviews(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching reviews:", error);
+      });
+  }, [productId]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/ratings/avg/${productId}`)
+      .then((response) => {
+        setAvg(response.data);
+        console.log("AVG: ", response.data);
+      });
+  });
+
   return (
     <>
       <nav>
         <MainNavbar />
       </nav>
+
       <div className="detail" style={{ backgroundColor: "#f5f5fa" }}>
         <section className="">
           <div
@@ -470,6 +522,7 @@ function ProductPage() {
                     <b>
                       <span className="title">ĐÁNH GIÁ SẢN PHẨM</span>
                     </b>
+
                     <div className="bg-white rounded  p-4 mb-4 clearfix graph-star-rating">
                       <div className="graph-star-rating-header">
                         <div className="star-rating">
@@ -592,6 +645,54 @@ function ProductPage() {
                           </div>
                         </div>
                       </div>
+                    </div>
+
+                    <Typography component="legend">
+                      Đánh giá sản phẩm
+                    </Typography>
+                    <Rating
+                      name="product-rating"
+                      value={value}
+                      onChange={handleRatingChange}
+                    />
+
+                    <label htmlFor="description">Mô tả:</label>
+                    <textarea
+                      id="description"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+
+                    <button onClick={handlePostRating}>Đăng</button>
+
+                    {avg !== null && (
+                      <div>
+                        <p>Average Rating: {avg}</p>
+                      </div>
+                    )}
+
+                    <div>
+                      <Typography variant="h6">
+                        Đánh giá của người dùng
+                      </Typography>
+                      {reviews.map((review) => (
+                        <div key={review.id}>
+                          <Typography>
+                            Người đánh giá: {review.account_rate.username}
+                          </Typography>
+                          <Rating
+                            name="read-only"
+                            value={review.star}
+                            readOnly
+                          />
+                          <Typography>Mô tả: {review.description}</Typography>
+                          {review.account_rate.infoAccount && (
+                            <Typography>
+                              Email: {review.account_rate.infoAccount.email}
+                            </Typography>
+                          )}
+                        </div>
+                      ))}
                     </div>
                     <div className="pt-2">
                       <div className="mt-3">
