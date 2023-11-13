@@ -97,55 +97,57 @@ function Product() {
       .get(`http://localhost:8080/api/category/${id}`)
       .then((response) => {
         // Loại bỏ các mục danh sách gấp đôi trong listCategory
-        const uniqueCategoryList = response.data.listCategory.filter(
-          (category, index, self) =>
-            index ===
-            self.findIndex(
-              (c) => c.type_category_item === category.type_category_item
-            )
-        );
-        response.data.listCategory = uniqueCategoryList;
+        // const uniqueCategoryList = response.data.listCategory.filter(
+        //   (category, index, self) =>
+        //     index ===
+        //     self.findIndex(
+        //       (c) => c.type_category_item === category.type_category_item
+        //     )
+        // );
+        console.log(response);
+        // response.data.listCategory = uniqueCategoryList;
 
         dispatch({
           type: "SET_CATEGORY_ITEM",
-          categoryItem: response.data.listCategory,
+          // categoryItem: response.data.listCategory,
+          categoryItem: response.data,
         });
       })
       .catch((error) => {
         console.error(error);
       });
-    getListProduct();
-  }, [id]);
+    // getListProduct();
+  }, []);
 
-  const getListProduct = () => {
-    axios
-      .get(`http://localhost:8080/api/product`)
-      .then((response) => {
-        dispatch({ type: "SET_PRODUCTS", products: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
+  // const getListProduct = () => {
+  //   axios
+  //     .get(`http://localhost:8080/api/product`)
+  //     .then((response) => {
+  //       dispatch({ type: "SET_PRODUCTS", products: response.data });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+  console.log(categoryItem);
   // Filtering Products
-  const listFilter = [];
-  categoryItem.forEach((value) => {
-    products.forEach((product) => {
-      if (value.id === product.categoryItem_product.id) {
-        listFilter.push(product);
-      }
-    });
-  });
+  // const listFilter = [];
+  // categoryItem.forEach((value) => {
+  //   products.forEach((product) => {
+  //     if (value.id === product.categoryItem_product.id) {
+  //       listFilter.push(product);
+  //     }
+  //   });
+  // });
 
-  const filteredProducts = listFilter.filter((product) => {
-    return (
-      (!selectedCategory ||
-        product.categoryItem_product.id === selectedCategory.id) &&
-      product.price >= valueMin &&
-      product.price <= valueMax
-    );
-  });
+  // const filteredProducts = listFilter.filter((product) => {
+  //   return (
+  //     (!selectedCategory ||
+  //       product.categoryItem_product.id === selectedCategory.id) &&
+  //     product.price >= valueMin &&
+  //     product.price <= valueMax
+  //   );
+  // });
 
   return (
     <>
@@ -434,52 +436,54 @@ function Product() {
                           </nav>
 
                           <div className="row">
-                            {filteredProducts.map((product, index) =>
-                              product.price >= valueMin &&
-                              product.price <= valueMax ? (
-                                <div
-                                  key={index}
-                                  className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3"
-                                >
-                                  <div className="product">
-                                    {product.image_product.map(
-                                      (image, index) => (
-                                        <img
-                                          key={index}
-                                          src={"/images/" + image.url}
-                                          alt={`Image ${index}`}
-                                        />
-                                      )
-                                    )}
-                                    <ul className="d-flex align-items-center justify-content-center list-unstyled icons">
-                                      <li className="icon">
-                                        <span className="fas fa-expand-arrows-alt"></span>
-                                      </li>
-                                      <li className="icon mx-3">
-                                        <span className="far fa-heart"></span>
-                                      </li>
-                                      <li className="icon">
-                                        <span className="fas fa-shopping-bag"></span>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                  <div className="tag bg-red">sale</div>
-                                  <div className="title pt-4 pb-1">
-                                    <Link to={`/product/${product.id}`}>
-                                      {product.product_name}
-                                    </Link>
-                                  </div>
-                                  <div className="d-flex align-content-center justify-content-center">
-                                    <span className="fas fa-star"></span>
-                                    <span className="fas fa-star"></span>
-                                    <span className="fas fa-star"></span>
-                                    <span className="fas fa-star"></span>
-                                    <span className="fas fa-star"></span>
-                                  </div>
-                                  <div className="price">{product.price}</div>
-                                </div>
-                              ) : null
-                            )}
+                            {categoryItem?.listCategory?.map((itemc) => (
+                                itemc?.products?.map((product, index) =>
+                                  product.price >= valueMin &&
+                                    product.price <= valueMax ? (
+                                    <div
+                                      key={index}
+                                      className="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3"
+                                    >
+                                      <div className="product">
+                                        {product.image_product.map(
+                                          (image, index) => (
+                                            <img
+                                              key={index}
+                                              src={"http://localhost:8080/api/uploadImageProduct/" + image.url}
+                                              alt={`Image ${index}`}
+                                            />
+                                          )
+                                        )}
+                                        <ul className="d-flex align-items-center justify-content-center list-unstyled icons">
+                                          <li className="icon">
+                                            <span className="fas fa-expand-arrows-alt"></span>
+                                          </li>
+                                          <li className="icon mx-3">
+                                            <span className="far fa-heart"></span>
+                                          </li>
+                                          <li className="icon">
+                                            <span className="fas fa-shopping-bag"></span>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                      <div className="tag bg-red">sale</div>
+                                      <div className="title pt-4 pb-1">
+                                        <Link to={`/product/${product.id}`}>
+                                          {product.product_name}
+                                        </Link>
+                                      </div>
+                                      <div className="d-flex align-content-center justify-content-center">
+                                        <span className="fas fa-star"></span>
+                                        <span className="fas fa-star"></span>
+                                        <span className="fas fa-star"></span>
+                                        <span className="fas fa-star"></span>
+                                        <span className="fas fa-star"></span>
+                                      </div>
+                                      <div className="price">{product.price}</div>
+                                    </div>
+                                  ) : null
+                                )
+                            ))}
                           </div>
                         </div>
                       </div>

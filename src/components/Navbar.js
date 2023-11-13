@@ -8,8 +8,17 @@ import Button from 'react-bootstrap/Button';
 import './nav.css';
 import { Link } from 'react-router-dom';
 import "../pages/css/user/responsive.css";
+import { cartSelector } from '../actions/actions';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 const MainNavbar = () => {
+  const cart = useSelector(cartSelector);
+  let total = 0;
+  cart.map(item => {
+    total = total + Number(item.quantity)
+  })
+  console.log(total)
   return (
     <>
       <header className="header shop">
@@ -102,7 +111,7 @@ const MainNavbar = () => {
                     <a href="/profile" className="single-icon"><i className="fa-solid fa-user"></i></a>
                   </div>
                   <div className="sinlge-bar shopping">
-                    <a href="/cart" className="single-icon"><i className="fa-solid fa-bag-shopping"></i> <span className="total-count">2</span></a>
+                    <a href="/cart" className="single-icon"><i className="fa-solid fa-bag-shopping"></i> <span className="total-count">{total}</span></a>
                     {/* Shopping Item */}
                     <div className="shopping-item">
                       <div className="dropdown-cart-header">
@@ -110,23 +119,19 @@ const MainNavbar = () => {
                         <a href="/cart">Xem giỏ hàng</a>
                       </div>
                       <ul className="shopping-list">
-                        <li>
-                          <a href="#" className="remove" title="Remove this item"><i className="fa fa-remove"></i></a>
-                          <a className="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#" /></a>
-                          <h4><a href="#">Sản phẩm 1</a></h4>
-                          <p className="quantity">1 - <span className="amount">$99.00</span></p>
-                        </li>
-                        <li>
-                          <a href="#" className="remove" title="Remove this item"><i className="fa fa-remove"></i></a>
-                          <a className="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#" /></a>
-                          <h4><a href="#">Sản phẩm 2</a></h4>
-                          <p className="quantity">1x - <span className="amount">$35.00</span></p>
-                        </li>
+                        {cart.map((item,index) => (
+                          <li key={index}>
+                            <a href="#" className="remove" title="Remove this item"><i className="fa fa-remove"></i></a>
+                            <a className="cart-img" href="#"><img src={`http://localhost:8080/api/uploadImageProduct/${item.product.image_product[0].url}`} alt="#" /></a>
+                            <h4><a href="#">{item.product.product_name}</a></h4>
+                            <p className="quantity">{item.quantity} - <span className="amount">${item.product.price}</span></p>
+                          </li>
+                        ))}
                       </ul>
                       <div className="bottom">
                         <div className="total">
                           <span>Tổng</span>
-                          <span className="total-amount">$134.00</span>
+                          <span className="total-amount">${total}</span>
                         </div>
                         <a href="/checkout" className="btn animate">Thanh toán</a>
                       </div>

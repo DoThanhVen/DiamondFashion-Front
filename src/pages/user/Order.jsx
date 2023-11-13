@@ -1,8 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MainNavbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import axios from 'axios';
 function OrderList() {
+    const [orders, setOrders] = useState();
+    const [load, isLoad] = useState(false);
 
+    const fectAPI = () => {
+        axios
+            .get(`http://localhost:8080/api/order/find/account/${5}`)
+            .then((response) => {
+                console.log(response.data.data)
+                setOrders(response.data.data)
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+    useEffect(() => {
+        fectAPI();
+    }, [load])
+    const handelRemoveOrder = (id) => {
+        axios
+            .put(`http://localhost:8080/api/order/update/${id}/account/${5}?status=8`)
+            .then((response) => {
+                console.log(response.data.message)
+                isLoad(!load)
+            })
+            .catch((error) => {
+                // console.error(error);
+            });
+    }
+    const ButtonCancel = ({ id, status }) => {
+        if (status == 1) {
+            return (
+                <button style={{ border: 'none', padding: 6, borderRadius: 4 }} onClick={() => {
+                    handelRemoveOrder(id)
+                }} >Huỷ đặt</button>
+            )
+        }
+    }
+    const convertDate = (date) => {
+        console.log(new Date(date))
+        let fm = new Date(date).toLocaleDateString('vi-VI', {timeZone: 'UTC' })
+        return fm;
+    }
     return (
         <>
             <nav >
@@ -27,14 +69,23 @@ function OrderList() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td className='text-start'>ID001</td>
-                                                <td className='text-start'>HCM</td>
-                                                <td className='text-start'>5/8/2018</td>
-                                                <td className='text-start'>$15,000</td>
-                                                <td className='text-start'><span className="badge badge-boxed bg-warning text-dark">chưa giải quyết</span></td>
-                                                <td> <a href='/orderDetail'> Xem chi tiết </a> </td>
-                                            </tr>
+                                            {orders?.content.map((item) => (
+                                                <tr key={item.id}>
+                                                    <td className='text-start'>HD23{item.id}</td>
+                                                    <td className='text-start'>
+                                                        {item.address.address},
+                                                        {item.address.ward},
+                                                        {item.address.district},
+                                                        {item.address.city},
+                                                    </td>
+                                                    <td className='text-start'>{convertDate(item.create_date)}</td>
+                                                    <td className='text-start'>{item.total}</td>
+                                                    <td className='text-start'><span className="badge badge-boxed bg-warning text-dark">{item.status[item.status.length - 1].status.name}</span></td>
+
+                                                    <td> <a href={`/orderDetail/${item.id}`}> Xem chi tiết </a> </td>
+                                                    <td><ButtonCancel id={item.id} status={item?.status[item.status.length - 1].status.id}></ButtonCancel></td>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
                                 </div>

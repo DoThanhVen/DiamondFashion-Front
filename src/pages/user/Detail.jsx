@@ -7,8 +7,13 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import cartSilce from '../../Reducer/cartSilce';
+import { useDispatch } from 'react-redux';
+
+
 
 function localStateReducer(state, action) {
+
   switch (action.type) {
     case "SET_PRODUCT":
       return { ...state, product: action.payload };
@@ -27,8 +32,11 @@ function localStateReducer(state, action) {
   }
 }
 
+
 function ProductPage() {
   const { productId } = useParams();
+  const dispatchs = useDispatch();
+  const [quantity, setQuantity] = useState(1);
   const [localState, dispatch] = useReducer(localStateReducer, {
     product: null,
     shopName: null,
@@ -42,18 +50,26 @@ function ProductPage() {
     localState;
 
   const increaseCount = () => {
-    dispatch({ type: "SET_COUNT", payload: count + 1 });
+    // dispatch({ type: "SET_COUNT", payload: count + 1 });
+ 
+    setQuantity(Number(quantity) + 1)
   };
 
   const decreaseCount = () => {
-    if (count > 1) {
-      dispatch({ type: "SET_COUNT", payload: count - 1 });
+    // if (count > 1) {
+    //   dispatch({ type: "SET_COUNT", payload: count - 1 });
+    // }
+    if (quantity == 1) {
+      return;
     }
+    setQuantity(Number(quantity) - 1)
+
   };
 
   const handleShowMoreClick = () => {
     dispatch({ type: "SET_SHOW_ALL_COMMENTS", payload: true });
   };
+
 
   useEffect(() => {
     // Save the count to local storage when it changes
@@ -72,17 +88,17 @@ function ProductPage() {
       });
 
     // Fetch shop and address
-    axios
-      .get(`http://localhost:8080/api/product/${productId}/shop`)
-      .then((response) => {
-        const shopData = response.data;
-        console.log(response.data);
-        dispatch({ type: "SET_SHOP_NAME", payload: shopData.shop_name });
-        dispatch({ type: "SET_CITY", payload: shopData.addressShop.city });
-      })
-      .catch((error) => {
-        console.error("Error loading shop data:", error);
-      });
+    // axios
+    //   .get(`http://localhost:8080/api/product/${productId}/shop`)
+    //   .then((response) => {
+    //     const shopData = response.data;
+    //     console.log(response.data);
+    //     dispatch({ type: "SET_SHOP_NAME", payload: shopData.shop_name });
+    //     dispatch({ type: "SET_CITY", payload: shopData.addressShop.city });
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error loading shop data:", error);
+    //   });
 
     // axios
     //   .get(`http://localhost:8080/api/product/${productId}/shop_address`)
@@ -105,7 +121,16 @@ function ProductPage() {
     //     console.error("Error loading shop addresses:", error);
     //   });
   }, [productId]);
+  const handleAddCart = (e) => {
 
+    dispatchs(
+      cartSilce.actions.addToCart({
+        product: product,
+        quantity: quantity
+      })
+    )
+
+  }
   return (
     <>
       <nav>
@@ -120,8 +145,8 @@ function ProductPage() {
             <div className="row p-4">
               <aside className="col-lg-6">
                 {product &&
-                product.image_product &&
-                product.image_product.length > 0 ? (
+                  product.image_product &&
+                  product.image_product.length > 0 ? (
                   <Carousel>
                     {product.image_product.map((image, index) => (
                       <div
@@ -135,7 +160,7 @@ function ProductPage() {
                         }}
                       >
                         <img
-                          src={"/images/" + image.url}
+                          src={"http://localhost:8080/api/uploadImageProduct/" + image.url}
                           alt={`Image ${index}`}
                         />
                       </div>
@@ -221,7 +246,11 @@ function ProductPage() {
                         <i className="bi bi-dash"></i>
                       </button>
                       <input
-                        type="text"
+                        type="number" min={1}
+                        value={quantity}
+                        onChange={(e)=> {
+                            setQuantity(e.target.value)
+                        }}  
                         className="form-control text-center border border-secondary"
                         placeholder={count}
                         aria-label="Example text with button addon"
@@ -259,8 +288,8 @@ function ProductPage() {
                     <i className="bi bi-bag-plus mx-2"></i>
                     <strong>Mua ngay</strong>
                   </a>
-                  <a
-                    href="#"
+                  <button
+                    onClick={handleAddCart}
                     className="btn  shadow-0 mx-4 text-white
                   "
                     style={{
@@ -270,7 +299,7 @@ function ProductPage() {
                   >
                     <i className="bi bi-basket3-fill"></i>
                     <strong> Thêm vào giỏ hàng</strong>
-                  </a>
+                  </button>
                 </div>
               </main>
             </div>
