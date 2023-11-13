@@ -41,8 +41,12 @@ export default function SalesRegistration() {
         .post(domain + "/api/account/saleregis/" + username + "/" + shop_name, { city, district, ward, address })
         .then(response => {
           console.log(response);
+          if(response.data.sucess){
           alert(response.data.message);
           navigate("/")
+          }else{
+            alert(response.data.message);
+          }
         })
         .catch(error => {
           console.log(error);

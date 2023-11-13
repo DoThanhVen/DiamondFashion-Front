@@ -19,7 +19,6 @@ function Profile_User() {
   const [email, setEmail] = useState("");
   const [id_card, setId_card] = useState("");
   const [gender, setGender] = useState(0);
-
   const [profile, setProfile] = useState([]);
 
   const [selectedImage, setSelectedImage] = useState(null);

@@ -71,12 +71,6 @@ export default function Otp() {
         </div>
        
       </form>
-
-
-
-
     </div>
-
-    
   );
 }
