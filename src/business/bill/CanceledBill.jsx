@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "../../css/business/bill.module.css";
 import Nav from "react-bootstrap/Nav";
 import ModelEdit from "./ModelEdit";
+import axios from "axios";
 
 const numberProductPage = 10;
 const listBill = [
@@ -169,12 +170,12 @@ export default function CanceledBill() {
     }
     return uniqueList;
   }, []);
-  function handleClickChiTiet(event) {
-    const tdElement = event.currentTarget.parentElement;
+  function handleClickChiTiet(order) {
+    // const tdElement = event.currentTarget.parentElement;
 
-    const idBill = tdElement.querySelector("td:nth-child(2)").textContent;
+    // const idBill = tdElement.querySelector("td:nth-child(2)").textContent;
 
-    setModalData({ idBill });
+    setModalData(order);
 
     setIsModalOpen(true);
   }
@@ -218,6 +219,21 @@ export default function CanceledBill() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+  const [orders,setOrders] = useState([]);
+  const fetchApi = () => {
+    axios.get(`http://localhost:8080/api/order/findByStatus/8`)
+      .then((reponse) => {
+        if (reponse.data.status == 'SUCCESS') {
+          setOrders(reponse.data.data)
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+  useEffect(() => {
+    fetchApi()
+  }, [])
 
   return (
     <React.Fragment>
@@ -254,12 +270,14 @@ export default function CanceledBill() {
             </tr>
           </thead>
           <tbody>
-            {listPage.map((value, index) => (
+            {orders.map((value, index) => (
               <tr key={index}>
                 <th>{index + 1}</th>
-                <td>{value.idBill}</td>
-                <td>Ngày Hủy Đơn</td>
-                <td onClick={handleClickChiTiet}>Xem Chi Tiết</td>
+                <td>{value.id}</td>
+                <td>{value?.status[value.status.length -1].create_date}</td>
+                <td onClick={() => {
+                  handleClickChiTiet(value)
+                }}>Xem Chi Tiết</td>
               </tr>
             ))}
           </tbody>

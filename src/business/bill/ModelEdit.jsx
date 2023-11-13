@@ -1,8 +1,12 @@
 import React from "react";
 import style from "../../css/business/bill.module.css";
+import { da } from "date-fns/locale";
+import { useState } from "react";
+import axios from "axios";
 
 //CHUYỂN ĐỔI TIỀN TỆ
 function formatCurrency(price, promotion) {
+  console.log(price)
   const formatter = new Intl.NumberFormat("vi-VN", {
     style: "currency",
     currency: "VND",
@@ -467,57 +471,85 @@ export default function ModelEdit({ data, closeModal }) {
       status: "8"
     }
   ];
-  const billCheck = allBill.filter((bill) => bill.idBill === data.idBill);
-  const listProducts = products.filter(
-    (product) => product.idBill === data.idBill
-  );
+  // const billCheck = allBill.filter((bill) => bill.idBill === data.idBill);
+  // const listProducts = products.filter(
+  //   (product) => product.idBill === data.idBill
+  // );
 
-  //TỔNG TIỀN HÓA ĐƠN
-  const totalBill = products.reduce((total, product) => {
-    if (product.idBill === data.idBill) {
-      const productPrice = product.price * product.amount;
-      return total + productPrice;
-    }
-    return total;
-  }, 0);
+  // //TỔNG TIỀN HÓA ĐƠN
+  // const totalBill = products.reduce((total, product) => {
+  //   if (product.idBill === data.idBill) {
+  //     const productPrice = product.price * product.amount;
+  //     return total + productPrice;
+  //   }
+  //   return total;
+  // }, 0);
+  const [status, setStatus] = useState();
+  const getTotal = () => {
+    console.log(data)
+    let total = 0;
+    console.log(data.orderDetails.length)
+    data.orderDetails.map((item,index) => {
+      console.log(index)
+      total += item.productOrder.price * item.quantity
+    })
+    
+    return total
+  }
+  const handleChangeStatus = (id) => {
+    console.log('id: ',id)
+    axios.put(`http://localhost:8080/api/order/update/${id}/account/5?status=${status}`)
+      .then((reponse) => {
+        if (reponse.data.status == 'SUCCESS') {
+          alert("success")
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
   return (
     <React.Fragment>
       <div className={`${style.formCardModel}`}>
         <div className={`${style.cardModel}`}>
           <div className={`${style.cardHeadingModel}`}>Chi tiết đơn hàng</div>
           <label className={`mt-3`}>
-            Mã hóa đơn: <b>{data.idBill}</b>
+            Mã hóa đơn: <b>{data.id}</b>
           </label>
           <div>
             Trạng thái:{" "}
             <b>
-              {billCheck[0].status === "0"
+              {data.status[data.status.length -1 ].status.id == "1"
                 ? "Chờ Xác Nhận"
-                : billCheck[0].status === "1"
+                : data.status[data.status.length -1 ].status.id == "2"
                 ? "Đã Xác Nhận"
-                : billCheck[0].status === "2"
+                : data.status[data.status.length -1 ].status.id == "3"
                 ? "Chuẩn Bị Hàng"
-                : billCheck[0].status === "3"
+                : data.status[data.status.length -1 ].status.id == "4"
                 ? "Đang Giao"
-                : billCheck[0].status === "4"
+                : data.status[data.status.length -1 ].status.id == "5"
                 ? "Chờ Lấy Hàng"
-                : billCheck[0].status === "5"
+                : data.status[data.status.length -1 ].status.id == "6"
                 ? "Đã Nhận"
-                : billCheck[0].status === "6"
+                : data.status[data.status.length -1 ].status.id == "7"
                 ? "Trả Hàng"
-                : billCheck[0].status === "7"
+                : data.status[data.status.length -1 ].status.id == "8"
                 ? "Đã Hủy"
                 : "Giao Thất Bại"}
             </b>
           </div>
           <div>
-            Người đặt: <b>Đỗ Thanh Vẹn</b>
+            {/* Người đặt: <b>Đỗ Thanh Vẹn</b> */}
           </div>
           <div className={`mb-3`}>
-            Ngày đặt: <b>1/10/2023</b>
+            Ngày đặt: <b>{data.create_date}</b>
           </div>
-          {billCheck[0].status !== "4" && billCheck[0].status !== "5" ? (
-            <select className={`${style.cardModelStatus}`}>
+          {data.status[data.status.length -1 ].status.id !== "4" && data.status[data.status.length -1 ].status.id !== "5" ? (
+            <select className={`${style.cardModelStatus}`} onChange={
+              (e) => {
+                setStatus(e.target.value)
+              }
+            }>
               <option></option>
               <option value="0">Chờ Xác Nhận</option>
               <option value="1">Đã Xác Nhận</option>
@@ -535,32 +567,31 @@ export default function ModelEdit({ data, closeModal }) {
               <span>#</span>
               <div>Hình Ảnh</div>
               <div>Tên Sản Phẩm</div>
-              <div>Màu</div>
-              <div>Size</div>
+              <div>Giá</div>
+
               <div>SL</div>
               <span>Thành Tiền</span>
             </div>
-            {listProducts.map((value, index) =>
-              value.idBill === data.idBill ? (
-                <div className={`${style.cardModelProduct}`}>
+            {data?.orderDetails.map((value, index) =>
+                <div key={index} className={`${style.cardModelProduct}`}>
                   <span>{index + 1}</span>
                   <div>
-                    <img src={`/images/${value.image}`}></img>
+                    <img src={`http://localhost:8080/api/uploadImageProduct/${value.productOrder.image_product[0].url}`}></img>
                   </div>
-                  <div>{value.productName}</div>
-                  <div>{value.color}</div>
-                  <div>{value.size}</div>
-                  <div>{value.amount}</div>
-                  <span>{formatCurrency(value.amount * value.price, 0)}</span>
+                  <div>{value.productOrder.product_name}</div>
+                  <div>{formatCurrency(Number(value.productOrder.price),0)}</div>
+                  <div>{value.quantity}</div>
+                  <span>{formatCurrency(Number(value.quantity) * Number(value.productOrder.price), 0)}</span>
                 </div>
-              ) : null
             )}
           </div>
           <div className={`mt-3`}>
             Tổng tiền:{" "}
-            <b style={{ color: "red" }}>{formatCurrency(totalBill, 0)}</b>
+            <b style={{ color: "red" }}>{formatCurrency(getTotal(), 0)}</b>
           </div>
-          <button className={`btn btn-primary mt-3`}>LƯU THAY ĐỔI</button>
+          <button onClick={() => {
+            handleChangeStatus(data.id)
+          }} className={`btn btn-primary mt-3`}>LƯU THAY ĐỔI</button>
           <span onClick={closeModal} className={`${style.closeModal}`}>
             X
           </span>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "../../css/business/bill.module.css";
 import Nav from "react-bootstrap/Nav";
 import ModelEdit from "./ModelEdit";
+import axios from "axios";
 
 const numberProductPage = 10;
 const listBill = [
@@ -157,145 +158,179 @@ const listBill = [
   }
 ];
 export default function UnpaidBill() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalData, setModalData] = useState({});
-    const listUnpaid = listBill.reduce((uniqueList, currentBill) => {
-      if (
-        currentBill.status === "0" &&
-        !uniqueList.some((item) => item.idBill === currentBill.idBill)
-      ) {
-        uniqueList.push(currentBill);
-      }
-      return uniqueList;
-    }, []);
-    function handleClickChiTiet(event) {
-      const tdElement = event.currentTarget.parentElement;
-  
-      const idBill = tdElement.querySelector("td:nth-child(2)").textContent;
-  
-      setModalData({ idBill });
-  
-      setIsModalOpen(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState({});
+  const listUnpaid = listBill.reduce((uniqueList, currentBill) => {
+    if (
+      currentBill.status === "0" &&
+      !uniqueList.some((item) => item.idBill === currentBill.idBill)
+    ) {
+      uniqueList.push(currentBill);
     }
-  
-    const closeModal = () => {
-      setIsModalOpen(false);
-      setModalData({});
-    };
-  
-    //PAGE
-    const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = Math.ceil(listUnpaid.length / numberProductPage);
-  
-    if (currentPage < 1) {
-      setCurrentPage(1);
-    } else if (currentPage > totalPages) {
-      setCurrentPage(totalPages);
-    }
-    const startIndex = (currentPage - 1) * numberProductPage;
-    const endIndex = startIndex + numberProductPage;
-  
-    const listPage = listUnpaid.slice(startIndex, endIndex);
-  
-    const handlePageChange = (page) => {
-      setCurrentPage(page);
-    };
-    //FORM SEARCH
-    const [selectedOption, setSelectedOption] = React.useState("");
-    const [valueOption, setValueOption] = React.useState("");
-    const handleChangeOption = (event) => {
-      const selectedOptionValue = event.target.value;
-      let text = "";
-      setValueOption(selectedOptionValue);
-      const options = event.target.options;
-      for (let i = 0; i < options.length; i++) {
-        if (options[i].value === selectedOptionValue) {
-          text = options[i].innerText;
-          break;
-        }
-      }
-  
-      setSelectedOption(text);
-    };
-    return (
-      <React.Fragment>
-        <div className={`${style.formSearch}`}>
-          <select
-            value={valueOption}
-            onChange={handleChangeOption}
-            className={`${style.optionSelect}`}
-          >
-            <option value="idBill">Mã đơn hàng</option>
-            <option value="customerName">Tên người mua</option>
-            <option value="productName">Sản phẩm</option>
-          </select>
-          <input
-            className={`${style.inputSearch}`}
-            type="text"
-            placeholder={`${selectedOption ? selectedOption : "Tìm kiếm"}...`}
-          ></input>
-          <button className={`${style.buttonSearch}`}>Tìm Kiếm</button>
-        </div>
-        <div className={`${style.updateStatusAll} mt-4 mb-3`}>
-          <div className={`${style.cardHeadingModel}`}>
-            {listUnpaid.length} Đơn hàng
-          </div>
-          <span className={`${style.buttonChangeStatus}`}>
-            <i class="bi bi-receipt-cutoff"></i> Duyệt Hàng Loạt
-          </span>
-        </div>
-        <div className={`${style.cardContainerTable}`}>
-          <table className={`table ${style.tableUnpaid}`}>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Mã Hóa Đơn</th>
-                <th>Ngày Đặt Hàng</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {listPage.map((value, index) => (
-                <tr key={index}>
-                  <th>{index + 1}</th>
-                  <td>{value.idBill}</td>
-                  <td>Ngày Đặt Hàng</td>
-                  <td onClick={handleClickChiTiet}>Xem Chi Tiết</td>
-                  <td>
-                    <button className={`${style.buttonSubmit}`}>Duyệt Đơn</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className={`${style.buttonPage}`}>
-            <Nav.Link className={`btn`} onClick={() => handlePageChange(1)}>
-              <i class="bi bi-chevron-bar-left"></i>
-            </Nav.Link>
-            <Nav.Link
-              className={`btn`}
-              onClick={() => handlePageChange(currentPage - 1)}
-            >
-              <i class="bi bi-caret-left"></i>
-            </Nav.Link>
-            <Nav.Link
-              className={`btn`}
-              onClick={() => handlePageChange(currentPage + 1)}
-            >
-              <i class="bi bi-caret-right"></i>
-            </Nav.Link>
-            <Nav.Link
-              className={`btn`}
-              onClick={() =>
-                handlePageChange(Math.ceil(listUnpaid.length / numberProductPage))
-              }
-            >
-              <i class="bi bi-chevron-bar-right"></i>
-            </Nav.Link>
-          </div>
-        </div>
-        {isModalOpen && <ModelEdit data={modalData} closeModal={closeModal} />}
-      </React.Fragment>
-    );
+    return uniqueList;
+  }, []);
+  function handleClickChiTiet(order) {
+    // const tdElement = event.currentTarget.parentElement;
+
+    // const idBill = tdElement.querySelector("td:nth-child(2)").textContent;
+
+    setModalData(order);
+
+    setIsModalOpen(true);
   }
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalData({});
+  };
+
+  //PAGE
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(listUnpaid.length / numberProductPage);
+
+  if (currentPage < 1) {
+    setCurrentPage(1);
+  } else if (currentPage > totalPages) {
+    setCurrentPage(totalPages);
+  }
+  const startIndex = (currentPage - 1) * numberProductPage;
+  const endIndex = startIndex + numberProductPage;
+
+  const listPage = listUnpaid.slice(startIndex, endIndex);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+  //FORM SEARCH
+  const [selectedOption, setSelectedOption] = React.useState("");
+  const [valueOption, setValueOption] = React.useState("");
+  const handleChangeOption = (event) => {
+    const selectedOptionValue = event.target.value;
+    let text = "";
+    setValueOption(selectedOptionValue);
+    const options = event.target.options;
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].value === selectedOptionValue) {
+        text = options[i].innerText;
+        break;
+      }
+    }
+
+    setSelectedOption(text);
+  };
+
+  const [orders, setOrders] = useState([]);
+  const [load, isLoad] = useState(false);
+  const fetchApi = () => {
+    axios.get(`http://localhost:8080/api/order/findByStatus/1`)
+      .then((reponse) => {
+        if (reponse.data.status == 'SUCCESS') {
+          setOrders(reponse.data.data)
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+  useEffect(() => {
+    fetchApi()
+  }, [load])
+  console.log(orders)
+  const handleOrder = (id) => {
+    axios.put(`http://localhost:8080/api/order/update/${id}/account/${5}?status=2`)
+      .then((reponse) => {
+        if (reponse.data.status == 'SUCCESS') {
+          alert("xác nhận đơn thành công")
+          isLoad(!load);
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+  return (
+    <React.Fragment>
+      <div className={`${style.formSearch}`}>
+        <select
+          value={valueOption}
+          onChange={handleChangeOption}
+          className={`${style.optionSelect}`}
+        >
+          <option value="idBill">Mã đơn hàng</option>
+          <option value="customerName">Tên người mua</option>
+          <option value="productName">Sản phẩm</option>
+        </select>
+        <input
+          className={`${style.inputSearch}`}
+          type="text"
+          placeholder={`${selectedOption ? selectedOption : "Tìm kiếm"}...`}
+        ></input>
+        <button className={`${style.buttonSearch}`}>Tìm Kiếm</button>
+      </div>
+      <div className={`${style.updateStatusAll} mt-4 mb-3`}>
+        <div className={`${style.cardHeadingModel}`}>
+          {listUnpaid.length} Đơn hàng
+        </div>
+        <span className={`${style.buttonChangeStatus}`}>
+          <i class="bi bi-receipt-cutoff"></i> Duyệt Hàng Loạt
+        </span>
+      </div>
+      <div className={`${style.cardContainerTable}`}>
+        <table className={`table ${style.tableUnpaid}`}>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Mã Hóa Đơn</th>
+              <th>Ngày Đặt Hàng</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((value, index) => (
+              <tr key={index}>
+                <th>{index + 1}</th>
+                <td>{value.id}</td>
+                <td>{value.create_date}</td>
+                <td onClick={() => {
+                  handleClickChiTiet(value)
+                }}>Xem Chi Tiết</td>
+                <td>
+                  <button onClick={() => {
+                    handleOrder(value.id)
+                  }} className={`${style.buttonSubmit}`}>Duyệt Đơn</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className={`${style.buttonPage}`}>
+          <Nav.Link className={`btn`} onClick={() => handlePageChange(1)}>
+            <i class="bi bi-chevron-bar-left"></i>
+          </Nav.Link>
+          <Nav.Link
+            className={`btn`}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            <i class="bi bi-caret-left"></i>
+          </Nav.Link>
+          <Nav.Link
+            className={`btn`}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            <i class="bi bi-caret-right"></i>
+          </Nav.Link>
+          <Nav.Link
+            className={`btn`}
+            onClick={() =>
+              handlePageChange(Math.ceil(listUnpaid.length / numberProductPage))
+            }
+          >
+            <i class="bi bi-chevron-bar-right"></i>
+          </Nav.Link>
+        </div>
+      </div>
+      {isModalOpen && <ModelEdit data={modalData} closeModal={closeModal} />}
+    </React.Fragment>
+  );
+}
