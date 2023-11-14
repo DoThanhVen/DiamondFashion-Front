@@ -4,6 +4,7 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import Nav from "react-bootstrap/Nav";
 import { callAPI } from "../service/API";
 import Loading from "../admin/Loading";
+import { useNavigate } from "react-router-dom";
 
 const numberPage = 10;
 //CHUYỂN ĐỔI TIỀN TỆ
@@ -17,6 +18,7 @@ function formatCurrency(price, promotion) {
 }
 
 function Home() {
+  const navigate = useNavigate()
   //LOADING
   const [loading, setLoading] = useState(true);
   //STATUS BILL
@@ -33,6 +35,7 @@ function Home() {
     { id: "8", value: "Đã Hủy" },
     { id: "9", value: "Giao Không Thành Công" }
   ];
+  
   const handleChangeStatusBill = status => {
     setValueBillOption(status);
   };
@@ -46,13 +49,18 @@ function Home() {
   }, []);
 
   const getAllBill = async idShop => {
-    const response = await callAPI(`/api/business/thongke/${idShop}`, "GET");
-    if (response) {
-      setListTotal(response.data[0]);
-      setBandProduct(response.data[1]);
-      setStockingProduct(response.data[2]);
-      setLoading(false)
-    }
+    await callAPI(`/api/business/thongke/${idShop}`, "GET")
+      .then(response => {
+        if (response) {
+          setListTotal(response.data[0]);
+          setBandProduct(response.data[1]);
+          setStockingProduct(response.data[2]);
+          setLoading(false);
+        }else{
+          navigate("/")
+        }
+      })
+      .catch(error => console.log(error));
   };
   //CHECK TRÙNG DATA
   const uniqueData = Array.from(
@@ -78,8 +86,31 @@ function Home() {
     currentPage * numberPage
   );
 
+  //TEST LOGIN
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = async () => {
+    const response = await callAPI("/api/account/login", "POST", {
+      username,
+      password
+    });
+    console.log(response.data);
+  };
   return (
     <React.Fragment>
+      <div className={`card mb-3 mt-3`}>
+        <input
+          type="text"
+          placeholder="Username"
+          onChange={e => setUsername(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Password"
+          onChange={e => setPassword(e.target.value)}
+        />
+        <button onClick={() => handleLogin()}>ĐĂNG NHẬP</button>
+      </div>
       <div className={style.card}>
         <div>
           <div className={style.heading}>Danh Sách Cần Làm</div>
@@ -301,7 +332,7 @@ function Home() {
           </div>
         </div>
       </div>
-      {loading && <Loading/>}
+      {loading && <Loading />}
     </React.Fragment>
   );
 }
