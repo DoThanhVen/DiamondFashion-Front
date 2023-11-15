@@ -124,6 +124,7 @@ function ProductPage() {
   const [value, setValue] = React.useState(0);
   const [reviews, setReviews] = useState([]);
   const [avg, setAvg] = useState(0);
+  const [userReviews, setUserReviews] = useState([]);
 
   const handleRatingChange = (event, newValue) => {
     setValue(newValue);
@@ -141,9 +142,15 @@ function ProductPage() {
           start: value,
           description: description,
         })
-
         .then((response) => {
           console.log(response.data);
+          if (response.status === 201) {
+            // Nếu thêm đánh giá thành công, cập nhật danh sách đánh giá của người dùng hiện tại
+            setUserReviews([...userReviews, response.data]);
+          } else {
+            // Xử lý lỗi nếu cần
+            console.error("Error adding rating:", response.data);
+          }
         })
         .catch((error) => {
           console.error(error);
@@ -152,6 +159,22 @@ function ProductPage() {
       alert("Vui lòng chọn số sao và viết đánh giá trước khi đăng");
     }
   };
+
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/api/ratings/${productId}`)
+      .then((response) => {
+        setReviews(response.data);
+        setUserReviews(
+          response.data.filter(
+            (review) => review.account_rate.id === ACCOUNT_ID
+          )
+        );
+      })
+      .catch((error) => {
+        console.error("Error fetching reviews:", error);
+      });
+  }, [productId]);
 
   useEffect(() => {
     axios
@@ -573,8 +596,8 @@ function ProductPage() {
                         Đánh giá của người dùng
                       </Typography>
 
-                      {reviews.length > 0 ? (
-                        reviews.map((review) => (
+                      {userReviews.length > 0 ? (
+                        userReviews.map((review) => (
                           <div key={review.id}>
                             <Typography>
                               Người đánh giá: {review.account_rate.username}
