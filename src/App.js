@@ -15,11 +15,11 @@ import SuggestedProducts from "./page_user/user/SuggestedProducts";
 import RecommendedProducts from "./page_user/user/RecommendedProducts";
 
 
-import Otp from "./page_user/account/Otp";
-import Register from "./page_user/account/Register";
-import SalesRegistration from "./page_user/account/SalesRegistration";
-import ForgotPass from "./page_user/account/ForgotPass";
-import NewPass from "./page_user/account/NewPass";
+import Otp from "./account/Otp";
+import Register from "./account/Register";
+import SalesRegistration from "./account/SalesRegistration";
+import ForgotPass from "./account/ForgotPass";
+import NewPass from "./account/NewPass";
 import ContactInfo from "./page_user/user/ContactInfo";
 import Policy from "./page_user/user/Policy";
 import LikeProduct from "./page_user/user/LikeProduct";

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
-import "../css/user/profile.css";
-import MainNavbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import "../page_user/css/user/profile.css";
+import MainNavbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function SalesRegistration() {
   const [selectedImage, setSelectedImage] = useState(null);

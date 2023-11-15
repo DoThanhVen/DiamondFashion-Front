@@ -22,6 +22,8 @@ import {
   Radio,
 } from "@mui/material";
 
+const API_BASE_URL = "http://localhost:8080";
+
 function valuetext(value) {
   return `${value}°C`;
 }
@@ -113,7 +115,7 @@ function Shop() {
     }
 
     axios
-      .get(`http://localhost:8080/api/product/${productId}/shop`)
+      .get(`${API_BASE_URL}/api/product/${productId}/shop`)
       .then((response) => {
         dispatch({ type: "SET_SHOP", shop: response.data });
         console.log("Shop Data:", response.data.data[2]);

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
+
+const API_BASE_URL = "http://localhost:8080";
+
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
@@ -30,7 +33,7 @@ function NewProducts() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/product/top10")
+      .get(`${API_BASE_URL}/api/product/top10`)
       .then((response) => {
         setTop10Products(response.data);
         console.log(response.data);

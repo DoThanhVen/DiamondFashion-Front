@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "../css/user/otp.css";
+import "../page_user/css/user/otp.css";
 import { Accordion, Card, Button } from "react-bootstrap";
 
 export default function Otp() {

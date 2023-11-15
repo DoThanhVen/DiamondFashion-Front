@@ -4,16 +4,18 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "../css/user/responsive.css";
 
+const API_BASE_URL = "http://localhost:8080";
+
 const SidebarM = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     // Gọi API
     axios
-      .get("http://localhost:8080/api/category")
+      .get(`${API_BASE_URL}/api/category`)
       .then((response) => {
         setCategories(response.data);
-        console.log(response.data)
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);

@@ -21,6 +21,9 @@ import "../css/user/home.css";
 import "../css/user/slider.css";
 import "../css/user/responsive.css";
 
+const API_BASE_URL = "http://localhost:8080";
+const ACCOUNT_ID = 6;
+
 function valuetext(value) {
   return `${value}°C`;
 }
@@ -30,10 +33,7 @@ function productReducer(state, action) {
     case "SET_FILTER_OPTIONS":
       return {
         ...state,
-        filterOptions: {
-          ...state.filterOptions,
-          ...action.filterOptions,
-        },
+        filterOptions: { ...state.filterOptions, ...action.filterOptions },
       };
     case "SET_PRODUCTS":
       return { ...state, products: action.products };
@@ -68,7 +68,7 @@ function LikeProduct() {
       priceSorting: "ascending",
       ratingFilter: "5",
     },
-    products: [], // Initialize as an empty array
+    products: [],
   });
 
   const { filterOptions, products } = localState;
@@ -94,7 +94,7 @@ function LikeProduct() {
 
   const getListProduct = () => {
     axios
-      .get(`http://localhost:8080/api/product`)
+      .get(`${API_BASE_URL}/api/product`)
       .then((response) => {
         dispatch({ type: "SET_PRODUCTS", products: response.data });
       })
@@ -109,7 +109,7 @@ function LikeProduct() {
 
   const fetchData = () => {
     axios
-      .get(`http://localhost:8080/api/likeProducts?accountId=6`)
+      .get(`${API_BASE_URL}/api/likeProducts?accountId=${ACCOUNT_ID}`)
       .then((response) => {
         dispatch({ type: "SET_PRODUCTS", products: response.data });
         console.log(response.data);
@@ -142,15 +142,18 @@ function LikeProduct() {
   const handleUnlikeProduct = (productId) => {
     axios
       .delete(
-        `http://localhost:8080/api/unlike_Products?accountId=6&productId=${productId}`
+        `${API_BASE_URL}/api/unlike_Products?accountId=${ACCOUNT_ID}&productId=${productId}`
       )
       .then((response) => {
         if (response.data === "Sản phẩm đã được unlike.") {
-          // Cập nhật danh sách sản phẩm yêu thích sau khi xóa thành công
+          alert("Đã unlike sản phẩm.");
           const updatedProducts = sortedProducts.filter(
             (product) => product.id_product !== productId
           );
           setSortedProducts(updatedProducts);
+          window.location.reload();
+        } else {
+          alert("Sản phẩm chưa được like.");
         }
       })
       .catch((error) => {

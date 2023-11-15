@@ -16,6 +16,8 @@ import "../css/user/product.css";
 import "../css/user/home.css";
 import "../css/user/slider.css";
 
+const API_BASE_URL = "http://localhost:8080";
+
 function valuetext(value) {
   return `${value}°C`;
 }
@@ -98,9 +100,8 @@ function Product() {
   const { id } = useParams();
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/category/${id}`)
+      .get(`${API_BASE_URL}/api/category/${id}`)
       .then((response) => {
-        // Loại bỏ các mục danh sách gấp đôi trong listCategory
         const uniqueCategoryList = response.data.listCategory.filter(
           (category, index, self) =>
             index ===
@@ -118,12 +119,15 @@ function Product() {
       .catch((error) => {
         console.error(error);
       });
-    getListProduct();
   }, [id]);
+
+  useEffect(() => {
+    getListProduct();
+  }, []); // This effect should only run once, on component mount
 
   const getListProduct = () => {
     axios
-      .get(`http://localhost:8080/api/product`)
+      .get(`${API_BASE_URL}/api/product`)
       .then((response) => {
         dispatch({ type: "SET_PRODUCTS", products: response.data });
       })
@@ -142,6 +146,7 @@ function Product() {
     });
   });
 
+  //Filter product price and sort
   useEffect(() => {
     const filteredProducts = listFilter.filter((product) => {
       return (
@@ -160,22 +165,23 @@ function Product() {
       productsCopy.sort((a, b) => b.price - a.price);
     }
 
-    setSortedProducts(productsCopy);
-  }, [selectedCategory, valueMin, valueMax, priceSorting, listFilter]);
+    // Chỉ cập nhật sortedProducts nếu nó thay đổi
+    if (!isEqual(sortedProducts, productsCopy)) {
+      setSortedProducts(productsCopy);
+    }
+  }, [
+    selectedCategory,
+    valueMin,
+    valueMax,
+    priceSorting,
+    listFilter,
+    sortedProducts,
+  ]);
 
-  // const handleLikeProduct = (productId) => {
-  //   axios
-  //     .post(
-  //       `http://localhost:8080/api/like_Products?accountId=6&productId=${productId}`
-  //     )
-  //     .then((response) => {
-  //       if (response.data === "Sản phẩm đã được like.") {
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
+  // Hàm so sánh đối tượng
+  function isEqual(a, b) {
+    return JSON.stringify(a) === JSON.stringify(b);
+  }
 
   return (
     <>

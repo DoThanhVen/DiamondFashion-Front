@@ -11,6 +11,9 @@ import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 
+const API_BASE_URL = "http://localhost:8080";
+const ACCOUNT_ID = 6;
+
 function localStateReducer(state, action) {
   switch (action.type) {
     case "SET_PRODUCT":
@@ -21,6 +24,8 @@ function localStateReducer(state, action) {
       return { ...state, shopAddress: action.payload };
     case "SET_CITY":
       return { ...state, city: action.payload };
+    case "SET_SHOP_DATA":
+      return { ...state, shopData: action.payload };
     case "SET_COUNT":
       return { ...state, count: action.payload };
     case "SET_SHOW_ALL_COMMENTS":
@@ -35,14 +40,22 @@ function ProductPage() {
   const [localState, dispatch] = useReducer(localStateReducer, {
     product: null,
     shopName: null,
+    shopData: null,
     shopAddress: null,
     city: "",
     count: parseInt(localStorage.getItem("count")) || 14,
     showAllComments: false,
   });
 
-  const { product, shopName, shopAddress, city, count, showAllComments } =
-    localState;
+  const {
+    product,
+    shopName,
+    shopData,
+    shopAddress,
+    city,
+    count,
+    showAllComments,
+  } = localState;
 
   const increaseCount = () => {
     dispatch({ type: "SET_COUNT", payload: count + 1 });
@@ -66,7 +79,7 @@ function ProductPage() {
   useEffect(() => {
     // Fetch product details
     axios
-      .get(`http://localhost:8080/api/product/${productId}`)
+      .get(`${API_BASE_URL}/api/product/${productId}`)
       .then((response) => {
         dispatch({ type: "SET_PRODUCT", payload: response.data });
       })
@@ -76,10 +89,11 @@ function ProductPage() {
 
     // Fetch shop and address
     axios
-      .get(`http://localhost:8080/api/product/${productId}/shop`)
+      .get(`${API_BASE_URL}/api/product/${productId}/shop`)
       .then((response) => {
         const shopData = response.data.data;
         console.log(response.data.data);
+        dispatch({ type: "SET_SHOP_DATA", payload: shopData });
         dispatch({ type: "SET_SHOP_NAME", payload: shopData[1] });
         dispatch({ type: "SET_CITY", payload: shopData[2].city });
       })
@@ -91,10 +105,13 @@ function ProductPage() {
   const handleLikeProduct = (productId) => {
     axios
       .post(
-        `http://localhost:8080/api/like_Products?accountId=6&productId=${productId}`
+        `${API_BASE_URL}/api/like_Products?accountId=${ACCOUNT_ID}&productId=${productId}`
       )
       .then((response) => {
         if (response.data === "Sản phẩm đã được like.") {
+          alert("Sản phẩm đã được like .");
+        } else {
+          alert("Sản phẩm đã được like trước đó.");
         }
       })
       .catch((error) => {
@@ -102,37 +119,44 @@ function ProductPage() {
       });
   };
 
+  // Đánh giá sản phẩm
+
   const [description, setDescription] = useState("");
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(0);
   const [reviews, setReviews] = useState([]);
   const [avg, setAvg] = useState(0);
 
   const handleRatingChange = (event, newValue) => {
     setValue(newValue);
   };
-  const handlePostRating = () => {
-    // Call API to save rating to the database
-    axios
-      .post("http://localhost:8080/api/ratings/add", {
-        productId: parseInt(productId),
-        accountId: 6,
-        start: value,
-        description: description,
-      })
+  const isValidRating = () => {
+    return value !== null && description.trim() !== "";
+  };
 
-      .then((response) => {
-        console.log(response.data);
-        // Handle success if needed
-      })
-      .catch((error) => {
-        console.error(error);
-        // Handle error if needed
-      });
+  const handlePostRating = () => {
+    if (isValidRating()) {
+      axios
+        .post(`${API_BASE_URL}/api/ratings/add`, {
+          productId: parseInt(productId),
+          accountId: ACCOUNT_ID,
+          start: value,
+          description: description,
+        })
+
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      alert("Vui lòng chọn số sao và viết đánh giá trước khi đăng");
+    }
   };
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/ratings/${productId}`)
+      .get(`${API_BASE_URL}/api/ratings/${productId}`)
       .then((response) => {
         setReviews(response.data);
       })
@@ -143,7 +167,7 @@ function ProductPage() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/ratings/avg/${productId}`)
+      .get(`${API_BASE_URL}/api/ratings/avg/${productId}`)
       .then((response) => {
         setAvg(response.data);
         console.log("AVG: ", response.data);
@@ -194,12 +218,7 @@ function ProductPage() {
               <main className="col-lg-6 ">
                 <div className="ps-lg-3">
                   {product && shopName !== null ? (
-                    <h4 className="title text-dark">
-                      {product.product_name}
-                      {/* <h2>{shopName}</h2> */}
-
-                      {/* Continue displaying other product details */}
-                    </h4>
+                    <h4 className="title text-dark">{product.product_name}</h4>
                   ) : (
                     <p>Loading...</p>
                   )}
@@ -221,17 +240,10 @@ function ProductPage() {
 
                   <div className="mb-3">
                     <span className="h5">
-                      {/* <div className="sale-price" style={{ fontSize: '25px' }}>
-                      <del>2.499.000 <sup>đ</sup> </del>
-                    </div> */}
                       <div className="d-flex ">
                         <h2 className="text-danger">
                           {product ? `${product.price} ₫` : "Loading..."}
                         </h2>
-
-                        {/* <div className="sale ms-4 bg-danger text-light mb-2 p-1">
-                        <b>Giảm 50%</b>
-                      </div> */}
                       </div>
                     </span>
                   </div>
@@ -286,12 +298,9 @@ function ProductPage() {
                   <div className="row mb-4">
                     <div className="col-md-4 col-6">
                       <button
+                        type="button"
+                        className="btn btn-success"
                         onClick={() => handleLikeProduct(product.id)}
-                        style={{
-                          padding: "8px 16px",
-                          borderRadius: "8px",
-                          fontWeight: "bold",
-                        }}
                       >
                         Thích
                       </button>
@@ -327,24 +336,30 @@ function ProductPage() {
         <div className="container mt-4">
           <div className="row gx-4 ">
             <div className="col-lg-8 mb-4 d-flex">
-              <img
-                src="/images/best-saler-2.jpg"
-                className="rounded-circle shop-image"
-                alt="Diamond_Fashion"
-                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-              />
-              <div className="shop-name ms-4 ">
-                <Link to={`/shops/${productId}/shop`}>
-                  {product && shopName !== null ? (
-                    <div>
-                      <b>{shopName}</b> <br />
-                      {city}
+              {product && shopName !== null && shopData ? (
+                <>
+                  <img
+                    src={`/images/${shopData[4]}`}
+                    className="rounded-circle shop-image"
+                    alt={shopData[4]}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                  <Link to={`/shops/${productId}/shop`}>
+                    <div className="shop-name ms-4">
+                      <div>
+                        <b>{shopName}</b> <br />
+                        {city}
+                      </div>
                     </div>
-                  ) : (
-                    <p>Loading...</p>
-                  )}
-                </Link>
-              </div>
+                  </Link>
+                </>
+              ) : (
+                <p>Loading...</p>
+              )}
             </div>
           </div>
         </div>
@@ -499,7 +514,6 @@ function ProductPage() {
                               {product.name}
                             </a>
                             <strong className="text-dark">
-                              {" "}
                               ${product.price.toFixed(2)}
                             </strong>
                           </div>
@@ -520,413 +534,70 @@ function ProductPage() {
                 <div className=" p-3 bg-white" style={{ borderRadius: "8px" }}>
                   <div className="reviews">
                     <b>
-                      <span className="title">ĐÁNH GIÁ SẢN PHẨM</span>
+                      <span component="legend" className="title">
+                        ĐÁNH GIÁ SẢN PHẨM
+                      </span>
                     </b>
+                    {/* <Typography component="legend">
+                      Đánh giá sản phẩm
+                    </Typography> */}
+                    <div>
+                      <Rating
+                        name="product-rating"
+                        value={value}
+                        onChange={handleRatingChange}
+                      />
 
-                    <div className="bg-white rounded  p-4 mb-4 clearfix graph-star-rating">
-                      <div className="graph-star-rating-header">
-                        <div className="star-rating">
-                          <a href="#">
-                            <i className="icofont-ui-rating active"></i>
-                          </a>
-                          <a href="#">
-                            <i className="icofont-ui-rating active"></i>
-                          </a>
-                          <a href="#">
-                            <i className="icofont-ui-rating active"></i>
-                          </a>
-                          <a href="#">
-                            <i className="icofont-ui-rating active"></i>
-                          </a>
-                          <a href="#">
-                            <i className="icofont-ui-rating"></i>
-                          </a>{" "}
-                          <b className="text-black ml-2">334</b>
-                        </div>
-                        <p className="text-black mb-4 mt-2">
-                          Rated 3.5 out of 5
-                        </p>
-                      </div>
-                      <div className="graph-star-rating-body">
-                        <div className="rating-list">
-                          <div className="rating-list-left text-black">
-                            5 Star
-                          </div>
-                          <div className="rating-list-center">
-                            <div className="progress">
-                              <div
-                                style={{ width: "56%" }}
-                                aria-valuemax="5"
-                                aria-valuemin="0"
-                                aria-valuenow="5"
-                                role="progressbar"
-                                className="progress-bar bg-primary"
-                              >
-                                <span className="sr-only">
-                                  80% Complete (danger)
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="rating-list-right text-black">
-                            56%
-                          </div>
-                        </div>
-                        <div className="rating-list">
-                          <div className="rating-list-left text-black">
-                            4 Star
-                          </div>
-                          <div className="rating-list-center">
-                            <div className="progress">
-                              <div
-                                style={{ width: "23%" }}
-                                aria-valuemax="5"
-                                aria-valuemin="0"
-                                aria-valuenow="5"
-                                role="progressbar"
-                                className="progress-bar bg-primary"
-                              >
-                                <span className="sr-only">
-                                  80% Complete (danger)
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="rating-list-right text-black">
-                            23%
-                          </div>
-                        </div>
-                        <div className="rating-list">
-                          <div className="rating-list-left text-black">
-                            3 Star
-                          </div>
-                          <div className="rating-list-center">
-                            <div className="progress">
-                              <div
-                                style={{ width: "11%" }}
-                                aria-valuemax="5"
-                                aria-valuemin="0"
-                                aria-valuenow="5"
-                                role="progressbar"
-                                className="progress-bar bg-primary"
-                              >
-                                <span className="sr-only">
-                                  80% Complete (danger)
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="rating-list-right text-black">
-                            11%
-                          </div>
-                        </div>
-                        <div className="rating-list">
-                          <div className="rating-list-left text-black">
-                            2 Star
-                          </div>
-                          <div className="rating-list-center">
-                            <div className="progress">
-                              <div
-                                style={{ width: "2%" }}
-                                aria-valuemax="5"
-                                aria-valuemin="0"
-                                aria-valuenow="5"
-                                role="progressbar"
-                                className="progress-bar bg-primary"
-                              >
-                                <span className="sr-only">
-                                  80% Complete (danger)
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="rating-list-right text-black">
-                            02%
-                          </div>
-                        </div>
-                      </div>
+                      <label htmlFor="description">Mô tả:</label>
+                      <textarea
+                        id="description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                      />
+
+                      <button
+                        onClick={handlePostRating}
+                        disabled={!isValidRating()}
+                      >
+                        Đăng
+                      </button>
                     </div>
 
-                    <Typography component="legend">
-                      Đánh giá sản phẩm
-                    </Typography>
-                    <Rating
-                      name="product-rating"
-                      value={value}
-                      onChange={handleRatingChange}
-                    />
-
-                    <label htmlFor="description">Mô tả:</label>
-                    <textarea
-                      id="description"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-
-                    <button onClick={handlePostRating}>Đăng</button>
-
-                    {avg !== null && (
-                      <div>
-                        <p>Average Rating: {avg}</p>
-                      </div>
-                    )}
-
                     <div>
+                      {avg !== null && (
+                        <div>
+                          <p>Average Rating: {avg}</p>
+                        </div>
+                      )}
+
                       <Typography variant="h6">
                         Đánh giá của người dùng
                       </Typography>
-                      {reviews.map((review) => (
-                        <div key={review.id}>
-                          <Typography>
-                            Người đánh giá: {review.account_rate.username}
-                          </Typography>
-                          <Rating
-                            name="read-only"
-                            value={review.star}
-                            readOnly
-                          />
-                          <Typography>Mô tả: {review.description}</Typography>
-                          {review.account_rate.infoAccount && (
+
+                      {reviews.length > 0 ? (
+                        reviews.map((review) => (
+                          <div key={review.id}>
                             <Typography>
-                              Email: {review.account_rate.infoAccount.email}
+                              Người đánh giá: {review.account_rate.username}
                             </Typography>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="pt-2">
-                      <div className="mt-3">
-                        {showAllComments ? (
-                          // Hiển thị tất cả các đánh giá
-                          // Dùng map để lặp qua danh sách đánh giá và hiển thị chúng
-                          <>
-                            <div className="user-review mb-4">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  src="/images/best-saler-2.jpg"
-                                  alt=""
-                                  style={{
-                                    width: 50,
-                                    height: 50,
-                                    borderRadius: "50%",
-                                  }}
-                                />
-                                <div className="ms-3">
-                                  <h6 className="mb-0">
-                                    <b> Crush 1</b>
-                                  </h6>
-                                  <span className="star-rating text-warning">
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                  </span>
-                                </div>
-                              </div>
-                              <p className="mt-2">
-                                Áo thun rất thoải mái và chất lượng tốt. Tôi rất
-                                hài lòng với sản phẩm này.
-                              </p>
-                              <div className="rep-comment">
-                                <div className="shop-name ms-4">
-                                  <b>Tên shop</b> <br />
-                                  <span>Cảm ơn bạn đã mua hàng</span>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="user-review mb-4">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  src="/images/best-saler-2.jpg"
-                                  alt=""
-                                  style={{
-                                    width: 50,
-                                    height: 50,
-                                    borderRadius: "50%",
-                                  }}
-                                />
-                                <div className="ms-3">
-                                  <h6 className="mb-0">
-                                    <b> Crush 2</b>
-                                  </h6>
-                                  <span className="star-rating text-warning">
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star"></i>
-                                    </span>
-                                  </span>
-                                </div>
-                              </div>
-                              <p className="mt-2">
-                                Áo thun không tệ, nhưng màu sắc hơi nhạt so với
-                                ảnh.
-                              </p>
-                            </div>
-
-                            <div className="user-review">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  src="/images/best-saler-2.jpg"
-                                  alt=""
-                                  style={{
-                                    width: 50,
-                                    height: 50,
-                                    borderRadius: "50%",
-                                  }}
-                                />
-                                <div className="ms-3">
-                                  <h6 className="mb-0">
-                                    <b> Crush 3</b>
-                                  </h6>
-                                  <span className="star-rating text-warning">
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star"></i>
-                                    </span>
-                                  </span>
-                                </div>
-                              </div>
-                              <p className="mt-2">
-                                Chất lượng sản phẩm không tương xứng với giá
-                                tiền.
-                              </p>
-                              <div className="rep-comment">
-                                <div className="shop-name ms-4">
-                                  <b>Tên shop</b> <br />
-                                  <span>
-                                    Xin lỗi bạn về sự không hài lòng của bạn.
-                                    Shop sẽ lưu ý và cố gắng chỉnh sửa cho hoàn
-                                    thiện
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                          </>
-                        ) : (
-                          // Hiển thị hai đánh giá đầu tiên
-                          <>
-                            <div className="user-review mb-4">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  src="/images/best-saler-2.jpg"
-                                  alt=""
-                                  style={{
-                                    width: 50,
-                                    height: 50,
-                                    borderRadius: "50%",
-                                  }}
-                                />
-                                <div className="ms-3">
-                                  <h6 className="mb-0">
-                                    <b> Crush 1</b>
-                                  </h6>
-                                  <span className="star-rating text-warning">
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                  </span>
-                                </div>
-                              </div>
-                              <p className="mt-2">
-                                Áo thun rất thoải mái và chất lượng tốt. Tôi rất
-                                hài lòng với sản phẩm này.
-                              </p>
-                              <div className="rep-comment">
-                                <div className="shop-name ms-4">
-                                  <b>Tên shop</b> <br />
-                                  <span>Cảm ơn bạn đã mua hàng</span>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="user-review">
-                              <div className="d-flex align-items-center">
-                                <img
-                                  src="/images/best-saler-2.jpg"
-                                  alt=""
-                                  style={{
-                                    width: 50,
-                                    height: 50,
-                                    borderRadius: "50%",
-                                  }}
-                                />
-                                <div className="ms-3">
-                                  <h6 className="mb-0">
-                                    <b> Crush 2</b>
-                                  </h6>
-                                  <span className="star-rating text-warning">
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star-fill"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star"></i>
-                                    </span>
-                                    <span className="star">
-                                      <i className="bi bi-star"></i>
-                                    </span>
-                                  </span>
-                                </div>
-                              </div>
-                              <p className="mt-2">
-                                Áo thun không tệ, nhưng màu sắc hơi nhạt so với
-                                ảnh.
-                              </p>
-                            </div>
-                          </>
-                        )}
-                      </div>
+                            <Rating
+                              name="read-only"
+                              value={review.star}
+                              readOnly
+                            />
+                            <Typography>Mô tả: {review.description}</Typography>
+                            {review.account_rate.infoAccount && (
+                              <Typography>
+                                {/* Email: {review.account_rate.infoAccount.email} */}
+                              </Typography>
+                            )}
+                          </div>
+                        ))
+                      ) : (
+                        <Typography>
+                          Chưa có bình luận nào về sản phẩm này.
+                        </Typography>
+                      )}
                     </div>
                   </div>
                 </div>
