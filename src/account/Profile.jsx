@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
-import MainNavbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import "../css/user/profile.css";
+import MainNavbar from "../page_user/components/Navbar";
+import Footer from "../page_user/components/Footer";
+import "../page_user/css/user/profile.css";
 
 function Profile_User() {
   const [selectedImage, setSelectedImage] = useState(null);

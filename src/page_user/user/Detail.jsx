@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useReducer } from "react";
 import "../css/user/detail.css";
-import MainNavbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import MainNavbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { products } from "./data";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
-import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 

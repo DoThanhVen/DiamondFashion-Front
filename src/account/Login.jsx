@@ -1,7 +1,7 @@
 import React from "react";
-import "../css/user/login.css";
-import MainNavbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import "../page_user/css/user/login.css";
+import MainNavbar from "../page_user/components/Navbar";
+import Footer from "../page_user/components/Footer";
 import ReCAPTCHA from "react-google-recaptcha";
 // import "../css/user/register_login.css"
 

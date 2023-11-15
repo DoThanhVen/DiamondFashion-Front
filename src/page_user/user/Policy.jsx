@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../css/user/policy.css"
-import MainNavbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import MainNavbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Policy() {
   const [activeItem, setActiveItem] = useState(null);

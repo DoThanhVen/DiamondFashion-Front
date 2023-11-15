@@ -1,6 +1,6 @@
 import React from "react";
 import Home from "./page_user/user/Home";
-import Login from "./page_user/account/Login";
+import Login from "./account/Login";
 import Cart from "./page_user/user/Cart";
 import Product from "./page_user/user/Product";
 import Detail from "./page_user/user/Detail"
@@ -8,7 +8,7 @@ import NewProducts from "./page_user/user/NewProducts";
 
 import OrderDetail from "./page_user/user/OrderDetail"
 import Checkout from "./page_user/user/Checkout"
-import Profile from "./page_user/account/Profile"
+import Profile from "./account/Profile"
 import Order from "./page_user/user/Order"
 
 import SuggestedProducts from "./page_user/user/SuggestedProducts";

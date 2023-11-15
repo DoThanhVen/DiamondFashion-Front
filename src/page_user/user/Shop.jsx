@@ -7,8 +7,8 @@ import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import ListGroup from "react-bootstrap/ListGroup";
 
-import MainNavbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import MainNavbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import "../css/user/product.css";
 import "../css/user/home.css";
 import "../css/user/slider.css";

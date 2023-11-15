@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import emailjs from "@emailjs/browser";
 import "../css/user/contact.css";
-import MainNavbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import MainNavbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function ContactInfo() {
   const form = useRef();

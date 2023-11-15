@@ -14,8 +14,8 @@ import {
 } from "@mui/material";
 import "../css/user/likeProduct.css";
 
-import MainNavbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import MainNavbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import "../css/user/product.css";
 import "../css/user/home.css";
 import "../css/user/slider.css";
