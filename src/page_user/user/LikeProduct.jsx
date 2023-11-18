@@ -20,6 +20,7 @@ import "../css/user/product.css";
 import "../css/user/home.css";
 import "../css/user/slider.css";
 import "../css/user/responsive.css";
+import swal from "sweetalert";
 
 const API_BASE_URL = "http://localhost:8080";
 const ACCOUNT_ID = 6;
@@ -146,18 +147,20 @@ function LikeProduct() {
       )
       .then((response) => {
         if (response.data === "Sản phẩm đã được unlike.") {
-          alert("Đã unlike sản phẩm.");
+          swal("Thông báo", "Đã xóa sản phẩm yêu thích.", "success");
+
+          // Cập nhật danh sách sản phẩm
           const updatedProducts = sortedProducts.filter(
             (product) => product.id_product !== productId
           );
           setSortedProducts(updatedProducts);
-          window.location.reload();
         } else {
-          alert("Sản phẩm chưa được like.");
+          swal("Thông báo", "Sản phẩm chưa được like.", "info");
         }
       })
       .catch((error) => {
         console.error(error);
+        swal("Lỗi", "Đã xảy ra lỗi khi thực hiện thao tác.", "error");
       });
   };
 
@@ -335,7 +338,10 @@ function LikeProduct() {
                                       (image, imageIndex) => (
                                         <img
                                           key={imageIndex}
-                                          src={"/images/" + image.url}
+                                          src={
+                                            `${API_BASE_URL}/api/uploadImageProduct/` +
+                                            image.url
+                                          }
                                           alt={`Image ${imageIndex}`}
                                         />
                                       )

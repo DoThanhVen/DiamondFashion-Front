@@ -18,10 +18,12 @@ import "../css/user/slider.css";
 
 const API_BASE_URL = "http://localhost:8080";
 
+// Hàm này được sử dụng để hiển thị giá trị của Slider
 function valuetext(value) {
   return `${value}°C`;
 }
 
+// Reducer cho quản lý trạng thái của component Product
 function productReducer(state, action) {
   switch (action.type) {
     case "SET_VALUE":
@@ -43,13 +45,13 @@ function productReducer(state, action) {
       return { ...state, priceSorting: action.priceSorting };
     case "SET_RATING_FILTER":
       return { ...state, ratingFilter: action.ratingFilter };
-
     default:
       return state;
   }
 }
 
 function Product() {
+  // Sử dụng useReducer để quản lý trạng thái của component
   const [localState, dispatch] = useReducer(productReducer, {
     value1: [0, 1000000],
     valueMin: 0,
@@ -74,7 +76,7 @@ function Product() {
   } = localState;
   const [sortedProducts, setSortedProducts] = useState([]);
 
-  // Event Handlers
+  // Bắt sự kiện khi giá trị của Slider thay đổi
   const handleChange1 = (event, newValue) => {
     dispatch({
       type: "SET_VALUE",
@@ -84,24 +86,28 @@ function Product() {
     });
   };
 
+  // Bắt sự kiện khi thay đổi sắp xếp theo ngày
   const handleDateSortingChange = (e) => {
     dispatch({ type: "SET_DATE_SORTING", dateSorting: e.target.value });
   };
 
+  // Bắt sự kiện khi thay đổi sắp xếp theo giá
   const handlePriceSortingChange = (e) => {
     dispatch({ type: "SET_PRICE_SORTING", priceSorting: e.target.value });
   };
 
+  // Bắt sự kiện khi thay đổi bộ lọc theo độ đánh giá
   const handleRatingFilterChange = (e) => {
     dispatch({ type: "SET_RATING_FILTER", ratingFilter: e.target.value });
   };
 
-  // Data Fetching
+  // Lấy dữ liệu danh mục từ server khi component được render
   const { id } = useParams();
   useEffect(() => {
     axios
       .get(`${API_BASE_URL}/api/category/${id}`)
       .then((response) => {
+        // Loại bỏ các danh mục trùng lặp
         const uniqueCategoryList = response.data.listCategory.filter(
           (category, index, self) =>
             index ===
@@ -111,6 +117,7 @@ function Product() {
         );
         response.data.listCategory = uniqueCategoryList;
 
+        // Cập nhật danh sách danh mục
         dispatch({
           type: "SET_CATEGORY_ITEM",
           categoryItem: response.data.listCategory,
@@ -121,14 +128,17 @@ function Product() {
       });
   }, [id]);
 
+  // Lấy danh sách sản phẩm từ server khi component được render
   useEffect(() => {
     getListProduct();
-  }, []); // This effect should only run once, on component mount
+  }, []);
 
+  // Hàm để lấy danh sách sản phẩm từ server
   const getListProduct = () => {
     axios
       .get(`${API_BASE_URL}/api/product`)
       .then((response) => {
+        // Cập nhật danh sách sản phẩm
         dispatch({ type: "SET_PRODUCTS", products: response.data });
       })
       .catch((error) => {
@@ -136,7 +146,7 @@ function Product() {
       });
   };
 
-  // Filtering Products
+  // Lọc sản phẩm
   const listFilter = [];
   categoryItem.forEach((value) => {
     products.forEach((product) => {
@@ -146,7 +156,7 @@ function Product() {
     });
   });
 
-  //Filter product price and sort
+  // Lọc và sắp xếp sản phẩm theo giá
   useEffect(() => {
     const filteredProducts = listFilter.filter((product) => {
       return (
@@ -450,12 +460,15 @@ function Product() {
                                       (image, index) => (
                                         <img
                                           key={index}
-                                          src={"/images/" + image.url}
-                                          alt={`Image ${index}`}
+                                          src={
+                                            `${API_BASE_URL}/api/uploadImageProduct/` +
+                                            image.url
+                                          }
+                                          alt={`Product Image ${index + 1}`}
                                         />
                                       )
                                     )}
-                                    <ul className="d-flex align-items-center justify-content-center list-unstyled icons">
+                                    {/* <ul className="d-flex align-items-center justify-content-center list-unstyled icons">
                                       <li className="icon">
                                         <span className="fas fa-expand-arrows-alt"></span>
                                       </li>
@@ -465,7 +478,7 @@ function Product() {
                                       <li className="icon">
                                         <span className="fas fa-shopping-bag"></span>
                                       </li>
-                                    </ul>
+                                    </ul> */}
                                   </div>
                                   <div className="tag bg-red">sale</div>
                                   <div className="title pt-4 pb-1">

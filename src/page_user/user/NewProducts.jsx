@@ -64,7 +64,7 @@ function NewProducts() {
                 ? JSON.parse(product[5]).map((image, subIndex) => (
                     <img
                       key={subIndex}
-                      src={`/images/${image.url}`}
+                      src={`${API_BASE_URL}/api/uploadImageProduct/${image.url}`}
                       alt={`Image ${subIndex}`}
                     />
                   ))

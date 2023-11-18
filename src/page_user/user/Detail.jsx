@@ -9,6 +9,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
+import swal from "sweetalert";
 
 const API_BASE_URL = "http://localhost:8080";
 const ACCOUNT_ID = 6;
@@ -29,6 +30,8 @@ function localStateReducer(state, action) {
       return { ...state, count: action.payload };
     case "SET_SHOW_ALL_COMMENTS":
       return { ...state, showAllComments: action.payload };
+    case "SET_SIMILAR_PRODUCTS":
+      return { ...state, similarProducts: action.payload };
     default:
       return state;
   }
@@ -101,6 +104,36 @@ function ProductPage() {
       });
   }, [productId]);
 
+  useEffect(() => {
+    const fetchSimilarProducts = async () => {
+      try {
+        const response = await axios.get(
+          `${API_BASE_URL}/api/product/${productId}/similar-products`
+        );
+        const data = response.data;
+
+        if (data.status === "SUCCESS") {
+          // Access the correct data structure
+          const similarProducts = data.data[1];
+          console.log("Similar Products Data:", similarProducts);
+
+          dispatch({
+            type: "SET_SIMILAR_PRODUCTS",
+            payload: similarProducts,
+          });
+        } else {
+          // Xử lý khi API trả về lỗi
+          console.error("Error fetching similar products:", data.message);
+        }
+      } catch (error) {
+        // Xử lý khi có lỗi trong quá trình gọi API
+        console.error("Error fetching similar products:", error);
+      }
+    };
+
+    fetchSimilarProducts();
+  }, [productId]);
+
   const handleLikeProduct = (productId) => {
     axios
       .post(
@@ -108,13 +141,14 @@ function ProductPage() {
       )
       .then((response) => {
         if (response.data === "Sản phẩm đã được like.") {
-          alert("Sản phẩm đã được like .");
+          swal("Thông báo", "Sản phẩm đã được like.", "success");
         } else {
-          alert("Sản phẩm đã được like trước đó.");
+          swal("Thông báo", "Sản phẩm đã được like trước đó.", "info");
         }
       })
       .catch((error) => {
         console.error(error);
+        swal("Lỗi", "Đã xảy ra lỗi khi thực hiện thao tác.", "error");
       });
   };
 
@@ -135,28 +169,44 @@ function ProductPage() {
 
   const handlePostRating = () => {
     if (isValidRating()) {
+      const ratingData = {
+        productId: parseInt(productId),
+        accountId: parseInt(ACCOUNT_ID),
+        start: parseInt(value),
+        description: description,
+      };
+
+      console.log("Rating Payload:", ratingData);
+
       axios
-        .post(`${API_BASE_URL}/api/ratings/add`, {
-          productId: parseInt(productId),
-          accountId: ACCOUNT_ID,
-          start: value,
-          description: description,
-        })
+        .post(`${API_BASE_URL}/api/ratings/add`, ratingData)
         .then((response) => {
-          console.log(response.data);
-          if (response.status === 201) {
-            // Nếu thêm đánh giá thành công, cập nhật danh sách đánh giá của người dùng hiện tại
-            setUserReviews([...userReviews, response.data]);
+          if (response.status === 200) {
+            if (response.data === "Bạn đã đánh giá sản phẩm này.") {
+              swal(
+                "Thành công",
+                "Bạn đã đánh giá sản phẩm này.",
+                "success"
+              ).then(() => {
+                // Tải lại trang sau khi đánh giá thành công
+                window.location.reload();
+              });
+            } else {
+              swal("Lỗi", "Phản hồi từ server không đúng.", "error");
+            }
           } else {
-            // Xử lý lỗi nếu cần
-            console.error("Error adding rating:", response.data);
+            // swal("Lỗi", `Lỗi không xác định: ${response.status}`, "error");
           }
         })
         .catch((error) => {
-          console.error(error);
+          swal("Lỗi", "Có lỗi xảy ra khi đánh giá sản phẩm.", "error");
         });
     } else {
-      alert("Vui lòng chọn số sao và viết đánh giá trước khi đăng");
+      swal(
+        "Lỗi",
+        "Vui lòng chọn số sao và viết đánh giá trước khi đăng",
+        "error"
+      );
     }
   };
 
@@ -226,7 +276,10 @@ function ProductPage() {
                         }}
                       >
                         <img
-                          src={"/images/" + image.url}
+                          src={
+                            `${API_BASE_URL}/api/uploadImageProduct/` +
+                            image.url
+                          }
                           alt={`Image ${index}`}
                         />
                       </div>
@@ -499,7 +552,7 @@ function ProductPage() {
                           kể từ ngày nhận hàng.
                         </li>
                         <li>
-                          Sản phẩm phải còn{" "}
+                          Sản phẩm phải còn
                           <strong>nguyên vẹn và không bị hỏng hóc</strong>.
                         </li>
                         <li>
@@ -512,35 +565,42 @@ function ProductPage() {
                 </div>
               </div>
 
-              <div className="col-lg-4 ">
+              <div className="col-lg-4">
                 <div
-                  className=" bg-white p-4  shadow-0"
+                  className=" bg-white p-4 shadow-0"
                   style={{ borderRadius: "8px" }}
                 >
                   <div className="">
                     <div className="card-body">
                       <h4 className="card-title">Sản phẩm tương tự</h4>
 
-                      {products.map((product, index) => (
-                        <div className="d-flex mb-3 mt-4" key={index}>
-                          <a href="#" className="me-3">
-                            <img
-                              src={product.imagePath}
-                              style={{ minWidth: "96px", height: "96px" }}
-                              className="img-md"
-                              alt={`Similar Product ${index + 1}`}
-                            />
-                          </a>
-                          <div className="info">
-                            <a href="#" className="nav-link mb-1">
-                              {product.name}
-                            </a>
-                            <strong className="text-dark">
-                              ${product.price.toFixed(2)}
-                            </strong>
+                      {localState.similarProducts &&
+                        localState.similarProducts.map((product, index) => (
+                          <div className="d-flex mb-3 mt-4" key={index}>
+                            <Link to={`/product/${product.id}`}>
+                              {product.image_product &&
+                                product.image_product.length > 0 && (
+                                  <img
+                                    src={`${API_BASE_URL}/api/uploadImageProduct/${product.image_product[0].url}`}
+                                    style={{ minWidth: "96px", height: "96px" }}
+                                    className="img-md"
+                                    alt={`Similar Product ${index + 1}`}
+                                  />
+                                )}
+                            </Link>
+                            <div className="info">
+                              <Link
+                                to={`/product/${product.id}`}
+                                className="nav-link mb-1"
+                              >
+                                {product.product_name}
+                              </Link>
+                              <strong className="text-dark">
+                                {product.price} ₫
+                              </strong>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -563,29 +623,35 @@ function ProductPage() {
                     {/* <Typography component="legend">
                       Đánh giá sản phẩm
                     </Typography> */}
-                    <div>
-                      <Rating
-                        name="product-rating"
-                        value={value}
-                        onChange={handleRatingChange}
-                      />
+                    <div className="rating-section">
+                      {userReviews.length === 0 ? (
+                        <>
+                          <Rating
+                            name="product-rating"
+                            value={value}
+                            onChange={handleRatingChange}
+                          />
 
-                      <label htmlFor="description">Mô tả:</label>
-                      <textarea
-                        id="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                      />
+                          <label htmlFor="description">Mô tả:</label>
+                          <textarea
+                            id="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                          />
 
-                      <button
-                        onClick={handlePostRating}
-                        disabled={!isValidRating()}
-                      >
-                        Đăng
-                      </button>
+                          <button
+                            onClick={handlePostRating}
+                            disabled={!isValidRating()}
+                          >
+                            Đăng
+                          </button>
+                        </>
+                      ) : (
+                        <p>Sản phẩm này bạn đã đánh giá</p>
+                      )}
                     </div>
 
-                    <div>
+                    <div className="average-rating-section">
                       {avg !== null && (
                         <div>
                           <p>Average Rating: {avg}</p>
@@ -598,7 +664,7 @@ function ProductPage() {
 
                       {userReviews.length > 0 ? (
                         userReviews.map((review) => (
-                          <div key={review.id}>
+                          <div key={review.id} className="user-review">
                             <Typography>
                               Người đánh giá: {review.account_rate.username}
                             </Typography>

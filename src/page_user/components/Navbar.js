@@ -6,9 +6,20 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import './nav.css';
 import "../css/user/responsive.css";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const MainNavbar = () => {
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate.push(`/search?name=${searchQuery}`);
+  }
+
   return (
     <>
       <header className="header shop">
@@ -64,9 +75,12 @@ const MainNavbar = () => {
                 <div className="mobile-nav"></div>
               </div>
               <div className="col-lg-8 col-md-7 mt-4 col-12">
-                <Form role="search">
+                <Form role="search" onSubmit={handleSearch}>
                   <div className="input-group">
-                    <FormControl type="search" placeholder="Tìm kiếm sản phẩm của bạn" />
+                    <FormControl type="search"
+                     placeholder="Tìm kiếm sản phẩm của bạn" 
+                     value={searchQuery}
+                     onChange={(e) => setSearchQuery(e.target.value)}/>
                     <Button variant="light" type="submit">
                       <i className="fa fa-search"></i>
                     </Button>
