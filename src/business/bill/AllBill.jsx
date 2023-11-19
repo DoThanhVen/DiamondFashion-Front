@@ -240,7 +240,22 @@ export default function AllBill() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
+
   const [orders, setOrder] = useState([]);
+  const [shop, setShop] = useState([]);
+  const [status, setStatus] = useState('');
+  const [keyword, setKeyword] = useState('');
+  const fetchApiShop = () => {
+    axios.get('http://localhost:8080/api/order/find/shop/1')
+      .then((reponse) => {
+        setShop(reponse.data.data)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+  console.log(shop)
   const fetchApi = () => {
     axios.get('http://localhost:8080/api/order/getAllList')
       .then((reponse) => {
@@ -252,26 +267,45 @@ export default function AllBill() {
   }
   useEffect(() => {
     fetchApi()
+    fetchApiShop()
   }, [])
   // console.log(orders.content)
   const onChangeStatus = (status) => {
-   
-    if(status == ''){
-      axios.get('http://localhost:8080/api/order/getAllList')
-      .then((reponse) => {
-        setOrder(reponse.data.data)
-      })
-      .catch((e) => {
-        console.log(e)
-      })
-    }else {
-      axios.get(`http://localhost:8080/api/order/findByStatus/${status}`)
-      .then((reponse) => {
-        setOrder(reponse.data.data) 
-      })
-      .catch((e) => {
-        console.log(e)
-      })
+    if (status == '') {
+      axios.get('http://localhost:8080/api/order/find/shop/1')
+        .then((reponse) => {
+          setOrder(reponse.data.data)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    } else {
+      axios.get(`http://localhost:8080/api/shop/${1}/status/${status}`)
+        .then((reponse) => {
+          setOrder(reponse.data.data)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    }
+  }
+  const handleSearch = () => {
+    if (status == '') {
+      axios.get(`http://localhost:8080/api/order/find/shop/1?keyword=${keyword}`)
+        .then((reponse) => {
+          setOrder(reponse.data.data)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    } else {
+      axios.get(`http://localhost:8080/api/shop/${1}/status/${status}?keyword=${keyword}`)
+        .then((reponse) => {
+          setOrder(reponse.data.data)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
     }
   }
   // console.log(orders?.content?.status[orders?.content?.status.length -1].status.id)
@@ -287,12 +321,14 @@ export default function AllBill() {
           <option value="customerName">Tên người mua</option>
           <option value="productName">Sản phẩm</option>
         </select>
-        <input
+        <input onChange={(e) => {
+          setKeyword(e.target.value)
+        }}
           className={`${style.inputSearch}`}
           type="text"
           placeholder={`${selectedOption ? selectedOption : "Tìm kiếm"}...`}
         ></input>
-        <button className={`${style.buttonSearch}`}>Tìm Kiếm</button>
+        <button onClick={handleSearch} className={`${style.buttonSearch}`}>Tìm Kiếm</button>
       </div>
       <div className={`${style.updateStatusAll} mt-4 mb-3`}>
         <div className={`${style.cardHeadingModel}`}>
@@ -308,6 +344,7 @@ export default function AllBill() {
           onChange={(event) => {
             onChangeStatus(event.target.value)
             setValueBillOption(event.target.value)
+            setStatus(event.target.value)
           }
           }
           className={`${style.optionSelect}`}
@@ -330,7 +367,7 @@ export default function AllBill() {
             </tr>
           </thead>
           <tbody>
-            {orders?.map((value, index) => (
+            {shop?.content?.map((value, index) => (
               <tr key={index}>
                 <th>
                   {currentPage * numberProductPage -

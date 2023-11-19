@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "../../css/admin/product/listproduct.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 import Nav from "react-bootstrap/Nav";
@@ -9,6 +9,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "react-datepicker/dist/react-datepicker.css";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const numberPage = 10;
 const listBill = [
@@ -83,6 +84,19 @@ function ListProduct() {
 
     setSelectedOption(text);
   };
+  const [products, setProducts] = useState([]);
+  const fecthAPi = () => {
+    axios.get(`http://localhost:8080/api/product/findAll`)
+      .then((response) => {
+        setProducts(response.data.data)
+      }).catch((e) => {
+        console.log(e)
+      })
+  }
+  useEffect(() => {
+    fecthAPi()
+  },[])
+  console.log(products)
 
   return (
     <React.Fragment>
@@ -122,16 +136,16 @@ function ListProduct() {
             <label className={style.column} />
             <label className={style.column} />
           </div>
-          {listPage.map((value, index) =>
+          {products?.content?.map((value, index) =>
             <div key={index} className={style.tableBody}>
               <label className={style.column}>
                 {currentPage * numberPage - numberPage + index + 1}
               </label>
               <label className={style.column}>
-                {value.idProduct}
+                {value.id}
               </label>
               <label className={style.column}>
-                {value.productName}
+                {value.product_name}
               </label>
               <label className={style.column}>
                 {value.shopName}

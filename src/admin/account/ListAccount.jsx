@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "../../css/admin/account/listaccount.module.css";
 import Nav from "react-bootstrap/Nav";
+import axios from "axios";
 
 const numberPage = 10;
 const listAccount = [
@@ -141,6 +142,19 @@ function ListAccount() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+  const [accounts, setAccounts] = useState([]);
+  const fecthAPi = () => {
+    axios.get(`http://localhost:8080/api/account/getAll`)
+      .then((response) => {
+        setAccounts(response.data.data)
+      }).catch((e) => {
+        console.log(e)
+      })
+  }
+  useEffect(() => {
+    fecthAPi()
+  },[])
+  console.log(accounts)
   return (
     <React.Fragment>
       <div className={style.listAccount}>
@@ -157,17 +171,17 @@ function ListAccount() {
             <label className={style.column}>Trạng thái</label>
             <label className={style.column}></label>
           </div>
-          {listPage.map((value, index) => (
+          {accounts?.content?.map((value, index) => (
             <div key={index} className={style.tableBody}>
               <label className={style.column}>
                 {currentPage * numberPage - numberPage + index + 1}
               </label>
               <label className={style.column}>{value.username}</label>
-              <label className={style.column}>{value.fullname}</label>
-              <label className={style.column}>{value.gender}</label>
-              <label className={style.column}>{value.phone}</label>
-              <label className={style.column}>{value.email}</label>
-              <label className={style.column}>{value.createDate}</label>
+              <label className={style.column}>{value.infoAccount?.fullname}</label>
+              <label className={style.column}>{value.infoAccount?.gender}</label>
+              <label className={style.column}>{value.infoAccount?.phone}</label>
+              <label className={style.column}>{value.infoAccount?.email}</label>
+              <label className={style.column}>{value.create_date}</label>
               <label className={style.column}>
                 <span
                   className={style.statusAccount}

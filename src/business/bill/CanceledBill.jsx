@@ -219,7 +219,9 @@ export default function CanceledBill() {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  const [orders,setOrders] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [KeyWord, setKeyWord] = useState('');
+
   const fetchApi = () => {
     axios.get(`http://localhost:8080/api/order/findByStatus/8`)
       .then((reponse) => {
@@ -234,7 +236,17 @@ export default function CanceledBill() {
   useEffect(() => {
     fetchApi()
   }, [])
-
+  const handleSearch = () => {
+    axios.get(`http://localhost:8080/api/order/findByStatus/8`)
+      .then((reponse) => {
+        if (reponse.data.status == 'SUCCESS') {
+          setOrders(reponse.data.data)
+        }
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
   return (
     <React.Fragment>
       <div className={`${style.formSearch}`}>
@@ -248,11 +260,14 @@ export default function CanceledBill() {
           <option value="productName">Sản phẩm</option>
         </select>
         <input
+          onChange={(e) => {
+            setKeyWord(e.target.value)
+          }}
           className={`${style.inputSearch}`}
           type="text"
           placeholder={`${selectedOption ? selectedOption : "Tìm kiếm"}...`}
         ></input>
-        <button className={`${style.buttonSearch}`}>Tìm Kiếm</button>
+        <button onClick={handleSearch} className={`${style.buttonSearch}`}>Tìm Kiếm</button>
       </div>
       <div className={`${style.updateStatusAll} mt-4 mb-3`}>
         <div className={`${style.cardHeadingModel}`}>
@@ -274,7 +289,7 @@ export default function CanceledBill() {
               <tr key={index}>
                 <th>{index + 1}</th>
                 <td>{value.id}</td>
-                <td>{value?.status[value.status.length -1].create_date}</td>
+                <td>{value?.status[value.status.length - 1].create_date}</td>
                 <td onClick={() => {
                   handleClickChiTiet(value)
                 }}>Xem Chi Tiết</td>

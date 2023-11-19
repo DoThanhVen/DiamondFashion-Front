@@ -4,7 +4,7 @@ import ListAccount from "./ListAccount";
 function Account() {
   return (
     <React.Fragment>
-      <EditAccount />
+      {/* <EditAccount /> */}
       <ListAccount/>
     </React.Fragment>
   );
