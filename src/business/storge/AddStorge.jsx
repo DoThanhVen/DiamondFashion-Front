@@ -19,8 +19,8 @@ export default function AddStorge() {
   }, []);
 
   const getdataProduct = async () => {
-    const reponse = await callAPI(`/api/product`, "GET");
-    setdataproduct(reponse)
+    const response = await ProductService.getAllProduct(1);
+    setdataproduct(response)
   }
 
   const handleChangeProduct = async (event) => {

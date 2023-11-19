@@ -11,9 +11,18 @@ function ListStorge() {
   }, [reload]);
 
   const getdataProduct = async () => {
-    const reponse = await ProductService.getAllProduct();
-    setdataproduct(reponse)
-  }
+    try {
+      const response = await ProductService.getAllProduct(1);
+      if (response && Array.isArray(response)) {
+        console.log('Response:', response);
+        setdataproduct(response);
+      } else {
+        console.error('Invalid or empty response received');
+      }
+    } catch (error) {
+      console.error('Error fetching and setting products:', error);
+    }
+  };
 
   return (
     <React.Fragment>

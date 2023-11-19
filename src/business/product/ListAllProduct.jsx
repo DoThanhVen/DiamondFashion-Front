@@ -19,7 +19,7 @@ function formatCurrency(price, promotion) {
   });
   return formatter.format(price - price * (promotion / 100));
 }
-function formatDate(date){
+function formatDate(date) {
   return moment(date).format("DD-MM-YYYY HH:mm:ss");
 }
 
@@ -60,7 +60,7 @@ export default function ListProduct() {
 
     const columns = Array.from(rowElement.querySelectorAll("label"));
     const id = columns[1].innerText;
-
+    
     setModalData({
       id,
       datacategory,
@@ -76,8 +76,8 @@ export default function ListProduct() {
 
 
   useEffect(() => {
-      getdataProduct();
-      getdataCategory();
+    getdataProduct();
+    getdataCategory();
   }, [reload]);
 
   const getdataProduct = async () => {
@@ -197,19 +197,19 @@ export default function ListProduct() {
           </select>
           {valueCategory !== ""
             ? <select
-                value={valueCategoryItem}
-                onChange={handleChangeCategoryItem}
-                className={`${style.optionSelectType}`}
-              >
-                <option value="">Phân Loại Sản Phẩm...</option>
-                {categoryItemData.map((value, index) => {
-                  return (
-                    <option key={index} value={value.id}>
-                      {value.type_category_item}
-                    </option>
-                  );
-                })}
-              </select>
+              value={valueCategoryItem}
+              onChange={handleChangeCategoryItem}
+              className={`${style.optionSelectType}`}
+            >
+              <option value="">Phân Loại Sản Phẩm...</option>
+              {categoryItemData.map((value, index) => {
+                return (
+                  <option key={index} value={value.id}>
+                    {value.type_category_item}
+                  </option>
+                );
+              })}
+            </select>
             : null}
         </div>
         <div className={`${style.storge}`}>
@@ -259,18 +259,18 @@ export default function ListProduct() {
               <label className={style.column}>
                 {Array.isArray(value[1])
                   ? value[1].map((item, index) =>
-                      <img
-                        key={index}
-                        className={style.image}
-                        src={`http://localhost:8080/api/uploadImageProduct/${item}`}
-                        alt="Hình Ảnh"
-                      />
-                    )
-                  : <img
+                    <img
+                      key={index}
                       className={style.image}
-                      src={`/images/nullImage.png`}
+                      src={`http://localhost:8080/api/uploadImageProduct/${item}`}
                       alt="Hình Ảnh"
-                    />}
+                    />
+                  )
+                  : <img
+                    className={style.image}
+                    src={`/images/nullImage.png`}
+                    alt="Hình Ảnh"
+                  />}
               </label>
               <label className={style.column}>
                 {value[2]}
@@ -321,11 +321,11 @@ export default function ListProduct() {
           </Nav.Link>
           {currentPage - 1 > 0
             ? <Nav.Link
-                className={`btn`}
-                onClick={() => handlePageChange(currentPage - 1)}
-              >
-                {currentPage - 1}
-              </Nav.Link>
+              className={`btn`}
+              onClick={() => handlePageChange(currentPage - 1)}
+            >
+              {currentPage - 1}
+            </Nav.Link>
             : null}
 
           <Nav.Link className={`btn ${style.btnActivePage}`}>
@@ -333,11 +333,11 @@ export default function ListProduct() {
           </Nav.Link>
           {currentPage + 1 <= totalPages
             ? <Nav.Link
-                className={`btn`}
-                onClick={() => handlePageChange(currentPage + 1)}
-              >
-                {currentPage + 1}
-              </Nav.Link>
+              className={`btn`}
+              onClick={() => handlePageChange(currentPage + 1)}
+            >
+              {currentPage + 1}
+            </Nav.Link>
             : null}
           <Nav.Link
             className={`btn`}

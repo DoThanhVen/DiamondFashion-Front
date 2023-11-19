@@ -31,7 +31,8 @@ function Shop() {
 
   const getdataShop = async () => {
     const reponse = await ShopService.getAllshop();
-    dispatch(getAllShop(reponse));
+    console.log('account', reponse)
+    dispatch(getAllShop(reponse.data));
   };
 
   return (

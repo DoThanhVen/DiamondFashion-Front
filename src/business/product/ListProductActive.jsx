@@ -78,13 +78,12 @@ export default function ListProduct() {
   }, []);
 
   const getdataProduct = async () => {
-    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=1&stocking=`;
+    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=1&stocking=&shop=1`;
     const response = await callAPI(url, "GET");
     if (response) {
       setdataproduct(response.data);
       setCurrentPage(1);
     }
-    ThongBao(response.message, response.status);
     console.log(response.data);
   };
 

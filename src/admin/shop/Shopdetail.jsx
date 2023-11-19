@@ -8,19 +8,26 @@ import style from "../../css/admin/shop/shopdetail.module.css";
 function ShopDetail() {
   const [shop, setshop] = useState({});
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.idShop);
+  const id = useSelector(state => state.idShop);
   const navigate = useNavigate();
-
+  const data = useSelector(state => state.allDataShop);
   useEffect(() => {
     getShop();
   }, [data]);
 
   const getShop = async () => {
-    const reponse = await ShopService.getAllshopById(data);
-    setshop(reponse);
+    if (Array.isArray(data)) {
+      console.log(data)
+      const listFilter = data.filter(a => {
+        return a.shop.id === id
+      }
+      )
+      listFilter.forEach(e => setshop(e))
+      console.log('list',listFilter)
+    }
   };
   const handleSubmit = async () => {
-    const reponse = await ShopService.updateStatusAdmin(shop.id, 1);
+    const reponse = await ShopService.updateStatusAdmin(shop.shop.id, 1);
     navigate("/admin/shops");
     dispatch(getIdShop(0));
   };
@@ -36,16 +43,16 @@ function ShopDetail() {
           style={{ maxWidth: "100%" }}
         />
       </div>
-      <label className={style.title}>Tên cửa hàng: {shop.shop_name}</label>
+      <label className={style.title}>Tên cửa hàng: {shop.shop?.shop_name}</label>
       <label className={style.title}>
-        Chủ sở hữu: {shop.accountShop?.username}
+        Chủ sở hữu: {shop.username}
       </label>
       <label className={style.title}>Địa chỉ:</label>
       <div className={style.address}>
-        <label>Tỉnh/Thành phố: {shop.addressShop?.city}</label>
-        <label>Quận/Huyện: {shop.addressShop?.district}</label>
-        <label>Xã/Phường: {shop.addressShop?.ward}</label>
-        <label>Số nhà: {shop.addressShop?.address}</label>
+        <label>Tỉnh/Thành phố: {shop.shop?.addressShop?.city}</label>
+        <label>Quận/Huyện: {shop.shop?.addressShop?.district}</label>
+        <label>Xã/Phường: {shop.shop?.addressShop?.ward}</label>
+        <label>Số nhà: {shop.shop?.addressShop?.address}</label>
       </div>
       <div>
         <button className={style.buttonSubmit} onClick={handleSubmit}>Xác Nhận Duyệt</button>

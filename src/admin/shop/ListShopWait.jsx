@@ -14,13 +14,17 @@ function ListShopWait() {
   useEffect(
     () => {
       if (Array.isArray(data)) {
-        const matchingShop = data.filter(shop => shop.status === 0);
-        setListShopwait(matchingShop);
+        console.log(data)
+        const listFilter = data.filter(a => {
+          return a.shop.status === 0
+        }
+        )
+        setListShopwait(listFilter);
       }
     },
     [data]
   );
-  function formatDate(date){
+  function formatDate(date) {
     return moment(date).format("DD-MM-YYYY HH:mm:ss");
   }
   return (
@@ -42,30 +46,30 @@ function ListShopWait() {
                 {index}
               </label>
               <label className={style.column}>
-                {value.shop_name}
+                {value.shop.shop_name}
               </label>
               <label className={style.column}>
-                {value.accountShop.username}
+                {value.username}
               </label>
               <label className={style.column}>
-                {formatDate(value.create_date)}
+                {formatDate(value.shop.create_date)}
               </label>
               <label className={style.column}>
                 <span
                   className={style.status}
                   style={{
-                    backgroundColor: value.status === 0 ? "#34219E" : null,
+                    backgroundColor: value.shop.status === 0 ? "#34219E" : null,
                     padding: "5px 10px"
                   }}
-                  value={`${value.status}`}
+                  value={`${value.shop.status}`}
                 >
-                  {value.status === 0 ? "Chờ Xác Nhận" : null}
+                  {value.shop.status === 0 ? "Chờ Xác Nhận" : null}
                 </span>
               </label>
               <label className={style.column}>
                 <img
                   style={{ width: "100px" }}
-                  src={`http://localhost:8080/api/uploadImageProduct/${value.image}`}
+                  src={`http://localhost:8080/api/uploadImageProduct/${value.shop.image}`}
                   alt="Hình Ảnh"
                 />
               </label>
@@ -73,7 +77,7 @@ function ListShopWait() {
               <label
                 className={style.column}
                 onClick={() => {
-                  dispatch(getIdShop(value.id));
+                  dispatch(getIdShop(value.shop.id));
                 }}
               >
                 <Link to="/admin/shop/shopdetail">Xem Chi Tiết</Link>

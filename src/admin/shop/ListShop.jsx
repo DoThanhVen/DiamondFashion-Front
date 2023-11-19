@@ -22,7 +22,8 @@ function ListShop() {
   };
   useEffect(() => {
     if (Array.isArray(data)) {
-      setListShop(data);
+      const listShop = data.map(value=>value.shop)
+      setListShop(listShop);
     }
 
   }, [data]);
@@ -33,7 +34,7 @@ function ListShop() {
         <label className={style.heading}>Danh sách cửa hàng</label>
       </div>
       <div className={style.listShop}>
-        {listShop.map((value, index) => (
+        {listShop?.map((value, index) => (
           <div className={style.cardShop} key={index}>
             <div className={style.heading}>
               <img

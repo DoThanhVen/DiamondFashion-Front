@@ -2,7 +2,7 @@ import { callAPI } from "./API";
 const url = `/api/shop`
 class ShopService {
     getAllshop = async () => {
-        return await callAPI(url, 'GET')
+        return await callAPI(`${url}/findAll`, 'GET')
     }
 
     getAllshopById = async (id) => {

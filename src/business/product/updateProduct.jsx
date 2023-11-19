@@ -28,6 +28,7 @@ export default function ModelEdit({ onReload, data, closeModal }) {
     , []);
 
   const getdataproductbyid = async () => {
+    console.log(data.id)
     const reponse = await ProductService.getProductbyId(data.id)
     setproduct(reponse)
     setname(reponse.product_name)

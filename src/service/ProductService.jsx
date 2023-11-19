@@ -9,15 +9,15 @@ class ProductService {
             price: price,
             description: description,
             status: status,
-            create_date:new Date(),
+            create_date: new Date(),
             categoryItem_product: {
                 id: valueCategoryItem
             }
         })
-        if (reponse&&quantityValue!==0) {
+        if (reponse && quantityValue !== 0) {
             await callAPI(`/api/product/createStorage/${reponse.data.id}`, 'POST', {
                 quantity: quantityValue,
-                create_date:new Date()
+                create_date: new Date()
             })
         }
 
@@ -73,10 +73,15 @@ class ProductService {
         return reponse;
     }
 
-    getAllProduct = async () => {
-        const reponse = await callAPI(url, "GET");
-        return reponse;
-    }
+    getAllProduct = async (shop) => {
+        try {
+            const response = await callAPI(`${url}/getByShop?shop=${shop}&status=`, "GET"); // Ensure status parameter is included
+            return response;
+        } catch (error) {
+            console.error("Error fetching products:", error);
+            return []; // Return an empty array or handle the error according to your app's logic
+        }
+    };
 
     getAllProductWithStorage = async () => {
         const reponse = await callAPI(`${url}/getAllProductWithStorage`, "GET");
