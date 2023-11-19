@@ -45,6 +45,7 @@ function OrderList() {
         let fm = new Date(date).toLocaleDateString('vi-VI', {timeZone: 'UTC' })
         return fm;
     }
+    console.log(orders)
     return (
         <>
             <nav >

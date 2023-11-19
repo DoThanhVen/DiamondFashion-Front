@@ -22,7 +22,7 @@ function OrderReceipt() {
   useEffect(() => {
     fectAPI();
   }, [])
-
+  console.log(order)
   return (
     <>
       <nav >
