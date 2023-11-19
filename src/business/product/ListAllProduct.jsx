@@ -81,7 +81,7 @@ export default function ListProduct() {
   }, [reload]);
 
   const getdataProduct = async () => {
-    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=&stocking=&shop=1`;
+    const url = `/api/product/find?key=${valueOption}&valueKeyword=${textInput}&idCategoryItem=${valueCategoryItem}&minQuantity=${numberMinValue}&maxQuantity=${numberMaxValue}&status=&stocking=&shop=2`;
     const response = await callAPI(url, "GET");
     if (response) {
       setdataproduct(response.data);
