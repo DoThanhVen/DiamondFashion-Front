@@ -9,6 +9,8 @@ function ForgotPass() {
     const [prepassword, setPrePassword] = useState("");
     const [code, setCode] = useState("");
     const [valicode, setValiCode] = useState("");
+    const [inp, setInp] = useState(false);
+    const [inpPass, setInpPass] = useState(true);
 
     const navigate = useNavigate();
     const domain = process.env.REACT_APP_API || "http://localhost:8080";
@@ -24,6 +26,8 @@ function ForgotPass() {
                     if (response.data.success) {
                         alert(response.data.message);
                         setCode(response.data.code)
+                        setInp(true);
+                        setInpPass(false);
                     } else {
                         alert(response.data.message);
                     }
@@ -42,7 +46,9 @@ function ForgotPass() {
             alert("MẬT KHẨU NHẬP LẠI KHÔNG CHÍNH XÁC!");
         } else if (newpassword.length < 6) {
             alert("MẬT KHẨU QUÁ NGẮN!");
-        }else if (valicode !== code) {
+        } else if (valicode === "") {
+            alert("VUI LÒNG NHẬP MÃ XÁC NHẬN!");
+        } else if (valicode !== code) {
             alert("MÃ XÁC NHẬN KHÔNG CHÍNH XÁC!");
         } else {
             axios
@@ -74,7 +80,7 @@ function ForgotPass() {
                                 <div className="card-body">
                                     <div className="form-group">
                                         <label for="email-for-pass">Vui lòng nhập địa chỉ email của bạn:</label>
-                                        <input className="form-control" type="text" id="email" required="" onChange={e => setEmail(e.target.value)} />
+                                        <input className="form-control" type="text" id="email" required="" disabled={inp} onChange={e => setEmail(e.target.value)} />
                                         <small className="form-text text-muted">Nhập địa chỉ email bạn đã sử dụng khi đăng ký. Sau đó, chúng tôi sẽ gửi mã OTP qua email đến địa chỉ này.</small>
                                         <br />
                                         <button className="btn btn-success px-4" type="submit" onClick={handleForgot}>GỬI MÃ</button>
@@ -85,15 +91,15 @@ function ForgotPass() {
                                     </div>
                                     <div className="form-group">
                                         <label for="email-for-pass">Mật khẩu mới</label>
-                                        <input className="form-control" type="password" id="newpassword" required="" onChange={e => setNewPassword(e.target.value)} />
+                                        <input className="form-control" type="password" id="newpassword" required="" disabled={inpPass} onChange={e => setNewPassword(e.target.value)} />
                                     </div>
                                     <div className="form-group">
                                         <label for="email-for-pass">Nhập mật khẩu mới</label>
-                                        <input className="form-control" type="password" id="prepassword" required="" onChange={e => setPrePassword(e.target.value)} />
+                                        <input className="form-control" type="password" id="prepassword" required="" disabled={inpPass} onChange={e => setPrePassword(e.target.value)} />
                                     </div>
                                 </div>
                                 <div className="card-footer">
-                                    <button className="btn btn-success px-4" type="submit" onClick={handleChangePass}>Đổi mật khẩu</button>
+                                    <button className="btn btn-success px-4" type="submit" disabled={inpPass} onClick={handleChangePass}>Đổi mật khẩu</button>
                                 </div>
                             </form>
                         </div>

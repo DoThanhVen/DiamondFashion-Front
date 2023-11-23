@@ -66,6 +66,7 @@ function Profile_User() {
             setButtonDisabled(true);
             setButtonUpdateDisabled(false);
             setInpProfile(true);
+            window.location.reload();
           } else {
             alert(response.data.message);
           }
@@ -82,30 +83,34 @@ function Profile_User() {
       alert("VUI LÒNG NHẬP MẬT KHẨU CŨ CỦA BẠN!");
     }
     else if (prepassword === "1") {
-      if (password === repassword) {
-        if (password === prepassword) {
-          alert("MẬT KHẨU MỚI KHÔNG ĐƯỢC TRÙNG VỚI MẬT KHẨU CŨ!")
-        } else {
-          axios
-            .post(domain + "/api/account/changepass", { username, password })
-            .then(response => {
-              console.log(response);
-              if (response.data.success) {
-                alert(response.data.message);
-              } else {
-                alert(response.data.message);
-              }
-            })
-            .catch(error => {
-              console.log(error);
-            });
+      if (password === "") {
+        alert("VUI LÒNG NHẬP MẬT KHẨU MỚI CỦA BẠN!");
+      } else {
+        if (password === repassword) {
+          if (password === prepassword) {
+            alert("MẬT KHẨU MỚI KHÔNG ĐƯỢC TRÙNG VỚI MẬT KHẨU CŨ!")
+          } else {
+            axios
+              .post(domain + "/api/account/changepass", { username, password })
+              .then(response => {
+                console.log(response);
+                if (response.data.success) {
+                  alert(response.data.message);
+                } else {
+                  alert(response.data.message);
+                }
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          }
+        }
+        else {
+          alert("MẬT KHẨU NHẬP LẠI KHÔNG KHỚP!");
         }
       }
-      else {
-        alert("MẬT KHẨU NHẬP LẠI KHÔNG KHỚP!");
-      }
     } else {
-      alert("BẠN NHẬP SAI MẬT KHẨU HIỆN TẠI!");
+      alert("BẠN NHẬP MẬT KHẨU CŨ KHÔNG CHÍNH XÁC!");
     }
   }
 
@@ -126,6 +131,7 @@ function Profile_User() {
     setButtonDisabled(false);
     setButtonUpdateDisabled(true);
     setInpProfile(false);
+    setProfile([]);
   }
   return (
     <>

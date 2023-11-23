@@ -12,21 +12,31 @@ function Register() {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [valiCode, setValicode] = useState("");
+  const [inpEmail, setInpEmail] = useState(false);
   const navigate = useNavigate();
   const domain = process.env.REACT_APP_API || "http://localhost:8080";
 
   const handleValidate = async (e) => {
     e.preventDefault();
-    axios
-      .post(domain + "/api/account/" + email)
-      .then(response => {
-        console.log(response);
-        setValicode(response.data.code);
-        alert(response.data.message);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    if (email === "") {
+      alert("VUI LÒNG NHẬP EMAIL!");
+    } else {
+      axios
+        .post(domain + "/api/account/" + email)
+        .then(response => {
+          console.log(response);
+          if (response.data.success) {
+            setValicode(response.data.code);
+            setInpEmail(true);
+            alert(response.data.message);
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   };
 
   const handleRegis = async (e) => {
@@ -50,6 +60,7 @@ function Register() {
                   navigate("/login")
                 } else {
                   alert(response.data.message);
+                  setInpEmail(false);
                 }
               })
               .catch(error => {
@@ -110,7 +121,7 @@ function Register() {
                           </div>
                           <div className="col-12">
                             <label for="inputAddress2" className="form-label">Email</label>
-                            <input type="text" className="form-control" id="email" onChange={e => setEmail(e.target.value)} />
+                            <input type="text" className="form-control" disabled={inpEmail} id="email" onChange={e => setEmail(e.target.value)} />
                           </div>
                           <div className="col-8">
                             <input type="text" className="form-control" id="code" placeholder="Mã xác nhận" onChange={e => setCode(e.target.value)} />
