@@ -2,15 +2,27 @@ import React, { useState, useRef, useEffect } from "react";
 import MainNavbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import '../account/profile.css';
-import { useNavigate } from "react-router";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import { Navigate, useNavigate } from "react-router";
 
 function Profile_User() {
 
+  const navigate = useNavigate();
   const login = useSelector(state => state.dataLogin);
+  const [isButtonDisabled, setButtonDisabled] = useState(true);
+  const [isButtonUpdateDisabled, setButtonUpdateDisabled] = useState(false);
+  const [gt, setGt] = useState(0);
+
+  const [inpProfile, setInpProfile] = useState(true);
 
   const username = "account1";
+  const id_account = "16";
   const [prepassword, setPrepassword] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
@@ -32,10 +44,13 @@ function Profile_User() {
 
   useEffect(() => {
     axios
-      .get(domain + "/api/account/profile")
-      .then(response => { setProfile(response.data) })
-      .catch(err => console.log(err))
-  })
+      .get(domain + "/api/account/profile/" + id_account)
+      .then(response => {
+        setProfile(response.data);
+        console.log(response.data);
+      })
+      .catch(err => console.log(err));
+  }, [])
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault()
@@ -48,6 +63,9 @@ function Profile_User() {
           console.log(response);
           if (response.data.success) {
             alert(response.data.message);
+            setButtonDisabled(true);
+            setButtonUpdateDisabled(false);
+            setInpProfile(true);
           } else {
             alert(response.data.message);
           }
@@ -97,7 +115,18 @@ function Profile_User() {
       // Xử lý tệp ảnh đã chọn ở đây
       setSelectedImage(URL.createObjectURL(file));
     }
-  };
+
+  }
+
+  const handleEdit = async (e) => {
+    setFullname(profile.fullname);
+    setPhone(profile.phone);
+    setEmail(profile.email);
+    setId_card(profile.id_card);
+    setButtonDisabled(false);
+    setButtonUpdateDisabled(true);
+    setInpProfile(false);
+  }
   return (
     <>
       <React.Fragment>
@@ -177,58 +206,53 @@ function Profile_User() {
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
                         <label for="fullName">Họ tên:</label>
-                        <input type="text" class="form-control" name="fullname" id="fullName" onChange={e => setFullname(e.target.value)} />
+                        <input type="text" class="form-control" disabled={inpProfile} name="fullname" id="fullName" value={fullname} placeholder={profile.fullname} onChange={e => setFullname(e.target.value)} />
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
                         <label for="phone">Số điện thoại:</label>
-                        <input type="text" class="form-control" id="phone" onChange={e => setPhone(e.target.value)} />
+                        <input type="text" class="form-control" disabled={inpProfile} id="phone" value={phone} placeholder={profile.phone} onChange={e => setPhone(e.target.value)} />
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
                         <label for="email">Địa chỉ email:</label>
-                        <input type="url" class="form-control" id="email" onChange={e => setEmail(e.target.value)} />
+                        <input type="url" class="form-control" id="email" disabled={inpProfile} value={email} placeholder={profile.email} onChange={e => setEmail(e.target.value)} />
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                      <div class="form-group">
+                        <label for="id_card">Căn cước công dân:</label>
+                        <input type="text" class="form-control" id="id_card" disabled={inpProfile} value={id_card} placeholder={profile.id_card} onChange={e => setId_card(e.target.value)} />
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                       <div class="form-group">
                         <label for="email">Giới tính:</label>
-                        <div className='d-flex'>
-                          <div className="form-check">
-                            <input className="form-check-input" type="radio" name="gridRadios" value={0} onChange={e => setGender(e.target.value)} id="gridRadios" checked />
-                            <label className="form-check-label" for="gridRadios">
-                              Nam
-                            </label>
-                          </div>
-                          <div className="form-check " style={{ marginLeft: '40px' }}>
-                            <input className="form-check-input" type="radio" name="gridRadios" value={1} onChange={e => setGender(e.target.value)} id="gridRadios1" />
-                            <label className="form-check-label" for="gridRadios1">
-                              Nữ
-                            </label>
-                          </div>
-                          <div className="form-check " style={{ marginLeft: '40px' }}>
-                            <input className="form-check-input" type="radio" name="gridRadios" value={2} onChange={e => setGender(e.target.value)} id="gridRadios2" />
-                            <label className="form-check-label" for="gridRadios2">
-                              Khác
-                            </label>
-                          </div>
-                        </div>
+                        <RadioGroup
+                          row
+                          aria-labelledby="demo-row-radio-buttons-group-label"
+                          name="row-radio-buttons-group"
+                          defaultValue={gt}
+                        >
+                          <FormControlLabel value={0} onChange={e => setGender(e.target.value)} control={<Radio />} chek label="Nam" />
+                          <FormControlLabel value={1} onChange={e => setGender(e.target.value)} control={<Radio />} label="Nữ" />
+                          <FormControlLabel value={2} onChange={e => setGender(e.target.value)} control={<Radio />} label="Khác" />
+                        </RadioGroup>
                       </div>
-                    </div>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label for="address">Căn cước công dân:</label>
-                      <input type="text" class="form-control" id="id_card" onChange={e => setId_card(e.target.value)} />
                     </div>
                   </div>
                 </div>
                 <div class="row gutters mt-4">
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                  <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
                     <div class="text-right">
-                      <button type="button" id="submit" name="submit" class="btn btn-primary" onClick={handleUpdateProfile}>Cập nhật</button>
+                      <button type="button" id="submit_update" name="submit" class="btn btn-primary" onClick={handleUpdateProfile} disabled={isButtonDisabled}>Cập nhật</button>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                    <div class="text-right">
+                      <button type="button" id="submit" name="submit" class="btn btn-primary" onClick={handleEdit} disabled={isButtonUpdateDisabled}>Chỉnh sửa</button>
                     </div>
                   </div>
                 </div>

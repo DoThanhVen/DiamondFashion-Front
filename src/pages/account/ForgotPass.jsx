@@ -50,7 +50,7 @@ function ForgotPass() {
                 .then(response => {
                     console.log(response);
                     alert(response.data.message);
-                    
+                    navigate("/login")
                 })
                 .catch(error => {
                     console.log(error);
