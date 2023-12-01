@@ -153,7 +153,7 @@ function ListAccount() {
   }
   useEffect(() => {
     fecthAPi()
-  },[])
+  }, [])
   console.log(accounts)
   return (
     <React.Fragment>
@@ -177,10 +177,10 @@ function ListAccount() {
                 {currentPage * numberPage - numberPage + index + 1}
               </label>
               <label className={style.column}>{value.username}</label>
-              <label className={style.column}>{value.infoAccount?.fullname}</label>
-              <label className={style.column}>{value.infoAccount?.gender}</label>
-              <label className={style.column}>{value.infoAccount?.phone}</label>
-              <label className={style.column}>{value.infoAccount?.email}</label>
+              <label className={style.column}>{value.infoAccount?.fullname || value.username}</label>
+              <label className={style.column}>{value.infoAccount?.gender || 'chưa cập nhật'}</label>
+              <label className={style.column}>{value.infoAccount?.phone || 'chưa cập nhật'}</label>
+              <label className={style.column}>{value.infoAccount?.email || 'chưa cập nhật'}</label>
               <label className={style.column}>{value.create_date}</label>
               <label className={style.column}>
                 <span

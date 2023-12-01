@@ -84,20 +84,107 @@ function ListProduct() {
 
     setSelectedOption(text);
   };
+  const [shops, setShops] = useState([]);
   const [products, setProducts] = useState([]);
+  const [load, isLoad] = useState(false);
+  const [status, setStatus] = useState(1);
+  const [keyword, setKeyword] = useState('');
+  const [typeSearch, setTypeSearch] = useState(1);
   const fecthAPi = () => {
-    axios.get(`http://localhost:8080/api/product/findAll`)
+    axios.get(`http://localhost:8080/api/shop/find/product/status/${1}`)
       .then((response) => {
-        setProducts(response.data.data)
+        let data = response.data.data;
+        const dataShop = [];
+        if (!data.empty) {
+          data.content.forEach(item => {
+            item.products.forEach((value) => {
+              if (value.status == 1) {
+                dataShop.push({ ...value, shop_name: item.shop_name })
+              }
+            })
+          });
+        }
+        setShops(dataShop)
       }).catch((e) => {
         console.log(e)
       })
   }
+  console.log(shops)
   useEffect(() => {
     fecthAPi()
-  },[])
-  console.log(products)
+  }, [load])
 
+
+  const changeStatusProduct = (e) => {
+    let status = e.target.value;
+    axios.get(`http://localhost:8080/api/shop/find/product/status/${status}`)
+      .then((response) => {
+        let data = response.data.data;
+        const dataShop = [];
+        if (!data.empty) {
+          data.content.forEach(item => {
+            item.products.forEach((value) => {
+              if (value.status == status) {
+                console.log(value)
+                dataShop.push({ ...value, shop_name: item.shop_name })
+              }
+            })
+          });
+        }
+
+        setShops(dataShop)
+        setStatus(status)
+      }).catch((e) => {
+        console.log(e)
+      })
+  }
+  const handleStatusProduct = (idProduct, stt) => {
+    console.log(stt, ',', idProduct)
+    if (stt == 1) {
+      axios.put(`http://localhost:8080/api/product/verify/${idProduct}`)
+        .then((response) => {
+          isLoad(!load)
+        }).catch((e) => {
+          console.log(e)
+        })
+    } else if (stt == 0) {
+      axios.put(`http://localhost:8080/api/product/ban/${idProduct}`)
+        .then((response) => {
+          isLoad(!load)
+        }).catch((e) => {
+          console.log(e)
+        })
+    }
+
+  }
+  // console.log(shops)
+  const handleSearch = () => {
+    console.log(status, ',', keyword, ', ', typeSearch)
+    
+    axios.get(`http://localhost:8080/api/shop/find/product/status/${status}/search?type=${typeSearch}&keyword=${keyword}`)
+    // axios.get(`http://localhost:8080/api/product/name/${status}?&keyword=${keyword}`)
+      .then((response) => {
+        let data = response.data.data;
+        console.log(response.data.data)
+       
+        console.log(data)
+        const dataShop = [];
+        if (data != null) {
+          data.forEach(item => {
+            item.products.forEach((value) => {
+              dataShop.push({ ...value, shop_name: item.shop_name })
+            })
+          });
+        }
+        // console.log(dataShop)
+        setShops(dataShop)
+      }).catch((e) => {
+        console.log(e)
+      })
+  }
+  const changeType = (e) => {
+    setTypeSearch(e.target.value)
+  }
   return (
     <React.Fragment>
       <div className={style.listProduct}>
@@ -106,22 +193,40 @@ function ListProduct() {
             <label className={style.title}>Danh sách sản phẩm</label>
             <div className={`${style.formSearch}`}>
               <select
-                value={valueOption}
-                onChange={handleChangeOption}
+                // value={valueOption}
+                onChange={(e) => {
+                  setTypeSearch(e.target.value)
+
+                }}
                 className={`${style.optionSelect}`}
               >
-                <option value="idProduct">Mã sản phẩm</option>
-                <option value="productName">Tên sản phẩm</option>
-                <option value="shopName">Tên cửa hàng</option>
+                <option value="1">Mã sản phẩm</option>
+                <option value="2">Tên sản phẩm</option>
+                <option value="3">Tên cửa hàng</option>
               </select>
-              <input
+              <input onChange={(e) => {
+                setKeyword(e.target.value)
+              }}
                 className={`${style.inputSearch}`}
                 type="text"
                 placeholder={`${selectedOption
                   ? selectedOption
                   : "Tìm kiếm"}...`}
               />
-              <button className={`${style.buttonSearch}`}>Tìm Kiếm</button>
+              <button onClick={handleSearch} className={`${style.buttonSearch}`}>Tìm Kiếm</button>
+            </div>
+            <div>
+              <select
+
+                onChange={(e) => {
+                  changeStatusProduct(e)
+                }}
+                className={`${style.optionSelect}`}
+              >
+                <option value="1">Sản phẩm đang hoạt động</option>
+                <option value="0">Sản phẩm chưa duyệt</option>
+                <option value="2">Sản phẩm đã cấm</option>
+              </select>
             </div>
           </div>
         </div>
@@ -136,8 +241,8 @@ function ListProduct() {
             <label className={style.column} />
             <label className={style.column} />
           </div>
-          {products?.content?.map((value, index) =>
-            <div key={index} className={style.tableBody}>
+          {shops?.map((value, index) => (
+            <div key={value.id} className={style.tableBody}>
               <label className={style.column}>
                 {currentPage * numberPage - numberPage + index + 1}
               </label>
@@ -148,10 +253,10 @@ function ListProduct() {
                 {value.product_name}
               </label>
               <label className={style.column}>
-                {value.shopName}
+                {value.shop_name}
               </label>
               <label className={style.column}>
-                {value.createDate}
+                {value.create_date}
               </label>
               <label className={style.column}>
                 <span
@@ -174,31 +279,48 @@ function ListProduct() {
                 </span>
               </label>
               <label className={style.column}>
-                <a
-                  href="#updateStatus"
-                  className={`btn ${style.updateStatus}`}
-                  style={{
-                    backgroundColor:
-                      value.status === 0
-                        ? "green"
-                        : value.status === 1
-                          ? "red"
-                          : value.status === 2 ? "green" : "#E74C3C"
-                  }}
-                  value={`${value.status}`}
-                >
-                  {value.status === 0
-                    ? "Duyệt Sản Phẩm"
-                    : value.status === 1
-                      ? "Cấm Hoạt Động"
-                      : value.status === 2 ? "Mở Hoạt Động" : "Lỗi"}
-                </a>
+                {value.status === 0
+                  ? <button onClick={() => {
+                    handleStatusProduct(value.id, 1)
+                  }}>Duyệt Sản Phẩm</button>
+
+                  : value.status === 1
+                    ? <button onClick={() => {
+                      handleStatusProduct(value.id, 0)
+
+                    }}>Cấm sản phẩm</button>
+
+                    : value.status === 2 ? <button onClick={() => {
+                      handleStatusProduct(value.id, 1)
+
+                    }}>Mở sản phẩm"</button> : <span>Lỗi</span>
+                }
+                {/* <a
+                      href="#updateStatus"
+                      className={`btn ${style.updateStatus}`}
+                      style={{
+                        backgroundColor:
+                          value.status === 0
+                            ? "green"
+                            : item.status === 1
+                              ? "red"
+                              : item.status === 2 ? "green" : "#E74C3C"
+                      }}
+                      item={`${item.status}`}
+                    >
+                      {item.status === 0
+                        ? "Duyệt Sản Phẩm"
+                        : item.status === 1
+                          ? "Cấm Hoạt Động"
+                          : item.status === 2 ? "Mở Hoạt Động" : "Lỗi"}
+                    </a> */}
               </label>
               <label className={style.column}>
                 <Link to="/admin/bills/billdetail">Xem Chi Tiết</Link>
               </label>
+
             </div>
-          )}
+          ))}
         </div>
         <div className={`${style.buttonPage}`}>
           <Nav.Link className={`btn`} onClick={() => handlePageChange(1)}>

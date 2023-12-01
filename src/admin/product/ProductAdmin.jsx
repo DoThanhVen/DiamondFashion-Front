@@ -5,7 +5,7 @@ import ListProduct from "./ListProduct";
 function ProductAdmin() {
   return (
     <React.Fragment>
-      <EditProduct />
+      {/* <EditProduct /> */}
       <ListProduct />
     </React.Fragment>
   );
